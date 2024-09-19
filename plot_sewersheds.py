@@ -14,7 +14,19 @@ def __():
 
 
 @app.cell
-def __(nx, plt):
+def __(mo):
+    mo.md(
+        r"""
+        This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Suvey dataset. Data was downloaded from the "[2022 CWNS Dataset by State](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)" for California.
+
+        This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular California sewershed. For the most up-to-date information, see the [CA State Water Boards database](https://www.waterboards.ca.gov/ciwqs/).
+        """
+    )
+    return
+
+
+@app.cell
+def __(all_population, nx, plt):
     # DEFINE PLOTTING FUNCTIONS
 
     def add_connection(row):
@@ -38,24 +50,29 @@ def __(nx, plt):
         nodes = sewershed_map[sewershed_id]['nodes']
         connections = sewershed_map[sewershed_id]['connections']
         center_node = sewershed_map[sewershed_id]['center']
-        facility_names = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}' for node in nodes}
-        facility_permit_numbers = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}' for node in nodes}
-        node_labels = {node: f'{facility_names[node]}\nPermit no: {facility_permit_numbers[node]}' for node in nodes}
+        facility_names = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}'.replace('(', '\n(', 1) if len(f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}') > 20 else f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}' for node in nodes}
+        facility_permit_numbers = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
+        facility_pop = {node: f'{(all_population.loc[all_population['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not all_population[all_population['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
+        node_labels = {node: f'{facility_names[node]}\nPermit: {facility_permit_numbers[node]}\nPop. 2022: {int(float(facility_pop[node])) if facility_pop[node] != "N/A" else facility_pop[node]}' for node in nodes}
 
         G.add_nodes_from(nodes)
         G.add_edges_from([(conn[0], conn[1], {'label': f'{conn[2]}%'}) for conn in connections])
-        pos = nx.spring_layout(G, k=3, fixed={center_node: (0, 0)}, pos={center_node: (0, 0)})
-        plt.figure(figsize=(9, 6))
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'label'))
+        pos = nx.spring_layout(G, k=4, fixed={center_node: (0, 0)}, pos={center_node: (0, 0)}, iterations=300)
+        # pos = nx.spring_layout(G, k=3)
+
+        plt.figure(figsize=(6+3*len(nodes)/10, 4+3*len(nodes)/10))
+        ax1 = plt.subplot(111)
+        ax1.margins(0.1) 
+        nx.draw_networkx_edge_labels(G, pos, ax=ax1, edge_labels=nx.get_edge_attributes(G, 'label'))
 
         node_shapes = {node: 's' if any('Treatment' in facility_type for facility_type in facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_TYPE']) else '2' for node in nodes}
         for shape in set(node_shapes.values()):
             node_list = [node for node in nodes if node_shapes[node] == shape]
-            nx.draw_networkx_nodes(G, pos, nodelist=node_list, node_shape=shape, node_size=3000, node_color='lightblue', alpha = 0.7)
+            nx.draw_networkx_nodes(G, pos, ax=ax1, nodelist=node_list, node_shape=shape, node_size=3000, node_color='lightblue', alpha = 0.7)
 
-        
-        nx.draw_networkx_edges(G, pos, edge_color='gray', alpha=0.7, arrows=True, arrowsize=20, arrowstyle='->', min_source_margin=30, min_target_margin=30)
-        nx.draw_networkx_labels(G, pos, labels=node_labels, font_size=6, font_weight='bold')
+
+        nx.draw_networkx_edges(G, pos, ax=ax1, edge_color='gray', alpha=0.7, arrows=True, arrowsize=20, arrowstyle='->', min_source_margin=30, min_target_margin=30)
+        nx.draw_networkx_labels(G, pos, ax=ax1, labels=node_labels, font_size=6, font_weight='bold')
 
         plt.title(f'{sewershed_id}')
         plt.axis('off')
@@ -75,6 +92,7 @@ def __(pd):
     population_wastewater = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_WASTEWATER.csv', encoding='latin1', low_memory=False)
     population_wastewater_confirmed = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_WASTEWATER_CONFIRMED.csv', encoding='latin1', low_memory=False)
     population_decentralized = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_DECENTRALIZED.csv', encoding='latin1', low_memory=False)
+    all_population = pd.concat([population_wastewater, population_wastewater_confirmed, population_decentralized])
     discharges = pd.read_csv('CA_2022CWNS_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
     discharges['DISCHARGES_TO_CWNSID'] = pd.to_numeric(discharges['DISCHARGES_TO_CWNSID'], errors='coerce').astype('Int64')
     discharges['CWNS_ID'] = pd.to_numeric(discharges['CWNS_ID'], errors='coerce').astype('Int64')
@@ -85,6 +103,7 @@ def __(pd):
     facilities = facilities.merge(facility_permit, left_on='CWNS_ID', right_on='CWNS_ID', how='left')
     facilities = facilities.merge(facility_types, left_on='CWNS_ID', right_on='CWNS_ID', how='left')
     return (
+        all_population,
         areas_county,
         discharges,
         facilities,
