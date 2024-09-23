@@ -1,0 +1,2049 @@
+POLLUTANT_CODE,PARAMETER_DESC
+10804,"Produced water, gross alpha radiation"
+10969,"Produced water, gross beta radiation"
+12133,"Produced water, toxicity"
+10430,"Produced water, Radium 226, total"
+10431,"Produced water, Radium 228, total"
+12129,Produced water toxicity 7 day noec
+10973,Bioaccumulation testing performed
+10700,"Butyl, 5-benzotriazole, total"
+10215,"Chromium, trivalent total recoverable"
+4245,"Chronic toxicity, daphnia magnia 21 dy"
+12203,"Seafood production, effluent # day/mo"
+12171,"RCRA/CERCLA substances, 40 CFR 261 subp c"
+10981,"Bisazer, total, water, ug/L"
+12057,Dicrotophos
+11221,"Drilling fluid, end of well, 96-hr LC50"
+11226,"Drilling fluid, toxicity"
+12293,"Sum BOD and ammonia, water"
+10364,"Well fluids, oil & grease"
+11259,"1,2-Dichloro-1,2-difluoroethane"
+12398,Thermal efficiency
+11198,Diquat
+11345,"Organics, gasoline range"
+11341,"Gamma, total"
+12446,"Tritium, total"
+12447,"Tritium, total counting error [pc/L]"
+12448,"Tritium, total net increase H-3 units"
+2423,"Manganese, total recoverable"
+12175,"Radium 226 & 228, dissolved"
+12285,"Strontium 90, total"
+11641,"Lead 210, total"
+11426,Iodine 129
+12103,Total polonium
+12104,Polonium 210
+12173,"Radium 223, total"
+12368,"Technetium 99, total [14]"
+10093,"Aluminum chloride, dissolved, water"
+10934,Octachlorostyrene
+10691,"Tris[2,3-dibromo- propyl] phosphate"
+4677,Whole effluent toxicity
+10418,Methyl tert-butyl ether [MTBE]
+12509,"WET, sublethal retest #1"
+10027,Methoxypropylamine
+10100,Polynuclear Aromatic Hydrocarbons [PAHs]
+4082,Thorium [Thorium-232]
+6439,"Uranium 238, total"
+12460,"Uranium 235, total"
+10833,"Arsenic, trivalent dissolved"
+320002281,"Uranium, total as U3O8"
+12174,"Radium 224, total"
+10793,Actinium 227
+12407,Thorium 230
+11067,"Cerium, total"
+10214,"Chromium, hexavalent in bot dep [dry wt]"
+12092,"Phosphorous 32, total"
+12081,Fensulfothion
+12086,Fenthion
+12091,Merphos
+10124,Benzyl chloride
+10421,Dichloroprop
+12016,Dinoseb
+10784,MCPA
+12159,MCPP
+12053,Dichlorvos
+10038,Terbacil
+10646,Hexazinone
+10037,Bromacil
+11168,"1,2,3,7,8-Pentachlorodibenzo-p-dioxin"
+11166,"1,2,3,4,7,8-Hexachlorodibenzo-p-dioxin"
+11167,"1,2,3,6,7,8-Hexachlorodibenzo-p-dioxin"
+10911,4-Bromophenyl phenyl ether
+11159,Dewatering effluent chlorides tidal
+11156,Dewatering effluent COD
+11160,Dewatering effluent free oil
+11162,Dewatering effluent pH
+11157,Dewatering effluent TDS
+11158,Dewatering effluent TSS
+11309,"Flow, as a portion of stream flow"
+278,Acetonitrile
+11907,Total Organic Carbon % Removal
+11900,"Oil & grease, non-polar material"
+11323,"Flow, return factor"
+10762,Endothall
+11106,Color
+12286,Sulfide-hydrogen sulfide [undissociated]
+10151,2-Chlorobenzene
+10005,Di[2-ethylhexyl] phthalate [DEHP]
+12040,Octylphenol
+10953,p-Phenolsulfonic acid
+10658,m-Benzenedisulfonic acid
+10828,Area of disposal-used
+10800,Bicarbonate as [CaCO3]
+12082,Thionazin
+12047,Leptophos
+12085,Fenitrothion
+12405,Aspon
+12059,Monocrotophos
+12087,Dichlofenthion
+11199,DMR submitted
+6352,"Zinc, percent removal"
+1165,"Copper, percent removal"
+776,"Cadmium, percent removal"
+12249,"Solids, total suspd. non-volatile"
+11291,Excess thermal load
+11058,Carbonate ion [as CaCO3]
+12177,Rainfall events
+11324,"Flow, total"
+10835,Azide
+12170,Ethoxyquin
+11335,Freeboard
+10293,Furans
+11378,"Halogens, total combined"
+11421,Infiltration capacity
+11683,Mix ratio
+11685,Moisture content
+11903,Number of operating tubes
+11163,Octachlorodibenzo-p-dioxin
+11185,Octachlorodibenzofuran
+11899,Oil & grease [polar]
+11908,"Organics, total halogens [TOX]"
+10396,"Pentachlorophenol, removal efficiency"
+12120,"Pressure, casing"
+10680,Rovral
+12254,"Solids, total suspended, loading rate"
+12245,"Solids, total dissolved [inorganic]"
+12517,SOPP
+10696,Tebuconazole
+6128,"Temperature, background"
+11658,Tetramethyl ammonium hydroxide
+10698,Thiabendazole
+11044,Topsin
+12428,Total Petroleum Hydrocarbons - Diesel
+10485,Total Petroleum Hydrocarbons - Gasoline
+12431,Total water accumulations
+2220,Total water irrigated
+6638,"Turbidity, background"
+12450,"Turbidity, change"
+12452,"Turbidity, increase over background"
+12497,Volume of injected wastewater
+12484,Volume
+12483,"Volume, daily"
+12504,Water usage
+4819,"Algae, total [cells/mL]"
+12022,"3,4,6-Trichloroguaiacol, total"
+10380,"2,4,5-Trichlorophenol"
+12021,"3,4,5-Trichloroguaiacol"
+10635,"3,4,6-Trichlorocatechol"
+12002,"2,3,4,5-Tetrachlorophenol"
+10278,"1,1-Dichloroethene"
+10639,"Propylene glycol, total"
+12160,"Protein, crop crude %"
+11118,Crop yield
+11304,"Debris, floating [severity]"
+10726,Terramycin [1 hour application]
+11689,Morpholine
+10713,"Bromacil, lithium"
+11894,Bromoxynil octanoate
+10739,Dazomet
+11050,Nabonate
+12401,TCMTB
+11419,Industrial contribution % of influent
+12110,"Potassium, total [K2O], [water]"
+11084,Chlorinated paraffin in sludge
+12294,"Surface area, square feet"
+12274,"Stock base fluid, PAH"
+12276,"Stock base fluid, sediment toxicity"
+12275,"Stock base fluid, biodegredation rate"
+11202,"Discharge drill cuttings, sediment toxicity"
+11201,"Discharge drill cuttings, formation oil"
+11200,"Discharge drill cuttings, base fluids retained"
+12202,"Seabed survey, industry wide"
+10824,"Application rate, daily spray irrigation."
+12121,Priority pollutant chemical specific
+661,Biosolids weight indluding admixtures
+11387,"Viable helminth ova, sludge, dry weight"
+10287,"Fecal coliform in sludge, CFU/gram"
+10647,Cyanuric acid
+10984,Blend ratio
+10654,Ametryn
+10870,Benomyl and carbendazim
+10966,Bromoxynil
+11048,Busan 40
+10188,Busan 85
+10910,Chloroneb
+10656,Chlorothalonil
+10023,DCPA
+12090,DEF
+12072,Dioxathion
+10763,Endothall salts & esters
+10753,Fenarimol
+10941,Fenvalerate
+11052,KN methyl
+12464,Linuron
+12050,"Methamidophos, organic pesticide"
+11049,"Nabam, organic pesticide"
+10742,Norflurazon
+10935,Pentachloronitrobenzene [PCNB]
+10887,Pendimethalin
+12074,Phosmet
+10651,Prometon
+10652,Prometryn
+10873,Pronamide
+10774,Propachlor
+10648,Propazine
+12470,Tebuthiuron
+10650,Terbuthylazine
+10653,"Terbutryn, organic pesticide"
+10718,"Triadimefon, organic pesticide"
+12516,"Ziram, organic pesticide"
+10901,"SAS - 305, total"
+11904,Operation of turbines
+12122,Priority pollutants scan [yes/no]
+11388,Hematite Production
+11297,Filter backwash discharges per day
+12501,Water softener backwash
+12498,Water backwash
+5123,"Cyanide, free available"
+11395,Di[2-ethylhexyl] adipate
+10679,2-Ethylhexanol
+10752,Surfynol 104E
+10971,Betzdearborn DG5671
+11888,Nonyl phenoxypoly ethanol
+10410,Polyethylene glycol
+12067,"O,O-Diethyl S-methyl dithiophosphate"
+1939,Glycol mix applied
+12134,Production divided by days operated mo.
+10268,Ethyl mercaptan
+10959,Acetophene
+12130,"Produced water, TDS"
+11924,"Oxygen demand, nitrogenous, ultimate"
+11334,"Free oil, dewatering effluent"
+11164,"1,2,3,7,8,9-Hexachlorodibenzo-p-dioxin"
+11178,"1,2,3,7,8-Pentachlorodibenzofuran"
+11180,"2,3,4,7,8-Pentachlorodibenzofuran"
+11175,"1,2,3,4,7,8-Hexachlorodibenzofuran"
+11176,"1,2,3,6,7,8-Hexachlorodibenzofuran"
+11177,"1,2,3,7,8,9-Hexachlorodibenzofuran"
+11179,"2,3,4,6,7,8-Hexachlorodibenzofuran"
+11173,"1,2,3,4,6,7,8-Heptachlorodibenzofuran"
+11174,"1,2,3,4,7,8,9-Heptachlorodibenzofuran"
+11165,"1,2,3,4,6,7,8-Heptachlorodibenzo-p-dioxin"
+11181,"2,3,7,8-TCDF, sed."
+10926,"Benzene, ethylbenzene, toluene, xylene combination"
+10872,"Chlorosyringaldehyde, effluent"
+4146,"Coliform, total MF, immed, m-endo med 35 C"
+10251,"E. coli, thermotol, MF, MTEC"
+11237,"Enterococci: group D, MF trans, M-E, EIA"
+5878,"Phosphate, tot. bottom sed., dry wt."
+1976,"Halogens, tot organics bottom sediment"
+11402,"Hydrocarbon, total recoverable"
+3256,"Oil petroleum, total recoverable"
+11293,"Streptococci, fecal plate count KF agar"
+12098,"Plate count, total 35 deg. C, 24 hour"
+11431,Klebsiella species
+6656,"Carbon, chloroform extractables"
+10869,Base/neutral compounds
+1822,"Fluoride, complex"
+10447,Sodium chloride [salt]
+11121,Cyanide and thiocyanate - total
+10789,Acid compounds
+11660,Dichlorobromomethane
+10344,Carbon tetrachloride
+10262,"1,2-Dichloroethane"
+11673,Bromoform
+11664,Dibromochloromethane
+10345,Chloroform
+11650,"Chlorophyll A, corrected"
+10745,Pheophytin
+11649,Chlorophyll B
+11097,Chlorophyll C
+12364,Tannin and lignin
+10957,Benzofuran
+10734,Acrylic polymer in drilling fluids
+11892,"Aluminum stearate, wat sol in drill fl"
+11065,"Cellulose polymer, in drilling fluids"
+11136,DOS-3 in drilling fluids
+11412,Imco Lube 106 in drilling fluids
+11413,Imco Lubrikleen in drilling fluids
+11416,Imco phos in drilling fluids
+11432,Kwik Seal in drilling fluids
+12270,Starch in drilling fluids
+12513,XC Polymer in drilling fluids
+11096,"Chloroform extractables, total"
+10397,"Phenolics, total recoverable"
+10161,Toluene
+10930,Halogenated toluene
+603,Benzene
+10076,Acetochlor
+11079,"Chloramine, total"
+12449,Turbidity [severity]
+12278,Stream flow [severity]
+11204,Discharge flow as % of stream flow
+11417,"Ice cover, floating or solid [severity]"
+10805,"Alpha, total, counting error"
+12212,"Silver, ionic"
+10970,"Beta, total, counting error"
+10239,"2,3,7,8-Tetrachlorodibenzo-p-dioxin"
+12444,"Toxics, percent removal"
+10091,"Halogens, adsorbable organic"
+10976,Bioassay [96 hr]
+10975,Bioassay [48 hr]
+10974,Bioassay [24 hr]
+12435,"Toxicity, choice of species"
+12443,"Toxicity, trout"
+12442,"Toxicity, sand dollar"
+10178,Biochemical oxygen demand
+10486,Total suspendable solids
+11306,Flow meter calibration
+12272,"Stickwater, effluent percent recycled"
+12273,"Stickwater, effluent volume recycled"
+12135,"Production, seafood effluent"
+10140,p-Dichlorobenzene
+12246,"Solids, total dissolved, total tons"
+12156,"2,4,5-Trichlorophenoxypropionic acid"
+10384,"2-Methyl-4,6-dinitrophenol"
+11406,"Purgeable hydrocarbons, Meth. 601"
+10830,Purgeable aromatics Method 602
+12374,Temp. diff. between up/down stream deg. F
+11091,Chlorine produced oxidants
+10692,"1,2-Dichloropropylene"
+10086,"Amyl acetate, total"
+12440,"Toxicity, salmo acute"
+12441,"Toxicity, salmo chronic"
+12477,Human enteric virus
+10340,Dichloromethane
+11401,"Hydrazines, total"
+12269,Tributyltin
+10281,"1,2-cis-Dichloroethene"
+10918,4-Isopropyltoluene
+12154,Cyanazine
+12055,Chlorfenvinphos
+10958,"Dicamba, 5-hydroxy-, total recoverable"
+11889,Number of batches
+928,"Chlorine, free residual, total effluent"
+10785,"Isopropyl acetate, total effluent"
+11281,Methyl cellosolve
+10133,o-Dichlorobenzene
+8198,"Pentane, total effluent"
+5889,Phosphorus [reactive as P]
+11376,"Halocarbons, purgeable scan, effluent"
+10001,"PCB, total, scan effluent"
+11333,Free liquids in sludge
+11054,Triallate
+12461,"U-236, total wtr"
+12416,Total residual ooxidant-discharge time
+11123,"Dicyclohexylamine, total"
+11682,"Misc. free oil in Western GOM, OCS"
+5713,"Nitrogen, total, as NO3, [water]"
+448,"PCB-1016, bot. sed., dry weight"
+10902,Polybrominated diphenyl oxides
+10992,Malathion
+10407,Parathion
+12080,Demeton
+10408,Diazinon
+10406,Guthion
+10409,Methyl parathion
+10722,Mevinphos
+11196,TEPP
+10015,"Atrazine, dissolved"
+10704,Captan
+12463,Diuron
+10159,Hexachlorobenzene
+10017,Hexachlorobutadiene
+10737,Picloram
+10080,"2,4-Dichlorophenoxyacetic acid"
+10079,"2,4,5-T"
+10681,Sevin
+10014,Mirex
+10946,Dicofol
+10228,Lindane
+12077,Trithion
+12402,Chloroethylenebisthiocyanate
+12041,Sodium pentachloro- phenate
+10749,".gamma.-Chlordane, whole water"
+12164,Pyrethrins
+10297,Roundup
+10829,"Hydrocarbons, aromatic"
+11429,Isooctane
+10788,Propyl acetate
+11662,Chlorofluoromethane
+11661,Chlorodifluoromethane
+10950,N-Methylbenzenesulfonamide
+10394,Methyl phenol
+10122,Methylstyrene
+12153,Propanediol
+10954,Alkyl benzene sulfonated [ABS]
+10730,Chlorophenoxypropananol
+10026,1-Butanol
+12403,Methylenebisthiocyanate
+10272,"Butoxyethoxyethanol, total"
+10636,Benzisothiazole
+10743,Methyl butenol
+10307,"Petrol hydrocarbons, total recoverable"
+2049,"Hexane, sediment, dry weight"
+12100,Tetraethyl lead as alkyl lead
+12382,"Temperature rise, length of excursion"
+12386,"Temperature, length of excursion"
+11239,"Equipment outage, length of downtime"
+11240,"Equipment outage, number of occurrences"
+11300,Fish feed used
+200001221,"Biomass, fish"
+11305,"Floating solids, waste or visible foam-visual"
+12197,Sanitary waste discharged-assessmnt
+11424,Intermittent discharge-assessment
+10632,Dinonyl phthalate
+5033,Chloride
+2991,Organic Matter
+12065,Phorate
+12068,Dimethoate
+10775,"Alachlor, dissolved"
+12150,"2,2-Dichloropropane"
+12432,Toxicity characteristic leaching procedure
+2741,"Nickel, total sludge"
+6562,"Lead, total sludge"
+12241,"Solids, suspended percent removal, dry"
+12242,"Solids, suspended percent removal, wet"
+10840,"BOD, 5 day carbonaceous, % rmvl, dry"
+11053,Metam-sodium
+12052,Naled
+10269,Oxamyl
+12054,Tetrachlorvinphos [Stirofos]
+12046,Trichloronate
+10672,Dechlorane plus
+10725,Ethylene thiourea
+12079,Chlorpyrifos
+10888,Benefin
+10405,Disulfoton
+12045,Dyfonate
+10879,Trifluralin
+12142,Propanil
+11085,"Chlor, phenoxy acid gp, none found"
+12158,"2,4,5-TP[silvex] acids/salts, whole water sample"
+11274,Methomyl
+12140,Aldicarb
+10649,Simazine
+12043,Phosphated pesticides
+10625,Chloral hydrate
+10007,Di-n-butyl phthalate
+10630,Phthalate esters
+10508,Benzidine
+10607,Dimethoxybenzidine
+10972,Chlorendic acid
+10678,Didecyl dimethyl ammonium chloride
+10671,Dichlone
+10282,Vinyl chloride
+10285,Trichloroethylene
+10125,"4,4'-DDT"
+10143,"o,p'-DDT"
+10126,"4,4'-DDD"
+10127,"4,4'-DDE"
+10024,Aldrin
+11126,.alpha.-BHC
+11127,.beta.-BHC
+10747,"Chlordane, .alpha.-, whole water"
+11080,Chlordane [tech mix. and metabolites]
+10075,Metolachlor
+12083,Ronnel
+11135,"DDT/DDD/DDE, sum of p,p' & o,p' isomers"
+10039,Dieldrin
+10757,"Endosulfan, total"
+10040,Endrin
+12073,Ethion
+4234,Toxaphene
+10748,Heptachlor
+10716,Heptachlor epoxide
+10942,Chlorobenzilate
+10899,Methoxychlor
+4878,PCB-1221
+451,PCB-1232
+4879,PCB-1242
+454,PCB-1248
+11046,Propham
+12228,"Sodium, % total cations"
+12126,Process to significntly reduce pathogens
+12125,Process to further reduce pathogens
+10766,"Hydroxyquinoline, total"
+11214,"4-Dodecene, total effluent"
+11276,"Diethylene glycol dinitrate, total"
+10667,"Metrioltrinitrate, total"
+11238,Equipment inspection - visual
+3575,Rainfall
+10475,Methylene blue active substances
+10845,"BOD, 5-day, 20 deg C per cfs of streamflw"
+11191,Diffuser validation rpt % effl mix zone
+10962,Sodium salt of acifluorofen
+10819,Annual whole sludge application rate
+10812,Ann. amt sludge disposed by other method
+10813,Annual amt of sludge incinerated
+10818,"Annual sludge production, total"
+10817,Annual amount of sludge land applied
+10816,Annual amt. sludge disposed surface unit
+10815,Annual amt sludge disposed in landfill
+10814,Annual amt sludge transported interstate
+11640,Unit w/liner/leachate collection system
+12459,Unit boundary to property line distance
+11112,Compliance w/part 258 sludge requirement
+3666,"Selenium, sludge, total, dry weight [as Se]"
+11231,"Effluent back pressure, discharge pipe"
+10416,"1,2-Dibromo-3-chloropropane"
+12488,"WWT drill fluids/cuttings, TDS"
+12496,"WWT drill fluids/cuttings, oil & grease"
+12493,"WWT drill fluids/cuttings, zinc"
+11328,"Formation test fluids, free oil"
+11290,"Excess cement slurry, free oil"
+12495,WWT drill fluids/cuttings free oil
+12195,"Sanitary waste, BOD, 5-day"
+12492,"WWT drill fluids/cuttings, pH"
+12506,"Well fluids, pH"
+12489,"WWT drill fluids/cuttings, TSS"
+12196,"Sanitary waste, TSS"
+12487,"WWT drill fluids/cuttings, COD"
+12486,"WWT drill fluid/cutting, haz metal disch"
+12491,"WWT drill fluids/cuttings, chromium"
+12490,"WWT drill fluids/cuttings, chlorides"
+11329,"Formation test fluids, pH"
+12198,"Sanitary waste, fecal coliform"
+11647,Macroinvertebrate assessment
+10720,"trans-1,4-Dichloro-2-butene"
+10012,"Glycol, total"
+11139,"Facility operated during month, # days"
+11132,"Permethrin, total"
+11681,"Misc. discharges, free oil"
+11257,"1,1-Difluoroethane, total, water ug/L"
+11668,"Difluoromethane, total,water"
+11250,"Tetrafluroethane-1,1,1,2, total,water"
+11265,"1-Chloro-1,1,2,2,2-pentafluoroethane, water"
+10120,"N,N-Dimethylaniline"
+3714,"Silver, total dry weight, sludge mt"
+10035,Molinate
+10191,Pebulate
+12141,Devrinol [Napropamide]
+467,"Arsenic total, dry weight, sludge"
+2817,"Nitrogen, total Kjeldahl"
+12457,Ultraviolet light intensity
+12213,"Betz slimicide C-31, total"
+12214,"Betz slimicide C-74, total"
+12008,Ammonium picrate
+11302,"Flash point, deg C [40 CFR 403/261.21]"
+10729,Propylene glycol monobutyl ether
+10042,Isophorone
+10337,Methyl bromide [Bromomethane]
+10338,Methyl chloride [Chloromethane]
+10689,N-Nitrosodi-N-propylamine
+10121,N-Nitrosodiphenylamine
+10335,N-Nitrosodimethylamine [NDMA]
+4151,"Solids, total dissolved"
+12250,"Solids, total susp. per 1000 gallons"
+12231,"Solids, dissolved- tons"
+12527,"pH, CaCO3 stability"
+12206,Sediment sample [dry weight]
+12258,"Solids, total, percent"
+12236,"Solids, fixed, % of total solids"
+12223,"Sludge weight, wet"
+12260,"Solids, volatile % of total solids"
+12261,"Solids, volatile susp., in mixed liquor"
+12193,Salmonella
+12367,"Taxa, total number"
+4419,Urea
+11149,Density
+10809,"Nitrogen, ammonia total [as NH4]"
+10292,"Fuel, diesel, #1"
+11992,2-Methylpentane
+10841,"BOD, 5 day carbonaceous, % rmvl, wet"
+11998,Permission to discharge
+11430,Kappa number
+11909,"Organic nitrogen sludge, tot dry wt."
+12049,DMPA
+10644,Cyclonite
+12217,Sludge hydraulic loading
+11648,Nalco Macrotrol 9210
+12265,Spectrus CT 1300
+12392,Terpineol
+10068,Chlordane
+10675,"N,N-Dimethyl-1-butanamine"
+10728,N-[Methylpropylidenepropanamine]
+12013,"4-Methyl-2,6-di-tert-butylphenol"
+12001,Dimethylpropylphenol
+12018,4-t-Amyl-2-chlorophenol
+12039,"Dichloro-4-[1,1-dimethylpropylphenol]"
+12458,Ultraviolet light transmittance
+10031,"1,3-Dichloropropylene"
+10744,.alpha.-Terpineol
+12019,o-Cresol
+12146,1-Ethoxy-2-methylpropane
+11236,"Elevation, top of mine pool"
+12508,"Wetland overflow, y/n response"
+12445,"Tin, tri-organo-"
+11390,"Herbaceous vegetation, presence"
+12512,"Woody vegetation, presence"
+11301,"Fish, presence"
+12408,"Threatened & endangered species, presence"
+11253,TMOA
+12514,Rhodamine WT dye
+11313,Flow [dry weather]
+10931,3-Phenoxylbenzyl
+12017,Methallyloxyphenol
+10288,Formalin
+10363,Ammonium perfluoroctanoate
+11997,Potassium permanganate
+11382,Hatchery flow treated [GPM]
+12151,"2,2-Dimethoxypropane"
+10050,t-Butyl alcohol
+11148,Delta pH
+11130,Methylcyclopentane
+12300,Syltherm
+11674,Trimethylorthoformate
+10889,N-Ethylaniline
+10309,"Hydrogen sulfide, unionized"
+10968,"Benzothiazole, 2-[methythio]-"
+10637,"1,2-Benzisothiazole, 3-methoxy-"
+11188,"Dibenzothiophene, 1,2,3,4-Tetrahydro-8-methyl-"
+11273,Larvin
+2428,"Manure remaining, gallons"
+375,"Nitrogen, ammonia [NH3-N]"
+11195,"Phosphate, total [P2O5], water"
+11675,Chlorinated methanes
+11264,Chlorinated ethanes
+10916,4-Chlorophenyl phenyl ether
+10389,4-Nitrophenol
+11666,Dichlorodifluoromethane
+10710,"2,3,7,8-TCDD TEC"
+3321,Phenol
+5680,Naphthalene
+10693,"trans-1,3-Dichloroproprene, dry weight"
+10032,"cis-1,3-Dichloropropene"
+10955,"Benzo[b,k]fluoranthene"
+12061,Triaryl phosphate
+11056,Bolero
+10735,"Sodium polyacrylate, total"
+10142,p-Xylene
+11686,"Sodium molybdate, total"
+12006,"2,3-Dichlorophenol, total"
+12522,"Phenylphenol, 4- total"
+12282,Stream stage
+12296,"Surfactants, as CTAS, effluent"
+10157,Ethylbenzene
+12031,Aminocarb
+11042,Barban
+12155,Dalapon
+10878,"Dichloran, total"
+12089,Famphur
+12468,Fenuron
+10995,MCPB
+12025,Methiocarb
+12030,Mexacarbate
+12465,Monuron
+12471,Neburon
+11679,Polyram
+12015,Propoxur
+12469,Siduron
+11040,SWEP
+12069,Prothiofos
+10928,"Benzene, halogenated"
+12227,"Sodium, % exchangeable soil, total"
+11211,Xanthates
+11261,"1,1-Dichloro-2,2,2-trifluoroethane"
+11269,"1,1,1,2,2-Pentafluoroethane"
+11251,"1,1,1-Trichloro-2,2,2-trifluoroethane"
+11255,"1,1-Dichloro-1,2,2,2-tetrafluoroethane"
+10279,"1,2-Dichloroethene"
+11663,Dibromomethane [Methylene Bromide]
+10914,2-Chlorotoluene
+11394,"Chlorohexane, total"
+12051,Tetrachlorvinphos
+11045,"Benomyl, total"
+10697,"Bentazon, total"
+12070,Bolstar
+12084,Chlorpyrifos methyl
+10994,"2,4-DB"
+10875,DEET
+10890,"Ethalfluralin water, total"
+12467,Fluometuron
+11063,"Cations, total"
+10390,Chlorinated phenols
+10685,Isopimaric acid
+10767,Linolenic acid
+11922,"9,10-Epoxystearic acid"
+10686,Monochlorodehydroabietic acid
+10687,Dichlorodehydroabietic acid
+10019,Isoprene
+11919,"Oxidants, total residual"
+11918,"Oxidants, free available"
+11917,"Oxidants released, total residual"
+11929,Oxygen transfer efficiency
+11928,Oxygen injection diversion
+10003,Nitroglycerin
+10638,Ethylene glycol dinitrate
+10938,"Benzene, toluene, xylene in combination"
+11125,.delta.-BHC
+10949,n-Butylbenzene sulfonamide [in water]
+246,Acenaphthylene
+10074,Acenaphthene
+10054,Acrolein
+10057,Acrylonitrile
+428,Anthracene
+500,Asbestos [fibrous]
+10110,Benzo[b]fluoranthene
+10176,Benzo[k]fluoranthene
+10174,Benzo[a]pyrene
+11669,Bis[chloromethyl] ether
+10254,Bis[2-chloroethyl] ether
+12148,Bis[2-chloro-1-methylethyl] ether
+11248,Bis[2-chloroethoxy]methane
+12149,Bis[2-chloroisopropyl] ether
+10006,Butyl benzyl phthalate
+10264,"Chloroethane, total weight"
+1055,Chrysene
+10008,Diethyl phthalate
+10631,Dimethyl phthalate
+11399,"1,2-Diphenylhydrazine"
+10756,Endosulfan sulfate
+10758,.beta.-Endosulfan
+10759,.alpha.-Endosulfan
+10627,Endrin aldehyde
+7822,Fluoranthene
+10072,Fluorene
+10662,Hexachlorocyclopentadiene
+10266,Hexachloroethane
+10313,"Indeno[1,2,3-cd]pyrene"
+10884,"Isopropalin water, total"
+11381,Hatchery flow
+11099,Betz clam-trol CT-2
+11100,Betz clam-trol CT-4
+11256,"1,1-Dichloro-2,2-diethoxyethane"
+10881,2-Ethylbenzeneamine
+12472,"Tetramethylurea, total"
+11189,"Diesel range organics diesel, total, wtr"
+10891,N-Methylbenzeneamine
+12009,"2,4-Di-tert-pentylphenol, total"
+10673,"Butylamine, total, water"
+10688,"1-Formylpiperdine, total"
+12143,"Tripropyl orthoformate, total"
+10893,"U-Toluidine, total"
+11081,"Chlordane, CA Ocean Plan definition"
+11113,"Condenser cooling, water pumping rate"
+11230,Duration
+12097,Plant intake as % of stream flow
+10825,Application rate area sprayed
+11316,"Flow, maximum during 24 hr period"
+11325,"Flow, wastewater by-passing trtmnt plant"
+11315,"Flow, in conduit or thru treatment plant"
+11422,"Injection pressure, at well head"
+12118,Pressure in annulus of waste inject well
+11090,Chlorine dose
+11092,Chlorine rate
+11086,Chlorination
+10206,Chlorine dioxide
+11082,Monoboro chlorate
+7212,Chlorite
+11295,Ferricyanide
+10859,"BOD, percent removal [total]"
+10754,5-Day sum of BOD5 discharged
+10764,7-Day sum of BOD5 discharged
+10765,7-Day sum of WLA values
+12485,WLA BOD-5 day value
+10755,5-Day sum of WLA values
+10834,Avg. of 7-day sum of BOD5 values
+2448,"Mercury, total low level"
+12429,Total production - days
+10308,"Hydrogen peroxide, total, dilution ratio"
+12033,"4-Chloro-2,6-dinitrophenol"
+10666,Pentaeerythritol tetranitrate
+11275,Triethylene glycol
+10051,2-Propanone
+4800,Butanone
+10267,Trichloroethane
+6400,Acrylamide
+11061,Carcinogen additivity factor
+12295,Surface loading rate
+11330,Methyl formate
+12137,Isobutyraldehyde
+10682,Amyl alcohol
+10988,Boundary areas
+11995,% of fecal coliform samples < detectable
+12266,Spinosad [DE-105]
+10645,RDX+HMX
+10736,Methyl acrylate
+10842,"BOD, 5 day percent removal, dry"
+10843,"BOD, 5 day percent removal, wet"
+4880,PCB-1254
+457,PCB-1260
+6101,Sulfate
+12255,"Residue, total volatile"
+12204,Seawater gel mud
+10642,Kepone
+11124,Benzene hexachloride
+10107,"BOD, carbonaceous [5-day, 20 C][streamflow]"
+12048,EPN
+12075,Phosalone
+12066,Azinphos-ethyl
+12088,Coumaphos
+5201,Dibenzofuran
+11405,"Hydrocarbons, nitrated"
+2072,Hydrazine
+11398,"1,1-Dimethylhydrazine"
+12406,Thiosulfate ion[2-]
+11296,Ferrocyanide
+11041,Chlorpropham
+10177,"Camphor, whole water"
+11287,"Dichloroethene, total"
+11397,"Hexene, total water"
+10776,"N,N-Dimethyl acetamide, whole water"
+10152,"Dichlorobenzene, isomer"
+10164,Nitrobenzene
+12036,para-Chloro-meta-cresol
+7827,Phenanthrene
+7829,Pyrene
+10284,Tetrachloroethylene
+4068,Thallium in bottom deposits [dry wgt]
+10346,Trichlorofluoromethane
+10259,"1,1-Dichloroethane"
+10256,"1,1,1-Trichloroethane"
+10258,"1,1,2-Trichloroethane"
+10257,"1,1,2,2-Tetrachloroethane"
+10956,Benzo[ghi]perylene
+10109,Benzo[a]anthracene
+10417,"1,2-Dichloropropane"
+10280,"trans-1,2-Dichloroethylene"
+10130,"1,2,4-Trichlorobenzene"
+10238,"Dibenz[a,h]anthracene"
+10136,"1,3-Dichlorobenzene"
+11286,"2-Chloroethyl vinyl ether, [mixed]"
+11875,2-Chloronaphthalene
+10383,2-Chlorophenol
+10385,2-Nitrophenol
+10009,Di-n-octyl phthalate
+12010,"2,4-Dichlorophenol"
+10382,"2,4-Dimethylphenol"
+10144,"2,4-Dinitrotoluene"
+12011,"2,4-Dinitrophenol"
+12007,"2,4,6-Trichlorophenol"
+10150,"2,6-Dinitrotoluene"
+12519,"3,3'-Dichlorobenzidine"
+11043,"Carbosulfan, total"
+11377,"Halogen, total residual"
+3215,Perchlorate [ClO4]
+12427,"Fats, oils & grease [total o & g less TPH]"
+12411,Time of bromine addition
+12412,Time of ferrous sulfate addition
+12058,Diazoxon
+1274,Cryptosporidium
+10306,"Chlorinated hydrocarbons, total"
+12437,"Toxicity, final conc toxicity units"
+10978,"Biological diversity, Shannon-Weaver index"
+1012,"Chromium, sludge solid"
+4915,"Beryllium, sludge, tot. dry wt [as Be]"
+12259,"Solids, total, sludge, percent"
+11881,Net rate of additionof heat
+12371,Temp. diff. between intake and discharge
+10399,Orthene
+12297,Inorganic suspended solids
+12454,"Turbidity, time above limit"
+11060,"1,3-Diaminourea"
+12456,Ultraviolet light dosage
+12530,"pH, maximum"
+12531,"pH, minimum"
+10944,Phenylpropanolamine
+10778,Acetaminophen
+11243,Phenyltoloxamine
+10709,Chloroxazone
+10738,Chlorpheniramine
+10641,Methocarbamol
+10945,Ephedrine sulfate
+11659,Bromochloromethane
+11667,Dichlorofluoromethane
+12060,Isodecyl diphenyl phosphate
+12375,"Temp. difference, summer [deg. F]"
+12376,"Temp. difference, winter [deg. F]"
+11095,"Freon, total"
+10947,Isoxsuprine
+11278,Hydroxyzine
+12237,"Solids, large fraction, suspended"
+12239,"Solids, small fraction, suspended"
+11074,"COD, 25N K2Cr207, tot"
+11119,Current direction deg from true north
+10659,Isopropylidine dioxyphenol
+10715,"Endrin ketone, in water"
+10740,Hexahydroazepinone
+10166,Tetrachlorobenzene
+11247,Methyl ethyl sulfide
+10903,Sulfonyl-bis-benzene
+10033,"Allyl chloride, total"
+10289,"N,N-Dimethylformamide"
+10904,o-Xylene + p-Xylene
+10046,4-Methyl-2-pentanone
+10167,Trimethylbenzene
+10487,"Organics, total toxic [TTO]"
+10913,Monochlorobenzyl trifluoride
+10146,"Toluene-2,4-diisocyanate"
+11349,Tetrasodium EDTA
+10807,Aminotrol methylene phosphate
+11671,Bis[trichloromethyl] sulfone
+11277,Diethylaminoethanol
+10707,Dyphylline
+11347,EDTA
+10640,Guafensin
+11284,Hydroxyacetophenone
+10708,Mercaptobenzothiazole
+10923,Dichlorobenzyl trifluoride
+12168,N-Alkyldimethylbenzylammonium chloride
+11879,Naphthenic acid
+10746,Niacinamide
+10896,Nitrostyrene
+10733,Polymethylacrylic acid
+10831,"Aromatics, substituted"
+10876,Sulfabenzamide
+10781,Sulfacetamide
+10948,Sulfathiazole
+10706,Theophylline
+11047,Carbamates
+12518,Sodium-o-PPTH
+2040,Heptane
+11246,N-Nitrosodiethylamine
+11279,Ethylene chlorohydrin
+11404,"Halogenated hydrocarbons, total"
+10921,Monochlorotoluene
+11989,Paraben [methyl and propyl]
+12166,N-Nitrosopyrrolidine
+10677,N-Nitrosodibutylamine
+10083,Monochloroacetic acid [MCAA]
+10925,Diethylbenzene
+10912,o-Chlorobenzyl chloride
+10794,Aldrin + Dieldrin
+11999,"Chlorinated pesticides, total"
+10741,Isothiazolone
+11910,Organic pesticide chemicals [40 CFR455]
+11905,Organic active ingredients [40 CFR455]
+12523,Rotenone
+10643,HMX
+10388,4-Methylphenol
+11986,"Panthalium, total"
+11880,Neptune Blue
+12629,MCPA 2-ethylhexyl ester
+11672,"Dimethyl sulfide, total"
+11210,"Dimethyl disulfide, total [DMDS]"
+6390,Dioxane
+10078,Ethyl acetate
+10663,Ethylmethyldioxolane
+10043,Furfural
+10060,Methyl methacrylate
+11336,Tetrahydrofuran
+12152,Trichloropropane
+11271,Trichlorotrifluoroethane
+6106,"Sulfide, total"
+4881,PCB-1262
+10387,Bisphenol-A
+10684,Dehydroabietic acid
+11921,Epichlorohydrin
+11266,Dichloroethane
+11280,2-Ethoxyethanol
+11129,Cyclohexanone
+10370,Propylene oxide
+10155,Styrene
+10139,.meta.-Xylene
+10134,ortho-xylene
+12071,Ethoprop
+10783,"2,4-D, isobutyl ester in sediments"
+12289,"Sulfur dioxide, total"
+11311,"Flow, average stream per composite sample"
+12042,Trichlorophenol
+12003,Tetrachloroguaiacol [4cg] in whole water
+12393,Tetrachlorobiphenyl
+10624,Hexachlorobiphenyl
+11055,Cycloate
+10192,S-Ethyl dipropylthiocarbamate [EPTC]
+11294,Ratio of fecal coliform to fecal streptoc
+6802,"Sodium, total [as Na]"
+11285,"Ethylene, dissolved [C2H4]"
+10961,Chloramben
+10960,Dicamba
+360,"Aluminum, total"
+10987,"Boron, total"
+4448,"Vanadium, total"
+10468,Ferrous sulfate
+12292,Propargite
+12188,"Rhodium, total"
+12414,"Time, starting [hhmmusing 24-hour clock]"
+12413,"Time, ending [hhmm using 24-hour clock]"
+10489,"Trihalomethane, tot."
+12076,Terbufos [counter] total
+12093,Phytoplankton
+11665,Dichlorodibromomethane
+11128,Benzene hexachloride
+11066,Nitrocellulose
+10270,Triethanolamine
+10727,2-Naphthylamine
+12028,Diethylstilbesterol
+11241,Estradiol
+10787,Phenoxyacetic acid
+12399,Thiocarbamates
+12063,Hexamethylphosphoramide [HMPA]
+12064,N-2-mercaptoethylbenzenesulfamide
+6662,"Pesticides, general"
+11103,"Coliform, total colony forming units"
+6599,Flow rate
+11914,Overflows [days per month]
+11915,Overflows
+11916,"Overflow volume [SS0 volume, CSO volume]"
+12279,"Stream flow, estimated"
+5350,Flow
+10047,"Isopropyl alcohol [C3H8O], sed."
+10723,2-Hexanone
+11182,"Chlorinated dibenzo-furans, effluent"
+10240,"Chlorinated dibenzo-p-dioxins, effluent"
+10868,"Base neutrals & acid [Method 625], efflnt"
+11911,"Organics, tot purgeables [Method 624]"
+12035,"4-Chloro-3,5-dimethylphenol"
+10773,"2,2-Dibromo-3-nitrilopropionamide"
+6901,Methane
+11657,Methylamine
+10030,"Propene, total"
+3049,Ethylene oxide
+250,Acetaldehyde
+11242,"Ethylamine, whole water"
+10334,Dimethylamine
+5286,Ethanol
+6758,Formic acid
+10690,n-Propyl alcohol
+10719,Crotonaldehyde
+11244,Diethylamine
+10420,"Propionic acid, total"
+10085,Methyl acetate
+10028,Isobutyl alcohol
+817,Carbon disulfide
+11670,"Dimethyl sulfoxide, total"
+3541,Pyridine
+12094,"Piperdin, total"
+11993,3-Methylpentane
+10077,Vinyl acetate
+10993,Butanoic acid
+10664,"2-Methyl-1,3-dioxolane"
+11272,Oxalic acid
+10731,1-Methoxy-2-propanol
+12165,3-Methylpyridine
+10425,2-Methylpyridine
+10113,Aniline
+11122,Cyclohexylamine
+10063,N-Methyl-2-pyrrolidone
+10252,Triethylamine
+11994,Pentanoic acid
+12147,Isopropyl ether
+10965,Benzonitrile
+10115,o-Toluidine
+10943,Benzyl alcohol
+10386,3-Methylphenol
+905,Chemical Oxygen Demand [COD]
+12264,Specific gravity
+11926,"Oxygen demand, total"
+11062,Cation exchange capacity
+10149,"Trinitrotoluene [TNT], dissolved"
+12475,Velocity of discharge
+11884,"Nitrogenous oxygen demand [20-day, 20 C]"
+10853,"Carbonaceous oxygen demand, % removal"
+11885,"Nitrogenous oxygen demand, % removal"
+10838,"BOD, 20-day, percent removal"
+11384,Heat [summer] [per hour]
+11386,Heat [winter] [per hour]
+12377,"Temp. difference, summer [deg. C]"
+12378,"Temp. difference, winter [deg. C]"
+12180,Recirculation flow
+11340,Gallons distilled
+10865,Ballast water flow
+12277,Storm water flow
+10205,Chlorinated organic compounds
+11383,Heat [summer] [per day]
+11385,Heat [winter] [per day]
+11093,Chlorine usage
+12209,Settleable solids percent removal
+10071,Carbofuran
+10190,Sutan
+10705,Caffeine
+11268,Pentachloroethane
+10967,Benzothiazole
+10609,"Biphenyl, total"
+10922,Chloronitrobenzene
+10018,Chloroprene
+11877,Dimethylnaphthalene
+10932,Dinitrotoluene
+11878,Methyl naphthalene
+11270,"Tetrachloroethane, total"
+10153,Xylene [mix of m+o+p]
+11283,Acetophenone
+10919,"Bromo benzene, total"
+10263,1-Bromo-2-chloroethane
+11262,Bromodichloroethane
+137,"Butadiene, total"
+743,Butane
+6756,Cyclohexane
+10069,Dicyclopentadiene
+10253,Diethyl ether [ethoxyethane]
+10366,Organics-tot voltile [NJAC reg.7:23-17e]
+11646,"Explosive limit, lower"
+11655,"Metals, tox priority pollutants, total"
+12426,"Metals, total"
+10810,Anesthetics
+10882,"2-Nitroaniline, in sed., dry weight"
+10883,3-Nitroaniline
+11258,"Ethane, 1,2-bis[2- chloroethoxy]-, homologous sum"
+11292,"Explosives, combined TNT + RDX + tetryl"
+11379,Halomethanes
+6658,"Molybdenum, sludge, total, dry weight [as Mo]"
+572,"Barium, sludge, total, dry weight [as Ba]"
+5948,"Potassium, sludge, total, dry weight [as K]"
+2215,"Iron, sludge, total, dry weight [as Fe]"
+12238,"Solids, sludge, total, dry weight"
+11232,Effluent dilution ratio
+10082,Butyl acetate
+11321,"Flow, recycled"
+12117,Pressure difference
+11906,"Amines, organic total"
+10702,"4-Nitro-N-methylphthalimide, total"
+10189,"Sodium dimethyldithiocarbamate, total"
+10803,Alkyl dimethyl ethyl ammonium bromide
+11691,"N-Nitroso compounds, volatile"
+12479,"Volatile compounds, [GC/MS]"
+10674,Tributhylamine
+12105,Octylphenoxy polyethoxyethanol
+10610,"Isopropylbiphenyl, total"
+4073,Thermal discharge
+11088,Chlorination frequency
+11087,Chlorination duration
+10927,Methylethylbenzene
+11393,3-Methylhexane
+10885,"4-Chloroaniline, in sediment"
+11876,2-Methylnaphthalene
+10118,4-Nitroaniline
+12056,Phosphamidon
+11197,Reglone
+11319,"Flow, process wastewater"
+12115,"Precipitation, monthly accumulation"
+10655,"2,4-Toluenediamine"
+10668,"2,5-Toluenediamine"
+11209,"Gasoline, regular"
+11310,"Flow, augmented water"
+11326,"Flow, well water"
+11987,Paper production
+11298,Fine bleached kraft
+2806,"Nitrogen, nitrite total [as NO2]"
+11425,Iodide [as I]
+2208,"Iodine, residual"
+10657,Resorcinol
+10670,Hydroquinone
+10694,"2,3-Dichloropropylene"
+12145,"1,3-Dichloropropane"
+10724,5-Methyl-2-hexanone
+11893,"n-Octane, total"
+11396,Hexanoic acid
+10786,Isobutyl acetate
+10701,Indene
+10132,"1,2,4-Trimethylbenzene"
+10123,Isopropylbenzene
+10936,n-Propylbenzene
+10135,"1,3,5-Trimethylbenzene"
+12024,"3,4-Dimethylphenol"
+10964,"Benzoic acids, total"
+10990,"1,4-Dichlorobutane"
+10880,2-Chloroaniline
+12026,3-Chlorophenol
+12032,4-Chlorophenol
+12169,Quinoline
+10676,"Dibutylamine, whole water"
+10907,"1,2,4,5-Tetramethylbenzene"
+10920,n-Butylbenzene
+10895,Sec-butylbenzene
+10894,tert-Butylbenzene
+11282,2-Phenoxyethanol
+11874,1-Methylnaphthalene
+12034,2-Methyl-4-chlorophenol
+11144,n-Decane
+12144,"1,2,3-Trichloropropane"
+10772,Chloral
+10665,Phthalic anhydride
+10952,Benzenesulphonic acid
+10877,"2,3-Dichloroaniline"
+12012,"2,5-Dichlorophenol"
+12014,"2,6-Dichlorophenol"
+10929,Hexamethylbenzene
+10660,Safrole
+11249,"1,1,1,2-Tetrachloroethane"
+10629,Phthalic acid
+10771,Carbazole
+10892,Diphenylamine
+12521,p-Aminobiphenyl
+11213,n-Dodecane
+10905,"1,2,3-Trichlorobenzene"
+10236,Azobenzene
+11254,Freon 113
+10261,Ethylene dibromide
+10626,Citric acid
+10669,Dimethyl terephthalate
+10940,Trichlorotoluene
+12394,n-Tetradecane
+10906,"1,2,4,5-Tetrachlorobenzene"
+11392,Hexadecane
+12004,"2,3,4,6-Tetrachlorophenol"
+11389,n-Heptadecane
+10165,Pentachlorobenzene
+11891,n-Octadecane
+3356,Tri-n-butyl phosphate
+10768,Linoleic acid
+11233,n-Eicosane
+10769,Oleic acid
+10683,Abietic acid
+11212,Docosane
+10779,Butachlor
+12062,Triphenyl phosphate
+5617,"Methanol, total"
+11131,Octachlorocyclopentene
+11391,n-Hexacosane
+10611,"DCBP, total"
+11352,Guanidine nitrate
+12466,"N,N'-Diethylcarbanilide"
+11353,Nitroguanidine
+12299,"Suspended solids, total discharge"
+12298,"Suspended solids, total annual"
+12114,Precipitation volume
+10937,Tetramethylbenzene
+12410,Time each pumping rate utilized
+12167,Quarternary ammonium compounds
+12023,"3,4-Dichlorophenol"
+10695,Flusilazole
+12132,"Produced water, free oil"
+12020,Trichlorosyringol
+10633,Tetrachlorocatechol
+10933,sec-Butyldiphenylmethane
+10897,"Isopropyl-1,2-diphenylethane"
+10898,"sec-Butyl-1,2-diphenylethane"
+10900,"sec-Butyl-1,1-diphenylethane"
+11070,Certified operator name
+11071,Certified operator number
+11069,Certified operator class
+11068,Certified operator certification exp.
+11245,Diethylhydroxylamine
+10847,"BOD, carbonaceous [20 day, 20 C]"
+10848,"BOD, carbonaceous [40 day, 20 C]"
+10852,"BOD, carb-5 day, 20 deg C, percent removal"
+11145,"Dechlorination reagent, gen"
+11193,Dilution factor
+3917,"Sulfur, total"
+11108,"Color, concentration at wavelength"
+11077,Chem. oxygen demand [COD] % removal
+10849,"BOD, carbonaceous [5 day, 5 C]"
+10850,"BOD, carbonaceous [25-day, 20 C]"
+10851,"BOD, carbonaceous [28 day, 20 C]"
+10998,CBOD5+NH3-N
+10854,"Carbonaceous BOD, 5 day, 20 deg C filtrd"
+11228,Ferrochrome lignosulfonated frwtr mud
+11644,Lightly treated lignosulfonated mud
+12222,Sludge waste from secondary clarifiers
+12267,Spray irrigation
+10997,Bypass valve
+12181,"Recirculation, percent of plant flow"
+12262,"Solids, volatile suspended, % removal"
+10846,"BOD, 5-day, percent removal"
+12240,"Solids, suspended percent removal"
+12244,"Residue, volatile nonfilterable"
+12218,"Sludge return rate, % of plant flow"
+11064,Caustic in drilling fluids
+12387,"Temperature, summer [deg. C]"
+12390,"Temperature, winter [deg. C]"
+12388,"Temperature, summer [deg. F]"
+12391,"Temperature, winter [deg. F]"
+12381,Temperature rate of change deg. F/hour
+11303,Flashpoint temp of oil/solv ASTM 93-77
+10798,"Algicides, general"
+10886,p-Dimethylaminoazobenzene
+10777,Phenacetin
+11676,Ethyl methanesulfonate
+11677,Methyl methanesulfonate
+11263,"Bromoethane, dry weight"
+10041,2-Butanone peroxide
+11400,Methyl hydrazine
+11882,Nickel carbonyl
+11690,N-Nitrosomorpholine
+12095,1-Nitrosopiperidine
+12078,"Phosphorothioic acid, O,O,O-triethyl ester"
+10909,"1,3,5-Trinitrobenzene"
+11322,"Flow, restrictive"
+12108,Population served
+11420,Inert plastic spheres in drill fluids
+11890,Nutshells in drilling fluids
+12112,Power plant load in megawatts
+12415,Torq trim it in drilling fluids
+11218,"Drill cutting, [oil rigs]"
+11114,Condenser cooling water temp. increase
+12385,Calculated limit
+10820,Applicable temperature limitation
+11320,"Flow, pump out"
+10963,"Chlorobenzoic acid, in water"
+12038,"Dichlorophenol, in water, ug/L"
+10924,Dichlorotoluene
+11267,Dichlorotrifluoroethane
+10951,Diethylmethylbenzenesulfonamide
+11898,Odor [Threshold Number]
+11896,Odor [threshold no. at 60 deg. C]
+11895,Odor [threshold no. at 40 deg cent]
+11920,Redox [oxidation reduction potential]
+11318,"Flow, minimum flow range"
+11317,"Flow, maximum flow range"
+1130,Conductivity
+12263,Specific conductance
+11229,Dry days preceding precipitation event
+12176,Rainfall duration
+12379,Temperature of sample upon arrival at lab
+10857,"BOD, 5-day, 20 deg. C per production"
+12252,"Solids, total susp per production"
+11408,Hydrogen cyanide
+10348,Methyl mercaptan
+11111,Combined metals sum
+11073,Chem. oxygen demand per production
+2041,"Herbicides, total"
+12172,"Alpha emitting radium isotopes, dissolved"
+12253,"Solids, total susp. per cfs of streamflw"
+12157,Isooctyl silvex
+10782,"Isooctyl 2,4,5-T"
+12256,"Solids, total volatile, percent removal"
+12251,"Solids, total susp. per batch"
+11314,"Flow, gallons/batch"
+12221,Sludge volume index [SVI]
+12233,"Solids, dry, discharge to sol. handling sys."
+12136,"Production, total, megawatts"
+12234,"Solids, dry, incin.as%ofdrysol.fromtrmtplt"
+12235,"Solids, dry, removed from sol. handling sys."
+12207,Septage discharged to treatment fac.
+11192,"Digester solids content, percent"
+12225,"Sludge, rate of wasting"
+11927,"Oxygen demand, ult., percent removal"
+11923,"Oxygen demand, dissolved"
+10427,Nicotine sulfate
+12494,Waste heat rejection rate
+12096,Plant capacity fact. percent of capacity
+10860,"Oxygen demand, ultimate"
+11094,"Chlorine, total residual, duration of violation"
+11102,Coagulants added
+11990,"Particulates, floating"
+11991,"Particulates, floating, dry weight"
+12000,"Chlorinated pesticides, total & PCB's"
+3565,Radioactivity
+10980,Bis ether
+11409,Hydrogen ion
+10861,"Oxygen demand, ult. carbonaceous [UCOD]"
+12113,"Precipitation, total defined period/in"
+12101,Plume surface area
+3051,"Oxygen, dissolved [DO]"
+11205,"Oxygen, dissolved percent saturation"
+10856,"BOD, nitrogen inhib 5-day [20 deg. C]"
+10862,"BOD, [ult. 1st stage]"
+10863,"BOD, [ult. 2nd stage]"
+10837,"BOD, 20-day [20 deg. C]"
+10836,"BOD, 11-day [20 deg. C]"
+11075,"Oxygen demand, chem. [low level] [COD]"
+11076,"Oxygen demand, chem. [COD], dissolved"
+10839,"BOD, 35-day [20 deg. C]"
+11089,"Chlorine demand, 1 hr"
+3054,Ozone - residual
+11925,"Oxygen demand, sum product"
+11206,Dissolved oxygen injected
+11930,"Oxygen, dissolved, % of time violated"
+10510,pH
+12529,"pH, lab"
+11887,Non-ionic dispersant [Nalsperse 7348]
+814,Carbon dioxide [as CO2]
+10799,"Alkalinity, total [as CaCO3]"
+10802,"Alkalinity, phenolphthaline method"
+10801,"Alkalinity, carbonate [as CaCO3]"
+10791,"Acidity, total [as CaCO3]"
+10790,Acidity-mineral methyl orange [as CaCO3]
+5474,Hydrochloric acid
+11059,Bicarbonate ion- [as HCO3]
+12478,Viscosity
+12192,Salinity
+6699,"Magnesium, in bottom deposits"
+12226,Sodium adsorption ratio
+301,Acidity
+11190,Differential pressure annular well head
+10832,Sodium arsenite
+11083,Chlorides + Sulfates
+11653,"Mercaptans, total"
+12186,"Resin acids, total"
+12520,Dimethylbenzidine
+12524,pH change [range]
+10797,"Algal, biomass percent"
+12268,"Spray irrigation, application rate"
+12219,Sludge settleability 30 minute
+11308,"Flow volume daily, into a well"
+12220,Sludge volume daily into a well
+12119,"Pressure, bottom-at well bottom"
+10996,Dichlorobutene [isomers]
+11348,EDTA ammoniated
+11331,Free acid
+10808,Ammonia & ammonium- total
+11678,Chlorodimeform
+12380,Temperature rate of change deg. C/hr
+12453,"Turbidity, % increas over intake"
+10844,"BOD, 5 lb/cu ft process"
+12430,Total susp. solids- lb/cu ft process
+11684,Mixed liquor
+11680,Microscopic analysis
+11883,"Nitrobodies, total"
+12248,"Solids, total non- volatile, non-fixed"
+11638,Lagoon observation visual
+11037,"Calcium hypochlorite, weight/application grams"
+11036,"Calcium hypochlorite, number of applications"
+12027,4-Nitro-m-cresol
+3572,"Radon, total in water"
+4008,"Tantalum, total"
+12194,"Samarium, total [as Sm in water]"
+12191,"Ruthenium, total"
+3494,"Proprane, total"
+11207,Dissolved radioactive gasses
+12229,Solids accumulation rate tot dry weight
+12290,"Sodium sulfate, total"
+11332,"Free acid, total"
+12503,Water treatment additives
+10464,Aluminum sulfate
+11380,"Hardness, tot calc. [Ca, Mg, Fe] as CaC03"
+10067,Paraquat
+10858,"BOD, % over influent"
+10939,Trichlorobenzene
+10661,Dichlorobutadiene
+11652,MB 121
+12106,Polyacrylamide chloride
+12500,Water level relative to mean sea level
+11234,Elevation of original ground
+11912,"Osmotic pressure, total, unf whl wtr"
+12480,Volatile halogenated hydrocarbons
+11407,Volatile hydrocarbons
+11115,"Conductivity, net"
+11637,Lagoon freeboard
+10721,Ciodrin
+12525,pH exchange [su]
+11137,Daily excursion time [min]
+11688,Month excursion time [min]
+11138,Day - max excursion time [min]
+12526,"pH range excursions, > 60 minutes"
+12532,"pH range excursions, monthly total accum"
+12528,"pH, in soil"
+11224,"Drilling fluids, free oil"
+11223,"Drilling fluids, end of well toxicity"
+11222,"Drilling fluids, discharge rate"
+11225,"Drilling fluids, oil content"
+11227,"Drilling fluids, volume"
+11217,"Drill cuttings, free oil"
+11219,"Drilling cuttings, volume"
+11146,"Deck drainage, free oil"
+11147,"Deck drainage, volume"
+12131,"Produced water, flow"
+12127,"Produced sand, free oil"
+12128,"Produced sand, weight"
+12505,"Well fluids, free oil"
+12507,"Well fluids, volume"
+12200,"Sanitary waste, residual chlorine"
+12199,"Sanitary waste, flow"
+12201,"Sanitary waste, solids"
+11215,"Domestic waste, foam and floating solids"
+11153,"Desalinization unit, free oil"
+10864,"Backwash cycles, total number of"
+10628,Metribuzin
+12481,"Volatile halogenated organics [VHO], tot"
+10915,"Benzene, 1-chloro-4-[trifluoromethyl]-"
+10711,TCDD equivalents
+10717,Endrin + endrin aldehyde [sum]
+11208,Distance from shore
+12474,Vegetative cover
+11194,Dioxin laboratory - alpha code
+11902,Oil - separator obsv - assessment
+11289,Evaporator/bed obsv - assessment
+10827,Area inspection visual
+11216,Drain field insp assessment
+12216,Sludge buildup visual
+12107,Pond observation
+11913,"Outfall observation,visual, y/n response"
+11203,Discharge event observation [Visual Monitoring]
+12102,Pollutant table from 503.13
+11643,Level of pathogen requirements achieved
+11154,Description of pathogen option used
+12473,Vector attraction reduction alternative used
+12409,Tidal stage
+10811,"Animals, total estimated no. of"
+10796,Algal growth potential
+12499,Water level at sample collection time
+12182,Report due [yrmoda]
+11312,"Flow, direction"
+12476,Velocity of intake
+10260,"1,1-Dichloro-1-fluoroethane"
+11260,"1-Chloro-1,1-difluoroethane"
+11252,"1,1,1-Trifluoroethane"
+10991,"1,1,1,3,3-Pentafluorobutane"
+11117,Corrugated media - markt pulp air-dried
+12271,Stickwater discharge
+11142,De-inked washed fiber
+11141,De-inked floatation fiber
+12163,Purchased paper
+11299,Fine paper machine - dried
+12179,Raw materials processed
+12161,Pulp Production
+10780,2-Acetyl aminoflourcene
+724,Bromide [as Br]
+725,"Bromine, reported as the element"
+10989,Bromine chloride
+1942,"Gold, total [as Au]"
+12178,"Rare earth metals, total"
+11151,Depth to water level ft below landsurface
+11150,Depth of pond or reservoir in feet
+11155,Detention time
+12162,Pump hours
+11344,"Gases, total dissolved"
+12205,Seawater in drilling fluids
+4647,Freshwater in drilling fluids
+11642,Length of longest pH excursion
+11996,% of time exceeding pH limits
+11235,Elevation of top of well casing
+10634,"3,4,5-Trichlorocatechol"
+12005,"4,5,6-Trichloroguaiacol"
+10622,"3,3',4,4'-TCB, total sludge"
+10623,"3,4,4',5-TCB, total sludge"
+10621,"3,3',4,4',5-PECB, total sludge"
+10618,"2,3,3',4,4'-PECB, total sludge"
+10614,"2,3',4,4',5-PECB, total sludge"
+10612,"2,3',4,4',5'-PECB, total sludge"
+10619,"2,3,4,4',5-PECB, total sludge"
+10620,"3,3',4,4',5,5'-HXCB, total sludge"
+10617,"2,3,3',4,4',5-HXCB, total sludge"
+10615,"2,3,3',4,4',5'-HXCB, total sludge"
+10613,"2,3',4,4',5,5'-HXCB, total sludge"
+10616,"2,3,3',4,4',5,5'-HPCB, total sludge"
+10712,"2,3,7,8-TCDD TTE, total sludge"
+11057,S-Propyldipropylthiocarbamate [Vernolate]
+12404,Sulfotepp
+10983,Bleached kraft
+11078,Chemi-mechanical pulp
+12288,Sulfite pulp
+12029,"4,4'-Butyldenebis[6-t-butyl-m-cresol]"
+10761,"2,2-Dimethyl-2,3-dihydro-7-benzofuranol"
+10908,"Xylene, meta & para in combination"
+10855,"BOD, mass, times flow prop. multiplier"
+12247,"Solids, total diss., percent by weight"
+10732,Acrylic acid
+10917,p-Ethyltoluene
+11351,Dodecylguanidine salts
+12044,HEDP
+10699,Tolytriazole
+12138,Aldicarb sulfoxide
+12139,Aldicarb sulfone
+11687,Monitoring well level from the surface
+10760,"THC, dry & O2"
+11172,"TCDD, total sludge"
+11171,"PECDD, total sludge"
+11170,"HXCDD, total sludge"
+11169,"HPCDD, total sludge"
+11187,"TCDF, total sludge"
+11186,"PECDF, total sludge"
+11184,"HXCDF, total sludge"
+11183,"HPCDF, total sludge"
+8538,"Calcium, dissolved [as Ca]"
+6151,"Tin, total recoverable"
+4088,"Titanium, total recoverable"
+12515,"Yttrium, total recoverable"
+11427,"Iron and manganese, total"
+12462,Uranyl-ion
+10982,"Bismuth, total [as Bi]"
+12571,Bifenthrin
+12572,Chlorethoxyfos
+12573,Cyfluthrin
+12574,Tebupirimfos
+12575,Profenofos
+12576,Tefluthrin
+12577,Temephos
+12582,"Permanganate, Total"
+12578,Tert-Amyl Methyl Ether
+12579,"Chlordane - Nonachlor, Cis"
+12580,"Chlordane - Nonachlor, Trans"
+12581,p-Chlorotoluene
+10231,Deltamethrin
+10179,Butanal
+10336,Malachite Green
+12583,"Chlordene, Gamma"
+12584,Chloramine-T
+12585,PVP-Iodine
+11107,Apparent Color [Admi Units]
+12586,"Nitrogen, Total as NO3 + NH3"
+12587,Sodium Hypochlorite Bleach
+12588,Ethyl methacrylate
+12589,"Chlordene, Alpha"
+12590,Oxychlordane
+12591,Methylmercury
+10058,Methacrylonitrile
+10354,Nitrite Plus Nitrate Total
+12595,Offensive Conditions
+12596,Bromate
+12370,"Tellurium, total"
+12284,"Strontium, dissolved"
+11116,Copper as suspended black oxide
+4871,"Antimony, dissolved [as Sb]"
+10806,"Aluminum, ion"
+11072,"Cesium, total [as Cs]"
+11346,"Germanium, total [as Ge]"
+2374,"Lithium, dissolved [as Li]"
+12189,"Rubidium, total [as Rb]"
+2760,"Columbium, total"
+12211,"Silicon, total"
+10491,"Tungsten, total"
+12123,Total acid priority pollutants
+12124,Total base/neutral priority pollutants
+12482,Total volatile priority pollutants
+12420,Total agg concentration #4
+12417,Total agg concentration #1
+12418,Total agg concentration #2
+12419,Total agg concentration #3
+12421,Total agg concentration #5
+12422,Total agg concentration #6
+12423,Total agg concentration #7
+12424,Total agg concentration #8
+10821,Application daily spray irrigation
+10822,Application monthly spray irrigation
+10823,Application period spray irrigation
+12616,Folpet Water Total
+12425,"Hardness, Ca Mg Calculated [mg/L as CaCO3]"
+12617,Diisopropyl methylphosphonate
+12618,N-Nitroso-N-Methylethylamine
+12619,Furmecyclox
+12620,"1,1-Dichloropropene"
+12621,S-Trichlorobenzene [Sym-Trichlorobenzene]
+10826,Application weekly spray irrigation
+10977,Biocides
+11104,Color [admi units]
+11651,"Magnesium, pct exchange"
+11039,"Calcium, pct exchange"
+12111,"Potassium, pct exchange"
+11656,Sodium hexameta- phosphate
+10874,"Bayer 73, in water"
+1090,"Cobalt, dissolved [as Co]"
+11428,"Iron, ferrous"
+99999,"Solids, Total Suspended, Net Value"
+12208,"Solids, Settleable, Net"
+12597,"Tetryl [2,4,6-Trinitrophenylmethylnitramine]"
+12599,Heptachlor + Heptachlor Epoxide
+12598,Isoeugenol
+11423,Stream width
+12389,"Temperature, water deg. fahrenheit"
+12372,Temp. diff. between samp. & upstrm deg. C
+12373,Temp. diff. between samp. & upstrm deg. F
+12383,"Temperature, air [degrees Centigrade]"
+12384,"Temperature, air [degrees Fahrenheit]"
+11101,Cloud cover [percent]
+12511,Wind velocity
+12510,Wind direction [deg from true N]
+12283,Stream velocity
+11307,"Flow rate, instantaneous"
+12281,Streamflow
+12280,"Stream flow, instantaneous"
+11152,"Depth, max of sample"
+12455,"Turbidity, transmissometer, %"
+12451,"Turbidity, hellige [silicon dioxide]"
+12502,"Transparency, secchi disc"
+11105,Color [PT-CO units]
+11109,"Color, spectrophoto, water smpl at 7.6 pH"
+11110,"Color, spectrophoto-metric filter"
+12631,"Selenate, Total Recoverable"
+12630,"Selenite, Total Recoverable"
+3932,Sulfur Trioxide
+10365,Particulate Organic Carbon
+12623,Perfluorooctanoic Acid
+12625,Perfluorooctanesulfonamide
+12626,Isodrin
+12627,Strobane
+12628,Perthane
+12632,"Protactinium 234, Dry Weight"
+12633,Water Elevation
+12605,"Cesium-137 [CS-137], Total"
+10202,Hexachlorophene
+12606,"Potassium-40 [K-40], Total"
+10985,Fluoroborates
+11327,Fluorine
+3708,"Silica, dissolved [as SiO2]"
+11985,Attapulgite in drilling fluids
+12291,Barite in drilling fluids
+10871,Bentonite in drilling fluids
+12109,Potassium chloride in drilling fluids
+12365,Lignite in drilling fluids
+11645,Lignosulfate in drilling fluids
+11038,Lime in drilling fluids
+12603,Trichloronitromethane
+12604,Calcium Chloride
+12608,Bismuth 214
+12607,Lead 212
+12610,Lead 214
+12612,Thallium 208
+12609,Thorium 234
+12611,Actinium 228
+12613,Niclosamide
+10197,Sodium bicarbonate in drilling fluids
+3636,Sand in drilling fluids
+11098,"Asbestos, Chrysotile"
+10097,"Asbestos, total amphibole"
+11220,Drilled solids in drilling fluids
+10454,"Solids, total"
+12257,"Solids, total fixed"
+12184,"Residue, tot fltrble [dried at 105 C]"
+12232,"Solids, volatile dissolved"
+12230,"Solids, fixed dissolved"
+12243,"Solids, fixed suspended"
+12185,"Residue, total non-settleable"
+11403,"Hydrocarbons, in H2O, IR, CC14 extractible chromatograph"
+10867,"Baroid nos. 3, 7"
+10866,"Baroid nos. 2,4,5,6 imco no. 1,2,3,6"
+11415,"Imco nos. 4,5"
+11414,"Imco nos. 1,2,3,6"
+10979,"Biomass, plankton"
+11051,"Dithiocarbamate, reported as dithiocarbonate"
+12550,"2,4-DDD [O,P-DDD]"
+12551,"2,4-DDE [O,P-DDE]"
+12552,Propicanazole
+12553,Chiral [Stereoisomer of MP062]
+12554,MP062 [Steward]
+12555,Esfenvalerate [Asana]
+12556,Pirimicarb
+12557,Pymetrozine
+12558,Pyrifenox
+12559,Trichorofon
+12562,"Acetate, Total"
+12563,Propionitrile
+12564,"2,6-Dimethylphenol"
+12565,"2,5-Dimethyphenol"
+12566,"2,3-Dimethylphenol"
+12567,Propanal
+12568,Pentanal
+12569,m-Toluadehyde
+12570,Hexanal
+200000121,Baitfish
+11988,Paper-grade sulfite pulp & paper
+11886,Non-integrated fine paper
+11350,Nitrilotriacetic acid
+6372,"Zirconium, total"
+11418,Indium
+11654,Metals toxicity ratio
+12099,"Platinum, total [as Pt]"
+11639,"Lanthanum, total"
+11984,"Palladium, total [as Pd]"
+12187,"Rhenium, total"
+11375,"Hafnium, total"
+12210,Settling index as pertaining to wells
+12116,Pressure as pertaining to wells
+200000306,Imazapyr
+10319,Kerosene
+200000421,Evaporation Total
+200000143,"[1,1,3,3-Tetramethylbutyl]phenol"
+200000142,3-methylphenol and 4-methylphenol Combination
+4324,"1,2,3-Trimethyl Benzene"
+11342,Gas bubble severity
+12215,Sludge build-up in water
+11897,"Odor, atmospheric [severity]"
+12366,Taste [severity]
+12190,Runoff-spray irrigation field to stream
+11143,"Fish, dead [severity]"
+11338,Nitrofurans
+255,Acetic acid
+10986,Boric acid
+10792,"Acids, total volatile [as acetic acid]"
+11120,Cyanate [as OCN]
+10204,Sodium chlorate
+10209,Sodium dichromate
+2838,Sodium nitrite
+12400,Thiocyanate [as SCN]
+12287,Sulfite [as SO3]
+10395,Nonylphenol
+10481,Sulfolane
+10087,Potassium Acetate
+1444,Diethylene Glycol
+200000141,tert-Butylphenol
+12634,Azithromycin
+12635,Ciprofloxacin
+12636,Ibuprofen
+12637,Ethinyl Estradiol
+6215,Triclosan
+12640,Estrone
+12641,Amoxicillin
+12642,Ampicillin
+12643,Diethylene Glycol Monoethyl Ether
+12644,Salicylic Acid
+7415,"Color, spectrophoto, water smpl at 7.6 pH"
+200000282,Rate of Discharge
+10375,Glutaraldehyde
+1363,"Detergents, Total"
+200000304,Penoxsulam
+460,Arochlor 1268
+200000303,Fluridone
+200000305,Triclopyr
+200000307,Americium-241
+2857,"Fuel oil, no. 6"
+200000345,"Fuel oil, no. 5"
+200000221,n-Propyl Bromide
+200000302,Carfentrazone
+200000308,Plutonium-239
+200000361,Plutonium-238
+2856,"Fuel oil, no. 2"
+8,"Fuel oil, no. 4"
+6,"Diesel oil, no. 2"
+200000461,Dibromoacetic acid [DBAA]
+200000181,Haloacetic acids [HAA5]
+10089,Trichloroacetic acid [TCAA]
+200000462,Dichloroacetic acid [DCAA]
+200000463,Monobromoacetic acid [MBAA]
+200000541,Transparency
+8719,Seafood Processing Waste
+200000501,"1,2,3-Benzotriazole"
+200000503,GB Agent
+10398,VX Agent
+10011,Diethylenetriamine [DETA]
+200000502,Dipropylene Glycol
+200000561,Calcium Dimethyldithiocarbamate
+12560,Cycles Of Concentration
+200000721,5-Chloro-2-methyl-4-isothiazolin-3-one
+200000722,2-methyl-4-isothiazolin-3-one
+10466,Calcium sulfate
+200000581,Sodium dodecylbenzene sulfonate
+200000621,Glyoxal
+200000703,"2-Amino-4,6-dinitrotoluene"
+7435,Total Petroleum Hydrocarbons - Waste Oil
+200000704,2-Nitrotoluene
+200000701,"1,3-Dinitrobenzene"
+200000702,"4-Amino-2,6-dinitrotoluene"
+200000705,3-Nitrotoluene
+10145,4-Nitrotoluene
+200000723,Phosphonocarboxylic Acid Salt
+200000724,Phosno-Butanetricarboxylic Acid Salt
+200000586,1-Chloro-2-nitrobenzene
+200000583,3-Chloroaniline
+200000584,Diphenamid
+200000585,m-Toluidine
+200000681,Polyacrylamide
+200000641,Guaiacol [2-methoxyphenol]
+200000823,"Flash point, deg F [40 CFR 403/261.21]"
+6613,"Sediment, suspended"
+200000903,Total Petroleum Hydrocarbons - Diesel and Waste Oil
+200000750,Perfluorobutane Sulfonate
+200000751,Perfluorohexane Sulfonate
+200000752,Perfluoroheptane Sulfonate
+200000753,Perfluorodecane Sulfonate
+200000761,2-[N-ethylperfluorooctanesulfonamido] acetic acid
+200000762,2-[N-methylperfluorooctanesulfonamido] acetic acid
+1916,Giardia
+200000902,Cypermethrin
+200000781,Dimethyldithiocarbamate
+200000783,"Surfactants, nonionic"
+200000801,Ethyl acrylate
+200000861,Chlorhexidine diacetate
+200000862,Coconut Diethanolamide
+200000754,8:2 Fluorotelomer Alcohol
+200000755,10:2 Fluorotelomer Alcohol
+200000756,8:2 Fluorotelomer Acrylate
+200000757,10:2 Fluorotelomer Acrylate
+200000759,N-methylperfluorooctane Sulfonamidoethanol
+200000741,Perfluoropentanoic acid
+200000742,Perfluorohexanoic acid
+200000743,Perfluoroheptanoic acid
+200000744,Perfluorononanoic acid
+200000746,Perfluorodecanoic acid
+200000745,Perfluoroundecanoic acid
+200000747,Perfluorododecanoic acid
+200000748,Perfluorotridecanoic acid
+200000749,Perfluorotetradecanoic acid
+10275,Ethanolamine
+200000782,"Surfactants, anionic "
+200000901,.lambda.-Cyhalothrin
+5357,Fly ash
+447,PCB-Aroclor [mixture unspecified]
+6432,"Sludge weight, dry"
+200000882,C19-C36 Aliphatics
+200001041,Florfenicol
+10273,2-Butoxyethanol
+200001082,"Dibenz[a,j]acridine"
+3041,Overflows
+200001181,C3 Dimer Acid/Salt
+200000961,Thorium-230 + Thorium-232
+200001001,Peracetic Acid
+200000881,C9-C10 Aromatics
+200001023,Dimethyl Benzyl Ammonium Chloride
+200001022,Ethoxylated alkyl quaternary ammonium compound [generic]
+200001062,Potassium Amyl Xanthate [PAX]
+200001061,Methyl Isobutyl Carbinol
+200001081,3-Methylcholanthrene
+200000921,N-ethylperfluorooctane Sulfonamidoethanol
+200000941,Imidacloprid [Neonicotinoid]
+200000981,Isopropylamine
+3545,Nalco H150M
+200001083,Benzo[rst]pentaphene
+200001084,Perylene
+10175,Benzo[j]fluoranthene
+200001101,"Oil based fluids, non-aqueous based drilling fluids and cuttings"
+200001121,Corrosion Inhibitor
+200001141,1-Chloropropane
+200001161,Penicillin G Potassium
+200001241,Fish feed used efficiency
+200001323,Screen Efficiency
+200001326,Fish/Shellfish Impinged
+200001261,Critical Dilution
+200001341,Poly[hexamethylenebiguanide] hydrochloride
+200001361,"Dibenz[a,h]acridine"
+11343,"Digester gas, volume"
+12183,Reservoir storage
+200001363,"Dibenzo[a,h]pyrene"
+200001383,Nonylphenol diethoxylate
+200001201,"2-Ethyl-9,10-Anthraquinone"
+200001202,Sodium Tolytriazole
+200001324,Screen Area Blockage
+200001325,Intake Velocity Excusions
+200001362,"Dibenzo[a,e]pyrene"
+200001381,Dilantin [Phenytoin]
+200001382,Iopromide
+200001401,Meprobamate
+200001408,Trimethoprim
+200001402,Iohexol
+200001403,Nonylphenol monoethoxylate
+200001404,Octylphenol diethoxylate
+200001405,Octylphenol monoethoxylate
+200001406,Sulfamethoxazole
+200001407,Tris[2-chloroethyl] phosphate [TCEP]
+200001441,"2,4-Dinitroanisole"
+10507,o-Phenylphenol
+200001521,Biotic Index
+200001561,Galaxolide
+200001562,"TDCPP [Tris[1,3-dichloro-2-propyl] phosphate]"
+10049,TCPP [Tris [1-chloro-2-propyl] phosphate]
+3569,"Radium, total"
+200001641,"3,4-Dinitrotoluene"
+200000582,"3,3'-Dimethoxybenzidine"
+10117,"4,4'-Methylenebis[2-chloroaniline]"
+10053,2-Propen-1-ol
+10171,Oryzalin
+10795,"Algae, suspended"
+4078,Thiourea
+10104,Coal ash
+2218,Iron oxide
+10332,Magnesium oxide
+200001682,Manganese oxide
+200001683,Phosphorus Pentoxide
+630,Benzopyrene
+1765,Fecal Matter
+200001721,"Heterotrophic bacteria, total"
+200001762,Run time
+200001421,Dixylylethane [DEX]
+200001481,"Tetrahydroxymethylphosphonium chloride, THPC"
+200001501,"1,2,3,4-Tetrachlorobenzene"
+200001541,Fipronil
+200001542,Diclofenac
+200001601,Percent Base Saturation
+2111,Hydroxide
+8418,Creosote [Coal Tar]
+10169,Toluenediamine
+6583,Gasoline
+200001661,Soil Erodibility Potential
+6798,Toxics
+10381,Picric acid
+365,Aluminum oxide
+200001681,Barium oxide
+200001685,Sodium oxide
+200001701,Clostridium perfringens
+200001741,Tetramethylammonium chloride
+200001781,Total Amount Land Applied
+200001801,Nitrotriazolone [NTO]
+200001821,"Carbon, dissolved inorganic [as C]"
+5498,Total K001 Constituents
+200001841,Mixing Zone
+200001861,Dimethyldiallylammonium chloride
+200001881,Poly[diallyldimethylammonium chloride]
+200001901,Potassium aluminum sulfate [Alum]
+320001941,2-Methyl-5-nitrobenzenamine
+558,Bacteria
+320001981,"Observation, Manatees"
+320002061,"1,2-Dinitrobenzene"
+320002081,Vibrio cholerae
+3159,Organisms greater than or equal to 50 micrometers
+320002101,Wetlands Monitoring
+320002241,Oil-Based Defoamer
+320002021,Chlorinated benzenes
+1956,Grease
+320002102,"2,2',5-TrCB , PCB-18  congener"
+320002103," 2,4,4'-TrCB, PCB-28  congener"
+320002104,"3,4,4'-TrCB , PCB-37  congener"
+320002105,"2,2',3,5'-TeCB, PCB-44  congener"
+320002106,"2,2',4,5'-TeCB , PCB-49  congener"
+320002107,"2,2',5,5'-TeCB, PCB-52  congener"
+320002108,"2,3',4,4'-TeCB, PCB-66  congener"
+320002109,"2,3',4',5-TeCB , PCB-70  congener"
+320002110,"2,4,4',5-TeCB , PCB-74  congener"
+320002111,"2,2',3,4,5'-PeCB , PCB-87  congener"
+320002112,"2,2',4,4',5-PeCB , PCB-99  congener"
+320002113,"2,2',4,5,5'-PeCB, PCB-101  congener"
+320002114,"2,3,3',4',6-PeCB , PCB-110  congener"
+320002115,"2,3',4,4',6-PeCB , PCB-119  congener"
+320002116,"2,2',3,3',4,4'-HxCB, PCB-128  congener"
+320002117,"2,2',3,4,4',5'-HxCB, PCB-138  congener"
+320002118,"2,2',3,4',5',6-HxCB , PCB-149  congener"
+320002119,"2,2',3,5,5',6-HxCB , PCB-151  congener"
+320002120,"2,2',4,4',5,5'-HxCB, PCB-153  congener"
+320002121,"2,3,3',4,4',6-HxCB , PCB-158  congener"
+320002122,"2,3',4,4',5',6-HxCB , PCB-168  congener"
+320002123,"2,2',3,3',4,4',5-HpCB, PCB-170  congener"
+320002124,"2,2',3,3',4',5,6-HpCB , PCB-177  congener"
+320002125,"2,2',3,4,4',5,5'-HpCB, PCB-180  congener"
+320002126,"2,2',3,4,4',5',6-HpCB , PCB-183  congener"
+320002127,"2,2',3,4,4',6,6'-HpCB , PCB-184  congener"
+320002128,"2,2',3,4',5,5',6-HpCB, PCB-187  congener"
+320002129,"2,2',3,3',4,4',5,5'-OcCB , PCB-194  congener"
+320002130,"2,2',3,3',4,5',6,6'-OcCB , PCB-201  congener"
+320002131,"2,2',3,3',4,4',5,5',6-NoCB, PCB-206  congener"
+1,Number of connections
+320002221,Mineral Spirits - Odorless
+320002181,"DDT/DDD/DDE, sum of p,p' isomers"
+320002242,Polydimethylsiloxanes
+320002201,Imazamox
+320002001,Sediment Oxygen Demand
+320001961,Benzofluoranthene
+320002041,Cymene
+3907,"Sulfates, total [as SO4]"
+2200,Inorganic Pollutants
+320002522,Chloronaphthalene
+320002521,N-Nitrosodiethanolamine
+3697,"SSO, Dry Weather"
+320002261,Beta/photon emitters
+10061,Butyl Acrylate
+320002481,Specific Oxygen Update Rate [SOUR]
+320002381,Microcystin
+320002403,Date Dewatering Began
+320002402,Process 4 Product Output
+1485,Date Discharge Began
+320002461,"BOD, 120 Day, 20 Degrees C"
+320002641,Annual Certification Statement
+320002681,Uranium-234
+320002741,Plutonium-239 and Plutonium-240 combined
+320002441,Precious Metals Produced
+320002541,Total PFOA and PFOS
+320002561,"2,3,5,6-Tetrachlorophenol"
+320002721,Diazinon + Chlorpyrifos
+755,Bypass of Treatment Facility
+320002361,Triallyl cyanurate [TAC]
+3887,Date of Storm Event
+10429,Radionuclide Index
+320002404,Date of Sample Collection
+320002421,Time of Sample Collection
+320002523,Aramite
+320002661,Cesium-134
+300000576,Chloroacetaldehyde
+320002842,Screen Shutdown/Visual Remote Inspection Fail
+320002301,Resin and Fatty Acids
+320002321,Corrosivity
+320002501,"CSS volume, Percent Captured"
+320002841,Volume [mass]

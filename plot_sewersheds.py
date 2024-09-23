@@ -1,4 +1,5 @@
 import marimo
+from helper_functions.import_pop_served import pop_served_cwns
 
 __generated_with = "0.8.15"
 app = marimo.App()
@@ -26,7 +27,7 @@ def __(mo):
 
 
 @app.cell
-def __(all_population, nx, plt):
+def __(pop_served_cwns, nx, plt):
     # DEFINE PLOTTING FUNCTIONS
 
     def add_connection(row):
@@ -52,12 +53,12 @@ def __(all_population, nx, plt):
         center_node = sewershed_map[sewershed_id]['center']
         facility_names = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}'.replace('(', '\n(', 1) if len(f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}') > 20 else f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}' for node in nodes}
         facility_permit_numbers = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
-        facility_pop = {node: f'{(all_population.loc[all_population['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not all_population[all_population['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
+        facility_pop = {node: f'{(pop_served_cwns.loc[pop_served_cwns['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not pop_served_cwns[pop_served_cwns['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
         node_labels = {node: f'{facility_names[node]}\nPermit: {facility_permit_numbers[node]}\nPop. 2022: {int(float(facility_pop[node])) if facility_pop[node] != "N/A" else facility_pop[node]}' for node in nodes}
 
         G.add_nodes_from(nodes)
         G.add_edges_from([(conn[0], conn[1], {'label': f'{conn[2]}%'}) for conn in connections])
-        pos = nx.spring_layout(G, k=4, fixed={center_node: (0, 0)}, pos={center_node: (0, 0)}, iterations=300)
+        pos = nx.spring_layout(G, k=5, fixed={center_node: (0, 0)}, pos={center_node: (0, 0)}, iterations=500)
         # pos = nx.spring_layout(G, k=3)
 
         plt.figure(figsize=(6+3*len(nodes)/10, 4+3*len(nodes)/10))
@@ -85,15 +86,11 @@ def __(all_population, nx, plt):
 def __(pd):
     # IMPORT DATA
 
-    facility_permit = pd.read_csv('CA_2022CWNS_APR2024/FACILITY_PERMIT.csv', encoding='latin1', low_memory=False)
-    facilities = pd.read_csv('CA_2022CWNS_APR2024/FACILITIES.csv', encoding='latin1', low_memory=False)
-    areas_county = pd.read_csv('CA_2022CWNS_APR2024/AREAS_COUNTY.csv', encoding='latin1', low_memory=False)
-    facility_types = pd.read_csv('CA_2022CWNS_APR2024/FACILITY_TYPES.csv', encoding='latin1', low_memory=False)
-    population_wastewater = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_WASTEWATER.csv', encoding='latin1', low_memory=False)
-    population_wastewater_confirmed = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_WASTEWATER_CONFIRMED.csv', encoding='latin1', low_memory=False)
-    population_decentralized = pd.read_csv('CA_2022CWNS_APR2024/POPULATION_DECENTRALIZED.csv', encoding='latin1', low_memory=False)
-    all_population = pd.concat([population_wastewater, population_wastewater_confirmed, population_decentralized])
-    discharges = pd.read_csv('CA_2022CWNS_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
+    facility_permit = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/FACILITY_PERMIT.csv', encoding='latin1', low_memory=False)
+    facilities = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/FACILITIES.csv', encoding='latin1', low_memory=False)
+    areas_county = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/AREAS_COUNTY.csv', encoding='latin1', low_memory=False)
+    facility_types = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/FACILITY_TYPES.csv', encoding='latin1', low_memory=False)
+    discharges = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
     discharges['DISCHARGES_TO_CWNSID'] = pd.to_numeric(discharges['DISCHARGES_TO_CWNSID'], errors='coerce').astype('Int64')
     discharges['CWNS_ID'] = pd.to_numeric(discharges['CWNS_ID'], errors='coerce').astype('Int64')
     facilities = facilities[['CWNS_ID', 'FACILITY_NAME']]
@@ -103,7 +100,7 @@ def __(pd):
     facilities = facilities.merge(facility_permit, left_on='CWNS_ID', right_on='CWNS_ID', how='left')
     facilities = facilities.merge(facility_types, left_on='CWNS_ID', right_on='CWNS_ID', how='left')
     return (
-        all_population,
+        pop_served_cwns,
         areas_county,
         discharges,
         facilities,

@@ -1,0 +1,182 @@
+PARAMETER_CODE,DMR_PARAMETER_DESC,POLLUTANT_CODE,PARENT_CATEGORY,ESMR_PARAMETER_DESC,IR_PARAMETER_DESC
+10,"Temperature, water deg. centigrade",6128,Temperature,Temperature,Indicator Bacteria
+1009,"Barium, total recoverable",572,Metals,"Barium, Total Recoverable",Aluminum
+1032,"Chromium, hexavalent [as Cr]",10214,Metals,Chromium (IV),"Oxygen, Dissolved"
+1033,"Chromium, trivalent [as Cr]",10215,Metals,Chromium (III),Mercury
+1062,"Molybdenum, total [as Mo]",6658,Metals,"Molybdenum, Total",Sedimentation/Siltation
+1074,"Nickel, total recoverable",2741,Metals,"Nickel, Total Recoverable",Dioxin Toxic Equivalents
+1079,Silver total recoverable,3714,Metals,"Silver, Total Recoverable",PCBs (Polychlorinated biphenyls)
+1094,"Zinc, total recoverable",6352,Metals,"Zinc, Total Recoverable",Sediment
+11,"Temperature, water deg. fahrenheit",12389,Temperature,Temperature,pH
+1104,"Aluminum, total recoverable",360,Metals,"Aluminum, Total Recoverable","Temperature, water"
+11123,"Manganese, total recoverable",2423,Metals,"Manganese, Total Recoverable",Turbidity
+1113,"Cadmium, total recoverable",776,Metals,"Cadmium, Total Recoverable",Specific Conductivity
+1114,"Lead, total recoverable",6562,Metals,"Lead, Total Recoverable",Diazinon
+1118,"Chromium, total recoverable",1012,Metals,"Chromium, Total Recoverable",Phosphorus
+1119,"Copper, total recoverable",1165,Metals,"Copper, Total Recoverable",Manganese
+1129,"Molybdenum, total recoverable",6658,Metals,"Molybdenum, Total Recoverable",Cyanobacteria hepatotoxic microcystins
+11503,"Radium 226 + radium 228, total",12175,Uncategorized,Radium-226 + Radium-228,Nutrients
+1268,"Antimony, total recoverable",4871,Metals,"Antimony, Total Recoverable",Organic Enrichment/Low Dissolved Oxygen
+13501,"Strontium 90, total",12285,Metals,Strontium-90,Invasive Species
+154,Sulfate [as S],6101,Dissolved Solids,"Sulfate, Total (as S)",Total Dissolved Solids
+175,"Nitrogen, ammonia, percent removal",375,Nutrients,No Match,Arsenic
+18,Temp. diff. between samp. & upstrm deg. F,12373,Uncategorized,Temperature Difference Between Sample and Upstream,Biostimulatory Conditions
+183,"Chlorine, total residual, duration of violation",11094,Disinfectants,"Chlorine, Total Residual",Nickel
+22417,Methyl tert-butyl ether [MTBE],10418,Toxic Organics,Methyl Tert-butyl Ether (MTBE),Copper
+22456,Polynuclear Aromatic Hydrocarbons [PAHs],10100,Toxic Organics,Polynuclear Aromatic Hydrocarbons (PAHs),Boron
+28012,"Uranium, total [in pci/L]",6439,Metals,Uranium,pH (high)
+300,"Oxygen, dissolved [DO]",3051,Dissolved Oxygen,Dissolved Oxygen,Eutrophication
+30500,"Coliform, fecal - % samples exceeding limit",10287,Toxic Organics,Fecal Coliform,Chlordane
+310,"BOD, 5-day, 20 deg. C",10178,Organics,Biochemical Oxygen Demand (BOD) (5-day @ 20 Deg. C),DDT (Dichlorodiphenyltrichloroethane)
+32101,Dichlorobromomethane,11660,Toxic Organics,Dichlorobromomethane,Dieldrin
+32102,Carbon tetrachloride,10344,Toxic Organics,Carbon Tetrachloride,"Dioxin compounds (including 2,3,7,8-TCDD)"
+32103,"1,2-Dichloroethane",10262,Toxic Organics,"1,2-Dichloroethane",Furan Compounds
+32104,Bromoform,11673,Toxic Organics,Bromoform,PAHs (Polycyclic Aromatic Hydrocarbons)
+32105,Dibromochloromethane,11664,Toxic Organics,Dibromochloromethane,Selenium
+32106,Chloroform,10345,Toxic Organics,Chloroform,Toxicity
+34010,Toluene,10161,Toxic Organics,Toluene,Ammonia
+34030,Benzene,603,Toxic Organics,Benzene,Hydrogen Sulfide
+34210,Acrolein,10054,Uncategorized,Acrolein,Trash
+34215,Acrylonitrile,10057,Toxic Organics,Acrylonitrile,Lead
+34230,Benzo[b]fluoranthene,10110,Toxic Organics,Benzo(b)fluoranthene,Benzo[b]fluoranthene
+34242,Benzo[k]fluoranthene,10176,Toxic Organics,Benzo(k)fluoranthene,Benzo[k]fluoranthene
+34247,Benzo[a]pyrene,10174,Toxic Organics,Benzo(a)pyrene,Benzo(a)pyrene
+34273,Bis[2-chloroethyl] ether,10254,Toxic Organics,Bis (2-Chloroethyl) Ether,Heptachlor epoxide
+34278,Bis[2-chloroethoxy]methane,11248,Toxic Organics,Bis (2-Chloroethoxy) Methane,Toxaphene
+34283,Bis[2-chloroisopropyl] ether,12149,Toxic Organics,Bis (2-Chloroisopropyl) Ether,Salinity/TDS/Chlorides
+34301,Chlorobenzene,10151,Toxic Organics,Chlorobenzene,PCBs (Polychlorinated biphenyls) (sediment)
+34306,Chlorodibromomethane,11664,Toxic Organics,No Match,Chloride
+34320,Chrysene,1055,Toxic Organics,Chrysene,PCBs (Polychlorinated biphenyls) (dioxin-like)
+34336,Diethyl phthalate,10008,Toxic Organics,Diethyl Phthalate,Fipronil
+34341,Dimethyl phthalate,10631,Toxic Organics,Dimethyl Phthalate,Bifenthrin
+34346,"1,2-Diphenylhydrazine",11399,Toxic Organics,"1,2-Diphenylhydrazine",Cypermethrin
+34361,.alpha.-Endosulfan,10759,Other,No Match,Pyrethroids
+34371,Ethylbenzene,10157,Toxic Organics,Ethylbenzene,Deltamethrin
+34376,Fluoranthene,7822,Toxic Organics,Fluoranthene,Cyfluthrin
+34386,Hexachlorocyclopentadiene,10662,Toxic Organics,Hexachlorocyclopentadiene,Imidacloprid
+34391,Hexachlorobutadiene,10017,Toxic Organics,Hexachlorobutadiene,Mercury (sediment)
+34396,Hexachloroethane,10266,Toxic Organics,Hexachloroethane,Dacthal
+34403,"Indeno[1,2,3-cd]pyrene",10313,Toxic Organics,"Indeno (1,2,3-cd) Pyrene","Indeno[1,2,3-cd]pyrene"
+34408,Isophorone,10042,Toxic Organics,Isophorone,Benthic Community Effects
+34423,Methylene chloride,10340,Toxic Organics,Methylene Chloride,Nitrate
+34428,N-Nitrosodi-N-propylamine,10689,Toxic Organics,N-Nitrosodi-n-Propylamine,Fecal Coliform
+34433,N-Nitrosodiphenylamine,10121,Toxic Organics,N-Nitrosodiphenylamine,Sodium
+34438,N-Nitrosodimethylamine [NDMA],10335,Toxic Organics,N-Nitrosodimethylamine,Chlorophyll-a
+34447,Nitrobenzene,10164,Toxic Organics,Nitrobenzene,DDD (Dichlorodiphenyldichloroethane)
+34475,Tetrachloroethylene,10284,Toxic Organics,Tetrachloroethene,DDE (Dichlorodiphenyldichloroethylene)
+34501,"1,1-Dichloroethylene",10278,Toxic Organics,"1,1-Dichloroethylene",Dimethoate
+34506,"1,1,1-Trichloroethane",10256,Toxic Organics,"1,1,1-Trichloroethane",Malathion
+34511,"1,1,2-Trichloroethane",10258,Toxic Organics,"1,1,2-Trichloroethane",Total Coliform
+34516,"1,1,2,2-Tetrachloroethane",10257,Toxic Organics,"1,1,2,2-Tetrachloroethane",Carbaryl
+34526,Benzo[a]anthracene,10109,Toxic Organics,Benzo(a)anthracene,Benzo(a)anthracene
+34556,"Dibenz[a,h]anthracene",10238,Toxic Organics,"Dibenzo(a,h)anthracene","Dibenz[a,h]anthracene"
+34571,"1,4-Dichlorobenzene",10140,Toxic Organics,"1,4-Dichlorobenzene",Chlorpyrifos
+34611,"2,4-Dinitrotoluene",10144,Toxic Organics,"2,4-Dinitrotoluene","Cyhalothrin, Lambda"
+34616,"2,4-Dinitrophenol",12011,Toxic Organics,"2,4-Dinitrophenol",Endrin
+34621,"2,4,6-Trichlorophenol",12007,Toxic Organics,"2,4,6-Trichlorophenol",Microcystins
+34631,"3,3'-Dichlorobenzidine",12519,Toxic Organics,"3,3-Dichlorobenzidine",Scum/Foam-unnatural
+34675,"2,3,7,8-Tetrachlorodibenzo-p-dioxin",10239,Toxic Organics,"2,3,7,8-TCDD (Dioxin)",Bensulide
+3520,"Radiation, gross beta",10969,Other,"Radiation, Gross Beta",Methomyl
+3530,"Radiation,Gross Beta Particle Activity",99999,Other,"Radiation, Gross Beta",Oxyfluorfen
+3582,Oil and grease,10364,FOG,Oil and Grease,Oil and Grease
+3615,"2-Methyl-4,6-dinitrophenol",10384,Toxic Organics,"4,6-Dinitro-2-methylphenol",Molybdenum
+3824,Tributyltin,12269,Metals,Tributyltin (TBT),Linuron
+38260,Surfactants [MBAS],10475,Toxic Organics,Methylene Blue Active Substances (MBAS),Surfactants (MBAS)
+39100,Di[2-ethylhexyl] phthalate [DEHP],10005,Toxic Organics,No Match,Priority Organics
+39110,Di-n-butyl phthalate,10007,Toxic Organics,Di-n-butyl Phthalate,Pesticides
+39117,Phthalate esters,10630,Toxic Organics,Phthalate Esters,Metals
+39120,Benzidine,10508,Toxic Organics,Benzidine,Anatoxin-A
+39175,Vinyl chloride,10282,Toxic Organics,Vinyl Chloride,Clothianidin
+39180,Trichloroethylene,10285,Toxic Organics,Trichloroethene,Prometryn
+39300,"4,4'-DDT",10125,Toxic Organics,"4,4-DDT",Permethrin
+39310,"4,4'-DDD",10126,Toxic Organics,"4,4-DDD",Disulfoton
+39320,"4,4'-DDE",10127,Toxic Organics,"4,4-DDE",Thiamethoxam
+39330,Aldrin,10024,Toxic Organics,Aldrin,Fenpropathrin
+39336,.alpha.-BHC,11126,Other,alpha-BHC,Cyanide
+39350,Chlordane [tech mix. and metabolites],11080,Toxic Organics,Chlordane,Iron
+39379,"DDT/DDD/DDE, sum of p,p' & o,p' isomers",11135,Toxic Organics,"DDT/DDD/DDE, Sum of P,P & O,P Isomers",Sulfates
+39380,Dieldrin,10039,Toxic Organics,Dieldrin,Dieldrin
+39388,"Endosulfan, total",10757,Toxic Organics,"Endosulfans, Sum",Dieldrin (sediment)
+39390,Endrin,10040,Toxic Organics,Endrin,Endrin
+39400,Toxaphene,4234,Toxic Organics,Toxaphene,Toxaphene
+39410,Heptachlor,10748,Toxic Organics,Heptachlor,Chlordane (tissue)
+39420,Heptachlor epoxide,10716,Toxic Organics,Heptachlor Epoxide,Heptachlor epoxide
+39516,Polychlorinated biphenyls [PCBs],10001,Toxic Organics,"Polychlorinated Biphenyls (PCBs), Sum",Endosulfan (tissue)
+39570,Diazinon,10408,Toxic Organics,Diazinon,Diazinon
+39700,Hexachlorobenzene,10159,Toxic Organics,Hexachlorobenzene,DDT (tissue)
+400,pH,10510,pH,pH,pH
+46225,Chloride,5033,Dissolved Solids,Chloride,Chloride
+50050,"Flow, in conduit or thru treatment plant",11315,Flow,Flow,Chlorpyrifos (tissue)
+50060,"Chlorine, total residual",928,Disinfectants,"Chlorine, Total Residual",Dieldrin (tissue)
+50064,"Chlorine, free available",928,Disinfectants,"Chlorine, Free Available",Endosulfan (tissue & sediment)
+51040,E. coli,10251,Pathogens,E.coli,Lindane/gamma Hexachlorocyclohexane (gamma-HCH)
+51061,Flow [dry weather],11313,Flow,Flow,"Nitrogen, Nitrate"
+51173,"Cyanide, free available",5123,Toxic Inorganics,"Cyanide, Free Available","Copper, Dissolved"
+51197,Total Organic Carbon % Removal,11907,Organics,"Total Organic Carbon (TOC), Percent Removal",Benzo(a)anthracene
+51409,Specific Conductance,99999,Dissolved Solids,No Match,Specific Conductance
+51535,Haloacetic acids [HAA5],200000181,Toxic Organics,No Match,Chrysene (C1-C4)
+51543,Temperature Increase Deg. F,12389,Temperature,No Match,Phenanthrene
+51600,"pH Range Excursion, Maximum Duration",99999,pH,No Match,Pyrene
+51866,"Polychlorinated biphenyls [PCBs], sum of congeners",10001,Toxic Organics,Sum of 41 Congeners,Odor
+51867,"Polychlorinated biphenyls [PCBs], sum of Aroclors",10001,Toxic Organics,Total Arochlors,"Dibenz[a,h]anthracene"
+51874,Beta/photon emitters,320002261,Other,No Match,2-Methylnaphthalene
+51933,Diazinon + Chlorpyrifos,320002721,Toxic Organics,No Match,Cadmium (sediment)
+530,"Solids, total suspended",10486,Non-dissolved Solids,Total Suspended Solids (TSS),Copper (sediment)
+545,"Solids, settleable",12208,Non-dissolved Solids,Settleable Solids,Lead (sediment)
+556,Oil & Grease,10364,FOG,Oil and Grease,Oil and Grease
+600,"Nitrogen, total [as N]",2817,Nutrients,"Nitrogen, Total (as N)",Zinc (sediment)
+610,"Nitrogen, ammonia total [as N]",375,Nutrients,"Ammonia, Total (as N)",DDT (sediment)
+612,"Nitrogen, ammonia, tot unionized [as N]",375,Nutrients,"Ammonia, Unionized (as N)",Nitrogen
+61209,Perchlorate [ClO4],3215,Toxic Organics,Perchlorate,Esfenvalerate/Fenvalerate
+61211,Enterococci,11237,Pathogens,Enterococci,Fipronil Sulfone
+615,"Nitrogen, nitrite total [as N]",2806,Nutrients,"Nitrite, Total (as NO2)",Chlorine
+61736,"Turbidity, time above limit",12454,Color,Turbidity,Oil and Grease
+619,"Ammonia, unionized",375,Nutrients,"Ammonia, Unionized (as N)",Eutrophic
+620,"Nitrogen, nitrate total [as N]",5713,Nutrients,"Nitrate, Total (as N)",Algae
+630,Nitrite + Nitrate total [as N],10354,Nutrients,Nitrite Plus Nitrate (as N),alpha-Endosulfan (Endosulfan 1)
+640,"Nitrogen, inorganic total",2817,Nutrients,"Nitrate, Total (as N)",Profenofos
+665,"Phosphorus, total [as P]",5889,Nutrients,"Phosphorus, Total (as P)",Oil
+680,"Carbon, tot organic [TOC]",6656,Organics,Total Organic Carbon (TOC),Bis(2ethylhexyl)phthalate (DEHP)
+70,Turbidity,6638,Color,Turbidity,Turbidity
+7000,"Tritium, total",12446,Uncategorized,Tritium,Specific Conductance
+70295,"Solids, total dissolved",4151,Non-dissolved Solids,Total Dissolved Solids (TDS),Dioxin
+718,"Cyanide, weak acid, dissociable",5123,Toxic Inorganics,No Match,Sodium Adsorption Ratio (SAR)
+71901,"Mercury, total recoverable",2448,Metals,"Mercury, Total Recoverable",Viruses (enteric)
+720,"Cyanide, total [as CN]",5123,Toxic Inorganics,"Cyanide, Total (as CN)",Exotic Vegetation
+74015,"Phenols, chlorinated",10390,Toxic Organics,"Phenols, Chlorinated",Habitat alterations
+74055,"Coliform, fecal general",10287,Toxic Organics,Fecal Coliform,Reduced Tidal Flushing
+74056,"Coliform, total general",4146,Toxic Organics,Total Coliform,Nitrate and Nitrite
+77163,"1,3-Dichloropropene",10031,Toxic Organics,"1,3-Dichloropropylenes, Sum",ChemA (tissue)
+77835,"Hexachlorocyclohexane, total",11128,Toxic Organics,"Hexachlorocyclohexanes, Sum","Nitrogen, Nitrite"
+78218,"Phenolic compounds, unchlorinated",10397,Toxic Organics,"Phenols, Non-chlorinated",ChemA
+78247,"Chromium, hexavalent tot recoverable",10214,Metals,Chromium (VI) Total Recoverable,Nitrate as Nitrate (NO3)
+78248,"Cyanide, total recoverable",5123,Toxic Inorganics,No Match,Nitrate/Nitrite (Nitrite + Nitrate as N)
+78456,Halomethanes,11379,Toxic Organics,"Halomethanes, Sum",Lindane/gamma-Hexachlorocyclohexane (gamma-HCH) (tissue)
+78480,Effluent dilution ratio,11232,Uncategorized,Dilution Rate,"Selenium, Total"
+80,Color [PT-CO units],11105,Color,"Color, Pt-Co (unfiltered)",Nutrients (Algae)
+80045,"Alpha, gross particle activity",10804,Other,"Radiation, Gross Alpha","Zinc, Dissolved"
+80082,"BOD, carbonaceous [5 day, 20 C]",10107,Organics,Carbonaceous Biochemical Oxygen Demand (CBOD) (5-day @ 20 Deg. C),Swimming Restrictions
+80091,"BOD, carb-5 day, 20 deg C, percent removal",10852,Organics,"Carbonaceous Biochemical Oxygen Demand (CBOD) (5-day @ 20 Deg. C), Percent Removal",Pathogens
+81010,"BOD, 5-day, percent removal",10846,Organics,"BOD5 @ 20 Deg. C, Percent Removal",Low Dissolved Oxygen
+81011,"Solids, suspended percent removal",12240,Non-dissolved Solids,"Total Suspended Solids (TSS), Percent Removal",Azinphos-methyl (Guthion)
+81383,"Carbonaceous oxygen demand, % removal",10853,Organics,No Match,Salinity
+81403,Chlorpyrifos,12079,Toxic Organics,Chlorpyrifos,Chlorpyrifos
+81524,Dichlorobenzene,10152,Toxic Organics,"Dichlorobenzenes, Sum",Group A Pesticides
+82077,"Radiation, gross alpha",10804,Other,"Radiation, Gross Alpha",Trifluralin
+82080,"Trihalomethane, tot.",10489,Toxic Organics,Total Trihalomethanes (TTHM),Alkalinity as CaCO3
+82126,"Tritium, total",12446,Uncategorized,Tritium,Metolachlor
+82581,"pH range excursions, > 60 minutes",12526,pH,No Match,alpha.-BHC (Benzenehexachloride or alpha-HCH)
+82582,"pH range excursions, monthly total accum",12532,pH,No Match,Diuron
+82698,TCDD equivalents,10711,Toxic Organics,TCDD Equivalents,Simazine
+923,"Sodium, total recoverable",6802,Dissolved Solids,"Sodium, Total Recoverable",cis-permethrin
+932,"Sodium, %",6802,Dissolved Solids,"Sodium, %",Benzo[b]fluoranthene
+940,Chloride [as Cl],5033,Dissolved Solids,Chloride,pH (low)
+945,"Sulfate, total [as SO4]",6101,Dissolved Solids,"Sulfate, Total (as SO4)","Nitrogen, ammonia (Total Ammonia)"
+95,Specific conductance,12263,Dissolved Solids,No Match,Specific Conductance
+951,"Fluoride, total [as F]",1822,Dissolved Solids,"Fluoride, Total","Indeno[1,2,3-cd]pyrene"
+978,"Arsenic, total recoverable",467,Metals,"Arsenic, Total Recoverable","Ammonia as N, Total"
+980,"Iron, total recoverable",2215,Metals,"Iron, Total Recoverable",Hexachlorobenzene/ HCB
+981,"Selenium, total recoverable",3666,Metals,"Selenium, Total Recoverable",Paraquat
+982,"Thallium, total recoverable",4068,Metals,"Thallium, Total Recoverable",Acid Mine Drainage
+998,"Beryllium, total recoverable [as Be]",4915,Metals,"Beryllium, Total Recoverable","BOD, Biochemical oxygen demand"
+999,"Boron, total recoverable",10987,Inorganics,"Boron, Total Recoverable",Ammonia (Unionized)

@@ -1,0 +1,136 @@
+{
+    "Dissolved Oxygen": {
+        "values": ["DO", "Dissolved Oxygen"],
+        "case": false
+    },
+    "pH": {
+        "case-sensitive": {
+            "values": ["pH"],
+            "case": true
+        },
+        "other": {
+            "values": ["acidity", "alkalinity", "acid", "CaCO3", "HCO3", "anion", "cation", "carbonate"],
+            "case": false
+        }
+    },
+    "Radiation": {
+        "values": ["radiation", "alpha", "beta", "gamma", "particle activity", "Strontium-90", "Strontium 90"],
+        "case": false
+    },
+    "Disinfectants": {
+        "values": ["disinfectant", "chlorine", "chlorine dioxide", "chloramine", "chlorinate"],
+        "case": false
+    },
+    "FOG": {
+        "values": ["grease", "oil"],
+        "case": false
+    },
+    "Flow": {
+        "values": ["flow"],
+        "case": false
+    },
+    "Total Toxics": {
+        "values": ["48Hr", "96Hr", "Acute", "Chronic", "toxicity"],
+        "case": false
+    },
+    "Organics": {
+        "values": ["BOD", "COD", "chemical oxygen", "Thiourea", "volatile organic", "caffeine", "organics", "total organic", "carbon"],
+        "case": false
+    },
+    "Nutrients": {
+        "Nitrogen": {
+            "values": ["Nitrogen", "nitrite", "nitrate", "ammoni", "urea", "urine"],
+            "case": false
+        },
+        "Phosphorus": {
+            "values": ["Phosphorus", "phosphate"],
+            "case": false
+        },
+        "Potassium": {
+            "values": ["Potassium"],
+            "case": false
+        },
+        "General": {
+            "values": ["eutrophic", "chlorophyll", "algae", "nutrient"],
+            "case": false
+        }
+    },
+    "Color": {
+        "values": ["color", "turbidity"],
+        "case": false
+    },
+    "Non-dissolved Solids": {
+        "values": ["solids", "sand", "silica", "tss", "total suspendable", "sediment"],
+        "case": false
+    },
+    "Dissolved Solids": {
+        "values": ["dissolved solids", "tds", "sulfate", "sulfide", "chloride", "sodium", "SOPP", "conduct", "salinity", "fluoride"],
+        "case": false
+    },
+    "Temperature": {
+        "values": ["temperature", "thermal"],
+        "case": false
+    },
+    "Pathogens": {
+        "values": ["pathogen", "coli", "organism", "bacteria", "virus", "fungus", "mold", "cocc"],
+        "case": false
+    },
+    "Toxic Organics": {
+        "Toxic Organic Compounts": {
+            "values": [
+                "1,4-Dioxane", "Aldrin", "Anatoxin-A", "Benzene", "Bensulide", "BHC", "Bifenthrin", "Bromaform",
+                "Carbaryl", "Carbofuran", "ChemA", "Chlordane", "Chloroform", "Chlorpyrifos", "Chrysene",
+                "Chrysene (C1-C4)", "Clothianidin", "Cyfluthrin", "Cyhalothrin", "Cypermethrin", "Dacthal", "DDD",
+                "DDE", "DDT", "Deltamethrin", "Diazinon", "Dichlorvos", "Dieldrin", "Dimethoate", "Disulfoton",
+                "Diuron", "Endosulfan", "Endrin", "Ethylbenzene", "Fenpropathrin", "Fenpyroximate", "Fenvalerate",
+                "Fipronil", "Fluorene", "Furan", "Imidacloprid", "Isophorone", "Linuron", "Malathion", "Metolachlor",
+                "Methomyl", "Naphthalene", "Oxyfluorfen", "PAHs", "Paraquat", "PCB", "PCP", "Perchlorate",
+                "Permethrin", "Phenanthrene", "Profenofos", "Prometryn", "Pyrene", "Pyrethroid", "Simazine",
+                "Styrene", "TCDD", "Tetrachloroethylene/PCE", "Thiamethoxam", "Toluene", "Toxaphene",
+                "Trichloroethylene/TCE", "Trifluralin", "Vinyl", "Xylene"
+            ],
+            "case": false
+        },
+        "Prefixes": {
+            "values": ["hexa", "hept", "octa", "nona", "deca"],
+            "case": false
+        },
+        "Toxic Organic Snippets": {
+            "values": [
+                "1-", "2-", "2,4", "3-", "4-", "N-", "acet", "acil", "acryl", "alcohol", "aldehyde", "atics",
+                "azone", "benz", "butan", "busan", "butyl", "cresol", "dipro", "dioxin", "ene", "ethe", "ethyl",
+                "foaming", "form", "furfural", "meth", "molinate", "nalco", "nide", "niline", "o-", "oluene",
+                "penox", "pesticides", "petroleum", "phenol", "phthalate", "poxide", "propanol", "propylene",
+                "propy", "ridine", "styrene", "surfactant", "sutan", "tetrach", "thylene", "triclo", "xylen",
+                "zine", "zole"
+            ],
+            "case": false
+        }
+    },
+    "Toxic Inorganics": {
+        "values": ["arsenic", "hydrogen sulfide", "cyanide"],
+        "case": false
+    },
+    "Inorganics": {
+        "values": ["boron"],
+        "case": false
+    },
+    "Metals": {
+        "values": [
+            "Aluminum", "Antimony", "Arsenic", "Barium", "Beryllium", "Cadmium", "Calcium", "Chromium", "Cobalt",
+            "Copper", "Iron", "Lead", "Magnesium", "Manganese", "Mercury", "metals", "Molybdate", "Molybdenum",
+            "Nickel", "Selenium", "Silver", "Strontium", "Thallium", "Thiosulfate", "Thorium", "Tin", "Titanium",
+            "Tungsten", "Uranium", "Vanadium", "Xenon", "Yttrium", "Zinc", "Zirconium"
+        ],
+        "case": false
+    },
+    "Other": {
+        "values": [
+            "additives", "alpha", "asbestos", "began", "benthic", "beta", "coal", "conditions", "connections",
+            "downtime", "drilling", "elevation", "equipment", "facility", "fish", "foam", "habitat",
+            "invasive species", "level", "odor", "overflow", "plants", "radioactiv", "radiation", "radionuc",
+            "rainfall", "seafood", "swimm", "tidal", "tissue", "trace elements", "trash", "vegetation", "diesel", "fuel"
+        ],
+        "case": false
+    }
+}

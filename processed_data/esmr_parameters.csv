@@ -1,0 +1,801 @@
+ESMR_PARAMETER_DESC,CATEGORY,PARENT_CATEGORY,SUB_CATEGORY
+Flow,Flow,Flow,
+Total Coliform,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+pH,pH,pH,case-sensitive
+"Total Suspended Solids (TSS), Percent Removal",Non-dissolved Solids,Non-dissolved Solids,
+Dissolved Oxygen,Dissolved Oxygen,Dissolved Oxygen,
+Chlorine Usage,Disinfectants,Disinfectants,
+Oil and Grease,FOG,FOG,
+Temperature,Temperature,Temperature,
+"Chlorine, Total Residual",Disinfectants,Disinfectants,
+Total Suspended Solids (TSS),Non-dissolved Solids,Non-dissolved Solids,
+Biochemical Oxygen Demand (BOD) (5-day @ 20 Deg. C),Organics,Organics,
+"BOD5 @ 20 Deg. C, Percent Removal",Organics,Organics,
+"Sodium, Total Recoverable",Dissolved Solids,Dissolved Solids,
+"Sulfate, Total (as SO4)",Dissolved Solids,Dissolved Solids,
+Total Dissolved Solids (TDS),Dissolved Solids,Dissolved Solids,
+Chloride,Dissolved Solids,Dissolved Solids,
+Total Organic Carbon (TOC),Organics,Organics,
+Fecal Coliform,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Ammonia, Total (as N)",Nutrients,Nutrients,Nitrogen
+"Silica, Dissolved (as SiO2)",Non-dissolved Solids,Non-dissolved Solids,
+Enterococci,Pathogens,Pathogens,
+Settleable Solids,Non-dissolved Solids,Non-dissolved Solids,
+Turbidity,Color,Color,
+Urea,Nutrients,Nutrients,Nitrogen
+"Nitrate, Total (as N)",Nutrients,Nutrients,Nitrogen
+"Zinc, Total Recoverable",Metals,Metals,
+TCDD Equivalents,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"BHC, Sum",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Vinyl Chloride,Dissolved Solids,Toxic Organics,Toxic Organic Compounts
+Dibromochloromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Nickel, Total Recoverable",Metals,Metals,
+Bis (2-Chloroisopropyl) Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Heptachlor Epoxide,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+N-Nitrosodi-n-Propylamine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Copper, Total Recoverable",Metals,Metals,
+"Cadmium, Total Recoverable",Metals,Metals,
+Toxaphene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Hexachloroethane,Toxic Organics,Toxic Organics,Prefixes
+Chromium (III),Metals,Metals,
+"Iron, Total Recoverable",Metals,Metals,
+"Antimony, Total Recoverable",Metals,Metals,
+Bis (2-Ethylhexyl) Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Dichlorobenzenes, Sum",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dieldrin,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"1,2-Dichloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Methylene Chloride,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chlorobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Di-n-butyl Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Heptachlor,Toxic Organics,Toxic Organics,Prefixes
+"4,6-Dinitro-2-methylphenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4,6-Trichlorophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Cyanide, Total (as CN)",Toxic Inorganics,Toxic Inorganics,Toxic Organic Snippets
+Bis (2-Chloroethoxy) Methane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,1,2,2-Tetrachloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"3,3-Dichlorobenzidine",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,1,1-Trichloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Mercury, Total Recoverable",Metals,Metals,
+"Halomethanes, Sum",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Isophorone,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"1,3-Dichloropropylenes, Sum",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,1,2-Trichloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Polynuclear Aromatic Hydrocarbons (PAHs),Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Acrolein,Toxic Organics,Uncategorized,
+"DDT/DDD/DDE, Sum of P,P & O,P Isomers",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Tetrachloroethene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chloroform,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Silver, Total Recoverable",Metals,Metals,
+Aldrin,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Acrylonitrile,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Arsenic, Total Recoverable",Toxic Inorganics,Metals,
+Bromoform,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chromium (VI),Metals,Metals,
+"Beryllium, Total Recoverable",Metals,Metals,
+Diethyl Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,4-Dichlorobenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Trichloroethene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dichlorobromomethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Hexachlorocyclopentadiene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Endrin,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"1,1-Dichloroethylene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2-Diphenylhydrazine",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Benzidine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Benzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+N-Nitrosodiphenylamine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Radioactivity,Other,Other,
+"1,1-Dichloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Thallium, Total Recoverable",Metals,Metals,
+"Polychlorinated Biphenyls (PCBs), Sum",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Bromomethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-Dinitrophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Lead, Total Recoverable",Metals,Metals,
+Toluene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Chromium, Total Recoverable",Metals,Metals,
+Nitrobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chlordane,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+N-Nitrosodimethylamine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-Dinitrotoluene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Ethylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Hexachlorobutadiene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dimethyl Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Tributyltin (TBT),Toxic Organics,Metals,Toxic Organic Snippets
+Bis (2-Chloroethyl) Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Hexachlorobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Endosulfans, Sum",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Fluoranthene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Selenium, Total Recoverable",Metals,Metals,
+Carbon Tetrachloride,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chromium (VI) Total Recoverable,Metals,Metals,
+"Phenols, Non-chlorinated",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acute Toxicity,Total Toxics,Total Toxics,
+"Phenols, Chlorinated",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chronic Toxicity,Total Toxics,Total Toxics,
+"Color, Pt-Co (unfiltered)",Color,Color,
+"Hardness, Total (as CaCO3)",pH,pH,other
+"Copper, Total",Metals,Metals,
+"Nitrate, Total (as NO3)",Nutrients,Nutrients,Nitrogen
+"Sodium, Total",Dissolved Solids,Dissolved Solids,
+"Color, ADMI",Color,Color,
+Carbonaceous Biochemical Oxygen Demand (CBOD) (5-day @ 20 Deg. C),Organics,Organics,
+"Carbonaceous Biochemical Oxygen Demand (CBOD) (5-day @ 20 Deg. C), Percent Removal",Organics,Organics,
+"Ammonia, Unionized (as N)",Nutrients,Nutrients,Nitrogen
+"Nitrite, Total (as N)",Nutrients,Nutrients,Nitrogen
+"Phosphorus, Total (as P)",Nutrients,Nutrients,Phosphorus
+"Boron, Total",Inorganics,Inorganics,
+"Nitrogen, Total Organic (as N)",Nutrients,Nutrients,Nitrogen
+"Color, Pt-Co (filtered)",Color,Color,
+"Nitrogen, Total (as N)",Nutrients,Nutrients,Nitrogen
+Methylene Blue Active Substances (MBAS),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Zinc, Total",Metals,Metals,
+Di-n-octyl Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,6-Dinitrotoluene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Lead, Total",Metals,Metals,
+"Iron, Total",Metals,Metals,
+Total Kjeldahl Nitrogen (TKN) (as N),Nutrients,Nutrients,Nitrogen
+"Nickel, Total",Metals,Metals,
+"Cadmium, Total",Metals,Metals,
+Chromium (Total),Metals,Metals,
+"Arsenic, Total",Toxic Inorganics,Metals,
+"Silver, Total",Metals,Metals,
+Electrical Conductivity @ 25 Deg. C,Dissolved Solids,Dissolved Solids,
+"Sulfate, Total (as S)",Dissolved Solids,Dissolved Solids,
+"Sulfide, Total (as S)",Dissolved Solids,Dissolved Solids,
+"Phenols, Total",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Zinc, Dissolved",Metals,Metals,
+"Orthophosphate, Total (as P)",Nutrients,Nutrients,Phosphorus
+"Copper, Dissolved",Metals,Metals,
+"Lead, Dissolved",Metals,Metals,
+Chromium (III) Total Recoverable,Metals,Metals,
+"Cadmium, Dissolved",Metals,Metals,
+"Alkalinity, Total (as CaCO3)",pH,pH,other
+"Magnesium, Total Recoverable",Metals,Metals,
+"Calcium, Total",Metals,Metals,
+"Alkalinity, Carbonate (as CaCO3)",pH,Organics,other
+"Potassium, Total Recoverable",Nutrients,Nutrients,Potassium
+"Alkalinity, Bicarbonate (as CaCO3)",pH,Organics,other
+"Manganese, Total",Metals,Metals,
+"Manganese, Total Recoverable",Metals,Metals,
+Butylbenzyl Phthalate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Bicarbonate Ion (as HCO3),pH,Organics,other
+"Magnesium, Total",Metals,Metals,
+"Aluminum, Total",Metals,Metals,
+"Vanadium, Total Recoverable",Metals,Metals,
+"Vanadium, Total",Metals,Metals,
+"Dissolved Oxygen, saturation",Dissolved Oxygen,Dissolved Oxygen,
+"1,2,3,4,6,7,8-Heptachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,4,6,7,8,9-Octachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Mercury, Total",Metals,Metals,
+Asbestos,Other,Other,
+E.coli,Pathogens,Pathogens,
+Chemical Oxygen Demand (COD),Organics,Organics,
+"1,2,3,4,6,7,8,9-Octachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"4,4-DDE",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Boron, Total Recoverable",Inorganics,Inorganics,
+"Barium, Total Recoverable",Metals,Metals,
+"Molybdenum, Total Recoverable",Metals,Metals,
+"Calcium, Total Recoverable",Metals,Metals,
+"Cobalt, Total Recoverable",Metals,Metals,
+"Barium, Total",Metals,Metals,
+"Cobalt, Total",Metals,Metals,
+"Molybdenum, Total",Metals,Metals,
+"Hardness, Ca (as CaCO3)",pH,pH,other
+Anion/Cation Balance,pH,pH,other
+delta-BHC,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Arsenic, Dissolved",Toxic Inorganics,Metals,
+"Sodium, Dissolved",Dissolved Solids,Dissolved Solids,
+"Manganese, Dissolved",Metals,Metals,
+"Iron, Dissolved",Metals,Metals,
+"Nickel, Dissolved",Metals,Metals,
+"Selenium, Dissolved",Metals,Metals,
+"Boron, Dissolved",Inorganics,Inorganics,
+"Barium, Dissolved",Metals,Metals,
+"Chromium, Dissolved",Metals,Metals,
+"Calcium, Dissolved",Metals,Metals,
+"Mercury, Dissolved",Metals,Metals,
+"Magnesium, Dissolved",Metals,Metals,
+"Molybdenum, Dissolved",Metals,Metals,
+"Potassium, Dissolved",Nutrients,Nutrients,Potassium
+"Aluminum, Dissolved",Metals,Metals,
+"Antimony, Total",Metals,Metals,
+"Silver, Dissolved",Metals,Metals,
+Formaldehyde,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1016,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Selenium, Total",Metals,Metals,
+Naphthalene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acenaphthylene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chrysene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,4-Trichlorobenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"4,4-DDD",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+alpha-BHC,Toxic Organics,Other,Toxic Organic Compounts
+Endosulfan Sulfate,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"4,4-DDT",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+gamma-BHC,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+alpha-Chlordane,Toxic Organics,Other,Toxic Organic Compounts
+gamma-Chlordane,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Endrin Aldehyde,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Methoxychlor,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Endrin ketone,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+beta-BHC,Toxic Organics,Other,Toxic Organic Compounts
+Benzo(a)pyrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3-Trichloropropane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Nitrophenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-Dimethylphenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Phenol, Single Compound",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Methylnaphthalene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chronic Toxicity (Species 3),Total Toxics,Total Toxics,
+Trichlorofluoromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Indeno (1,2,3-cd) Pyrene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Chloro-3-methylphenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1242,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Acenaphthene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chronic Toxicity (Species 2),Total Toxics,Total Toxics,
+4-Nitroaniline,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,6-Dichlorophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Dibenzo(a,h)anthracene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Chloroethylvinyl Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+3-Nitroaniline,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chloroethane,Toxic Organics,Uncategorized,
+2-Nitroaniline,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1254,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+2-Methylphenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1221,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+2-Chloronaphthalene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"m,p-Xylenes",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Fluorene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Xylenes, Total",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Benzo(a)anthracene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Endosulfan II,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Endosulfan I,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"1,1,1,2-Tetrachloroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Anthracene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2-Dichloropropane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,3-Dichlorobenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Bromophenyl Phenyl Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Benzo(k)fluoranthene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Benzo(ghi)perylene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,3,4,6-Tetrachlorophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"cis-1,2-Dichloroethene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2-Dichlorobenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Nitrophenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2-Dibromoethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1232,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"2,3,7,8-TCDD (Dioxin)",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1260,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+o-Xylene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4,5-Trichlorophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Styrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-Dichlorophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Pentachlorophenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chronic Toxicity (Species 1),Total Toxics,Total Toxics,
+Benzo(b)fluoranthene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Chlorophenyl Phenyl Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Phenanthrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB-1248,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Pyrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Methyl Tert-butyl Ether (MTBE),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Carbonate Ion (as CO3),pH,Organics,other
+2-Chlorophenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,1-Dichloropropene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chloromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"trans-1,2-Dichloroethene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Antimony, Dissolved",Metals,Metals,
+"Phosphate, Total (as P)",Nutrients,Nutrients,Phosphorus
+Chlorophyll a,Nutrients,Nutrients,General
+"Orthophosphate, Dissolved (as P)",Nutrients,Nutrients,Phosphorus
+Dalapon,Toxic Organics,Uncategorized,
+Bentazon,Toxic Organics,Uncategorized,
+Atrazine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Simazine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Fluoride, Total",Dissolved Solids,Dissolved Solids,
+Di (2-ethylhexyl) adipate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Radiation, Gross Beta",Other,Other,
+Bis (chloromethyl) Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dichlorofenthion,Toxic Organics,Uncategorized,
+Benzyl alcohol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,3-Dichloropropane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Fluorophenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Bromoxynil,Toxic Organics,Uncategorized,
+"Radiation, Gross Alpha",Other,Other,case-sensitive
+"Beryllium, Total",Metals,Metals,
+"Aluminum, Total Recoverable",Metals,Metals,
+"Chlorine, Free Available",Disinfectants,Disinfectants,
+"Sodium, %",Dissolved Solids,Dissolved Solids,
+Methyl Mercury,Toxic Organics,Metals,Toxic Organic Snippets
+Bromochloromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Sodium Bisulfite,Dissolved Solids,Dissolved Solids,
+Anion Total,pH,pH,other
+Cation Total,pH,pH,other
+"Phosphorus, Total Organic (as P)",Nutrients,Nutrients,Phosphorus
+Total Trihalomethanes (TTHM),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Alkalinity, Hydroxide (as CaCO3)",pH,pH,other
+"Nitrogen, Total Inorganic (as N)",Nutrients,Nutrients,Nitrogen
+"Cyanide, Free Available",Toxic Inorganics,Toxic Inorganics,Toxic Organic Snippets
+"1,2,3,4,7,8,9-Heptachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,6,7,8-Hexachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,7,8-Pentachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,7,8-Pentachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,3,4,6,7,8-Hexachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,4,6,7,8-Heptachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,7,8,9-Hexachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,3,4,7,8-Pentachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,6,7,8-Hexachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,3,7,8-Tetrachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,4,7,8-Hexachlorodibenzofuran",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,7,8,9-Hexachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3,4,7,8-Hexachlorodibenzo-p-dioxin",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Freeboard,Toxic Organics,Uncategorized,
+Odor,Other,Other,
+Nitrite Plus Nitrate (as N),Nutrients,Nutrients,Nitrogen
+Picloram,Toxic Organics,Uncategorized,
+Methiocarb,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Tritium,Toxic Organics,Uncategorized,
+Diazinon,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Mirex,Toxic Organics,Uncategorized,
+Stirophos,Toxic Organics,pH,case-sensitive
+"2,4,5-TP (Silvex)",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-DB",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dicamba,Toxic Organics,Uncategorized,
+"2,4-D",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Alachlor,Toxic Organics,Uncategorized,
+"Glyphosate, Total",Toxic Organics,pH,case-sensitive
+Perchlorate,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Volatile Suspended Solids (VSS),Non-dissolved Solids,Non-dissolved Solids,
+MCPP,Toxic Organics,Uncategorized,
+Ethion,Toxic Organics,Uncategorized,
+Endothal,Toxic Organics,Dissolved Oxygen,
+Isopropylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Molinate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,1,2-Trichloro-1,2,2-Trifluoroethane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Sulfite (as SO3),Toxic Organics,Uncategorized,
+Dinoseb,Toxic Organics,Uncategorized,
+Diesel Oil,FOG,Other,
+Sulfur Dioxide,Toxic Organics,Uncategorized,
+Carbofuran,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Chlorpyrifos,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"1,2-Dibromo-3-Chloropropane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+MCPA,Toxic Organics,Uncategorized,
+Oxamyl,Toxic Organics,Uncategorized,
+4-Bromofluorobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Diquat,Toxic Organics,Uncategorized,
+trans-Nonachlor,Toxic Organics,Toxic Organics,Prefixes
+2-Hexanone,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Strontium-90,Toxic Organics,Metals,
+Dichloroprop,Toxic Organics,Uncategorized,
+4-Methyl-2-pentanone,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Total Solids (TS),Non-dissolved Solids,Non-dissolved Solids,
+Acetone,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Radium-226 + Radium-228,Toxic Organics,Uncategorized,
+Uranium,Metals,Metals,
+Dichlorodifluoromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Available Storage Volume,Toxic Organics,Uncategorized,
+Pheophytin,Metals,Metals,case-sensitive
+"Tin, Total Recoverable",Metals,Metals,
+Fixed Dissolved Solids (FDS),Dissolved Solids,Dissolved Solids,
+UV Banks in Operation,Toxic Organics,Uncategorized,
+UV Power,Toxic Organics,Uncategorized,
+UV Transmittance,Toxic Organics,Uncategorized,
+UV Dose,Toxic Organics,Dissolved Oxygen,
+Rainfall,Other,Other,
+Surface Loading Rate,Toxic Organics,Uncategorized,
+Dilution Rate,Toxic Organics,Uncategorized,
+"Phosphate, Total (as PO4)",Nutrients,Nutrients,Phosphorus
+Benzoic Acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4,6-Tribromophenol",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Chloroaniline,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Carbon disulfide,Dissolved Solids,Dissolved Solids,
+Motor Oil,FOG,FOG,
+"Phosphorus, Dissolved (as P)",Nutrients,Nutrients,Phosphorus
+Dibromodichloromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+p-Isopropyltoluene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Methyl Ethyl Ketone,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Fluorobiphenyl,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Phenol-d6,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Terphenyl-d14,Toxic Organics,pH,case-sensitive
+Demeton,Toxic Organics,Uncategorized,
+Cobalt Thiocyanate Active Substances (CTAS),Metals,Metals,
+"Nitrite, Total (as NO2)",Nutrients,Nutrients,Nitrogen
+Thiobencarb,Toxic Organics,Uncategorized,
+"Thallium, Total",Metals,Metals,
+Salinity,Dissolved Solids,Dissolved Solids,
+Dibromofluoromethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acute Toxicity-Fathead Minnow-survival,Total Toxics,Total Toxics,
+PCB 209,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Tetrachloro-m-xylene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Hardness, Mg (as CaCO3)",pH,pH,other
+"Lithium, Total",Toxic Organics,Uncategorized,
+Bromide,Toxic Organics,Uncategorized,
+"Hydrocarbons, Petroleum",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dioxane,Toxic Organics,Uncategorized,
+"cis-1,3-Dichloropropene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"trans-1,3-Dichloropropene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Total Suspended Solids (TSS), Net Value",Non-dissolved Solids,Non-dissolved Solids,
+"Total Organic Carbon (TOC), Percent Removal",Organics,Organics,
+"Sulfide, Dissolved (as S)",Dissolved Solids,Dissolved Solids,
+Chromium (VI) Dissolved,Metals,Metals,
+Benzo(e)pyrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB 118,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 028,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Thallium, Dissolved",Metals,Metals,
+Acute Toxicity (Species 2),Total Toxics,Total Toxics,
+"1,2-Dichloroethylenes, Sum",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Toluene-d8,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB 011,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 144,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 018,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 143,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 031,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 101,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 153,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 044,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 090,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 105,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 102,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 087,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 016,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 092,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 061,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 164,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 035,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 110,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 138,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 095,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 106,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 049,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 043,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 069,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 032,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 125,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 099,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 163,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 156,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 098,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 117,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 070,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 084,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 052,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 077,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 180,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 001,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 003,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 074,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 066,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 008,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 174,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 203,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 132,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 056,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 151,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 141,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 158,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 149,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 187,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 177,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 183,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 128,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 170,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 097,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 033,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 194,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 201,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 195,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Azinphos-methyl,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+3-Methylphenol/4-Methylphenol Coelution,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Ozone Residual,Toxic Organics,Uncategorized,
+PCB 061/070/074/076,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 129/138/163,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 135/151,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 018/030,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 167,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 156/157,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 044/047/065,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 090/101/113,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 180/193,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 147/149,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 020/028,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 206,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 037,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 086/087/097/108/119/125,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 110/115,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 128/166,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 153/168,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 049/069,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 119,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 168,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"2,4-DDD",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,2-Dichloropropane",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+2-Chlorotoluene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+n-Propylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Bromobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+tert-Butylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dibromomethane,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,4-Trimethylbenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Tert-Amyl Methyl Ether (TAME),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+4-Chlorotoluene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+sec-Butylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,3,5-Trimethylbenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"1,2,3-Trichlorobenzene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Ethyl-Tert Butyl Ether (ETBE),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Cobalt, Dissolved",Metals,Metals,
+"Vanadium, Dissolved",Metals,Metals,
+Perylene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Tert-Butyl Alcohol (TBA),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Trichlorotrifluoroethane,Toxic Organics,Uncategorized,
+"1,2-Dichloroethane-d4",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Disulfoton,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+4-Methylphenol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Neburon,Toxic Organics,Uncategorized,
+Radium-226,Toxic Organics,Uncategorized,
+Radium-228,Toxic Organics,Uncategorized,
+Dichloroacetic Acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Trichloroacetic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dibromoacetic Acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+N-Nitrosodiethylamine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Pasteurization Contact Time,Toxic Organics,Uncategorized,
+CT (Cl residual * contact time),Toxic Organics,Uncategorized,
+Depth to Groundwater,Toxic Organics,Uncategorized,
+Dimethoate,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Biphenyl,Toxic Organics,pH,case-sensitive
+Acute Toxicity (Species 1),Total Toxics,Total Toxics,
+TPH as Motor Oil,FOG,FOG,case-sensitive
+Aminocarb,Toxic Organics,Uncategorized,
+Dibenzofuran,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Nitrobenzene-d5,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Methomyl,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Dibromochloropropane,Toxic Organics,Uncategorized,
+"Nitrogen, Total Dissolved (as N)",Nutrients,Nutrients,Nitrogen
+"Titanium, Total Recoverable",Metals,Metals,
+PCB 066/076,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 087/117/125,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 056/060,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 139/149,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 138/163/164,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 106/118,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 090/101,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 061/070,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 043/049,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 052/069,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 020/021/033,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Malathion,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Dichlorvos,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Tin, Total",Metals,Metals,
+Thionazin,Toxic Organics,Uncategorized,
+Parathion,Toxic Organics,Uncategorized,
+Rotenone,Toxic Organics,Uncategorized,
+Tokuthion,Toxic Organics,Uncategorized,
+Ronnel,Toxic Organics,Uncategorized,
+Aspon,Toxic Organics,Uncategorized,
+Fensulfothion,Toxic Organics,Uncategorized,
+Mevinphos,Toxic Organics,pH,case-sensitive
+Methyl Parathion,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acetaldehyde,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+EPN,Toxic Organics,Uncategorized,
+Trichloronate,Toxic Organics,Uncategorized,
+Phorate,Toxic Organics,pH,case-sensitive
+Cyclohexane,Toxic Organics,Toxic Organics,Prefixes
+Gasoline,Toxic Organics,Uncategorized,
+Naled,Toxic Organics,Uncategorized,
+Bolstar,Toxic Organics,Uncategorized,
+Ethoprop,Toxic Organics,Uncategorized,
+Merphos,Toxic Organics,pH,case-sensitive
+Hydrogen Sulfide,Toxic Inorganics,Toxic Inorganics,
+Coumaphos,Toxic Organics,pH,case-sensitive
+Fenitrothion,Toxic Organics,Uncategorized,
+Fenthion,Toxic Organics,Uncategorized,
+Fenuron,Toxic Organics,Uncategorized,
+"2,4-DDT",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,4-DDE",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB 132/161,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Temp Diff b/n Intake and Discharge,Toxic Organics,Uncategorized,
+Acute Toxicity-Rainbow Trout-survival,Total Toxics,Total Toxics,
+PCB 182/187,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 128/162,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 158/160,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 060,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Chronic Toxicity-Fathead Minnow-Growth,Total Toxics,Total Toxics,
+Chronic Toxicity-Green Alga-Growth,Total Toxics,Total Toxics,
+Chronic Toxicity-C.dubia-Reproduction,Total Toxics,Total Toxics,
+Chronic Toxicity-Fathead Minnow-Survival,Total Toxics,Total Toxics,
+Chronic Toxicity-C.dubia-Survival,Total Toxics,Total Toxics,
+"Titanium, Total",Metals,Metals,
+Dissolved Organic Carbon,Toxic Organics,Organics,
+PCB 095/098/102,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 196/203,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 005/008,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 114,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Chromium (III) Dissolved,Metals,Metals,
+PCB 157,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 189,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 169,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 123,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 126,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 081,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Sum of 41 Congeners,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Total Arochlors,Toxic Organics,Uncategorized,
+Acute Toxicity-Sliversides-survival,Total Toxics,Total Toxics,
+Chronic Toxicity-Giant Kelp-Germ-tube length,Total Toxics,Total Toxics,
+Chronic Toxicity-Giant Kelp-Germination,Total Toxics,Total Toxics,
+Phthalate Esters,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+1-Methylnaphthalene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"2,6-Dimethylnaphthalene",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Triclopyr,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Imazapyr,Toxic Organics,Uncategorized,
+Aniline,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+n-Butylbenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Carbazole,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acute Toxicity-C.dubia-survival,Total Toxics,Total Toxics,
+Pyridine,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Chronic Toxicity-Inland Silverside-Survival,Total Toxics,Metals,
+Chronic Toxicity-Inland Silverside-Growth,Total Toxics,Metals,
+Soluble Biochemical Oxygen Demand (5-day @ 20 Deg. C),Organics,Organics,
+Chloroacetic Acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Bromoacetic Acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Chronic Toxicity-Atlantic Mysid, A.bahia-Growth",Total Toxics,Total Toxics,
+Triphenyl phosphate,Nutrients,Nutrients,Phosphorus
+Total Volatile Solids,Non-dissolved Solids,Non-dissolved Solids,
+"Hydrocarbons, Total Chlorinated",Disinfectants,Organics,
+"Acute Toxicity-Mysid, H. costata or M. bahia-survival",Total Toxics,Total Toxics,
+gamma-Chlordene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+alpha-Chlordene,Toxic Organics,Other,Toxic Organic Snippets
+Phenol-d5,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Oxychlordane,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Chronic Toxicity-Topsmelt-Survival,Total Toxics,Total Toxics,
+Chronic Toxicity-Topsmelt-Growth,Total Toxics,Total Toxics,
+Soluble Chemical Oxygen Demand,Organics,Organics,
+"Floating Particulates, Dry Weight",Metals,Metals,
+cis-Nonachlor,Toxic Organics,Toxic Organics,Prefixes
+Dibutyltin,Toxic Organics,Metals,Toxic Organic Snippets
+Chronic Toxicity-Red Abalone-Larval development,Total Toxics,Total Toxics,
+Chronic Toxicity-Sea Urchin or Sand Dollar-Fertilization,Non-dissolved Solids,Non-dissolved Solids,
+PCB 086/087/097/109/119/125,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 183/185,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB-1268,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Hexachlorocyclohexanes, Sum",Toxic Organics,Toxic Organics,Prefixes
+PCB-1262,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 161,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 021/033,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 083/099,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Chronic Toxicity-Atlantic Mysid, A.bahia-Survival",Total Toxics,Total Toxics,
+Isopropyl Ether,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Groundwater Elevation,Other,Other,
+PCB 021,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 017,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 146,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 184,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 040,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 006,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 136,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 166,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 193,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 109,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 004,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 185,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 013,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 129,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 027,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 113,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 026,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 065,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 082,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 116,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 088,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 137,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 076,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 171,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 160,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 147,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 115,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 107,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 047,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 093,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 030,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 042,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 083,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 198,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 196,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 029,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 041,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 173,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 007,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 068,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 179,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 012,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 064,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 091,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 009,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 190,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 086,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 020,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 015,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 022,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 134,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 019,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 071,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 100,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 085,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 199,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 135,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 025,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 040/071,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 048,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 051,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Oxidation-Reduction Potential,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Carbamazepine,Toxic Organics,Uncategorized,
+"Chronic Toxicity-Pacific Mysid, H.costata-Survival",Total Toxics,Total Toxics,
+1-Methylphenanthrene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Gradient Direction,Toxic Organics,Uncategorized,
+Gradient,Toxic Organics,Uncategorized,
+Ammonia Impact Ratio,Nutrients,Nutrients,Nitrogen
+Chronic Toxicity-Sea Urchin or Sand Dollar-Larval develop,Non-dissolved Solids,Non-dissolved Solids,
+UV Intensity,Toxic Organics,Uncategorized,
+River Direction,Toxic Organics,Uncategorized,
+Temperature Difference Between Sample and Upstream,Temperature,Temperature,
+Receiving Water to Effluent Flow Ratio,Flow,Flow,
+Acute Toxicity-Brook Trout-survival,Total Toxics,Total Toxics,
+PCB 129/138/160/163,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Chronic Toxicity-Bivalve or Oyster-Larval development,Total Toxics,Total Toxics,
+Acute Toxicity-Sheepshead Minnow-survival,Total Toxics,Total Toxics,
+Duration of Discharge,Toxic Organics,Uncategorized,
+Plastics,Toxic Organics,Uncategorized,
+Chlorpropham,Toxic Organics,pH,case-sensitive
+"Biphenthrin, Dissolved",Toxic Organics,pH,case-sensitive
+"Biphenthrin, Total",Toxic Organics,pH,case-sensitive
+"Cypermethrin, Dissolved",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Permethrin, Dissolved",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Acute Toxicity-Hyalella Azteca -survival.,Total Toxics,Total Toxics,
+"Esfenvalerate, Dissolved",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Lambda-Cyhalothrin, Dissolved",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Cyfluthrin, Dissolved",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Cypermethrin, Total",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Permethrin, Total",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"Esfenvalerate, Total",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Lambda-Cyhalothrin, Total",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+"Cyfluthrin, Total",Toxic Organics,Toxic Organics,Toxic Organic Compounts
+PCB 086/087/097/108/109/119/125,Toxic Organics,Toxic Organics,Toxic Organic Compounts
+Acute Toxicity-Topsmelt-survival,Total Toxics,Total Toxics,
+"Beryllium, Dissolved",Metals,Metals,
+N-Methyl perfluorooctane sulfonamidoacetic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorodecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluorohexadecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluorooctanoic acid,Toxic Organics,Toxic Organics,Prefixes
+"2H,2H,3H,3H-Perfluorodecanoic acid",Toxic Organics,Toxic Organics,Prefixes
+Perfluorononane sulfonic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluorodecanesulfonic acid,Toxic Organics,Toxic Organics,Prefixes
+"2,3,3,3-tetrafluoro-2-(1,1,2,2,3,3,3-heptafluoropropoxy) propanoic acid",Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorododecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluoro-3-methoxypropanoic acid (PFMPA),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorotridecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+N-Methyl perfluorooctane sulfonamide,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorononanoic acid,Toxic Organics,Toxic Organics,Prefixes
+N-Ethyl perfluorooctane sulfonamidoethanol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+"6:2 Fluorotelomer sulfonic acid (1H,1H,2H,2H-Perfluorooctanesulfonic acid)",Toxic Organics,Toxic Organics,Prefixes
+Perfluoro-4-methoxybutanoic acid (PFMBA),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluoroheptanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluoroundecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluoroheptanesulfonic acid,Toxic Organics,Toxic Organics,Prefixes
+N-Ethyl perfluorooctane sulfonamidoacetic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+9-Chlorohexadecafluoro-3-oxanonane-1-sulfonic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+N-Ethyl perfluorooctane sulfonamide,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluoro(2-ethoxyethane) sulfonic acid (PFEESA),Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorooctanoic sulfonate,Toxic Organics,Toxic Organics,Prefixes
+10:2 Fluorotelomer sulfonic acid,pH,pH,other
+"4,4,5,5,6,6,6-Heptafluorohexanoic Acid",Toxic Organics,Toxic Organics,Prefixes
+Perfluorobutanesulfonic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluoropentanoic acid,pH,pH,other
+Perfluorotetradecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluoropentane sulfonoic acid,pH,pH,other
+"8:2 Fluorotelomer sulfonic acid (1H, 1H, 2H, 2H-Perfluorodecanesulfonic acid)",Toxic Organics,Toxic Organics,Prefixes
+11-Chloroeicosafluoro-3-oxaundecane-1-sulfonic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorooctane sulfonamide,Toxic Organics,Toxic Organics,Prefixes
+Perfluorobutanoic acid,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Perfluorooctadecanoic acid,Toxic Organics,Toxic Organics,Prefixes
+Perfluorohexanoic acid,Toxic Organics,Toxic Organics,Prefixes
+"4:2 Fluorotelomer sulfonic acid (1H, 1H, 2H, 2H-Perfluorohexanesulfonic acid)",Toxic Organics,Toxic Organics,Prefixes
+"2H,2H,3H,3H-Perfluorooctanoic Acid",Toxic Organics,Toxic Organics,Prefixes
+"4,8-Dioxa-3H-perfluorononanoic acid",Toxic Organics,Toxic Organics,Prefixes
+Perfluorohexanesulfonic acid,Toxic Organics,Toxic Organics,Prefixes
+N-Methyl perfluorooctane sulfonamidoethanol,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Azobenzene,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+Ammonium as Nitrogen,Nutrients,Nutrients,Nitrogen
+Demeton-S,Toxic Organics,Toxic Organics,Toxic Organic Snippets
+PCB 139,Toxic Organics,Toxic Organics,Toxic Organic Compounts
