@@ -1,5 +1,4 @@
 import marimo
-from helper_functions.import_pop_served import pop_served_cwns
 
 __generated_with = "0.8.15"
 app = marimo.App()

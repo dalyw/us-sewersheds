@@ -71,7 +71,7 @@ def read_dmr(year, drop_no_limit=False):
     data = data[data['EXTERNAL_PERMIT_NMBR'].isin(npdes_from_facilities_list)]
     # if data['PARAMETER_CODE'] has leading 0s, remove them
     data['PARAMETER_CODE'] = data['PARAMETER_CODE'].str.lstrip('0')
-    data['POLLUTANT_CODE'] = data['PARAMETER_CODE'].map(ref_parameter.set_index('PARAMETER_CODE')['POLLUTANT_CODE'])
+    data['POLLUTANT_CODE'] = data['PARAMETER_CODE'].map(ref_parameter.copy().set_index('PARAMETER_CODE')['POLLUTANT_CODE'])
     data['MONITORING_PERIOD_END_DATE'] = pd.to_datetime(data['MONITORING_PERIOD_END_DATE'])
     data['DMR_VALUE_STANDARD_UNITS'] = pd.to_numeric(data['DMR_VALUE_STANDARD_UNITS'], errors='coerce')
     data['MONITORING_PERIOD_END_DATE_NUMERIC'] = data['MONITORING_PERIOD_END_DATE'].dt.year + data['MONITORING_PERIOD_END_DATE'].dt.month / 12 + data['MONITORING_PERIOD_END_DATE'].dt.day / 365
