@@ -89,10 +89,7 @@ def read_all_dmrs(save=False, load=True):
             if drop_toxicity:
                 data_dict[year] = data_dict[year][~data_dict[year]['PARAMETER_DESC'].str.contains('Toxicity')]
     if load:
-        # load facility_dict and data_dict from file
-        with open('processed_data/facility_dict.pkl', 'rb') as f:
-            facility_dict = pickle.load(f)
-        with open('processed_data/data_dict.pkl', 'rb') as f:
+        with open('processed_data/step1/data_dict.pkl', 'rb') as f:
             data_dict = pickle.load(f)
     return data_dict
 

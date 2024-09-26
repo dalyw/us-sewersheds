@@ -20,13 +20,14 @@ def categorize_parameters(df, parameter_sorting_dict, desc_column):
     """
     # Initialize the PARENT_CATEGORY and SUB_CATEGORY columns
     df['PARENT_CATEGORY'] = 'Uncategorized'
-    df['SUB_CATEGORY'] = ''
+    df['SUB_CATEGORY'] = 'Uncategorized'
     
     # Iterate through the parameter sorting dictionary
     for key, value in parameter_sorting_dict.items():
         if 'values' in value:
             mask = df[desc_column].str.contains('|'.join(value['values']), case=value.get('case', False))
             df.loc[mask, 'PARENT_CATEGORY'] = key
+            df.loc[mask, 'SUB_CATEGORY'] = key
         else:
             for sub_key, sub_value in value.items():
                 mask = df[desc_column].str.contains('|'.join(sub_value['values']), case=False)
