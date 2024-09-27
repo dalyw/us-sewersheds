@@ -9,9 +9,9 @@ The .ipynb scripts do the following
     Standardizes parameter names from different data sources, for use in steps 3 and 4.
 
     Data used:
-     -- data/dmrs: EPA ICIS DMR datasets
+     -- data/dmrs: EPA ICIS DMR datasets. (Files are too large for github: Must be downlaoded from ICIS for years 2014-2023 and added to this folder)
      -- data/ir: California Integrated Report 303d list
-     -- data/esmr: analytical results from electronic self-mointoring reporst (eSMRs) from CIWQs database
+     -- data/esmr: analytical results from electronic self-mointoring reporst (eSMRs) from CIWQs database. (Files are too large for github: Must be downlaoded from CIWQS and added to this folder)
 
 2. Population Served
     Merges multiple sources for population served in to the primary facilities list.

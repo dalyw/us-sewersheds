@@ -120,7 +120,7 @@
     },
     "Other": {
         "Radiation": {
-            "values": ["radiation", "alpha", "beta", "gamma", "particle activity", "Strontium-90", "Strontium 90", "radionuc", "radioactiv"],
+            "values": ["radiation", "alpha", "beta", "gamma", "particle activity", "Strontium-90", "Strontium 90", "radionuc", "radioactiv","radium"],
             "case": false
         },
         "Fuel": {
