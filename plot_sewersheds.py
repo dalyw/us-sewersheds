@@ -27,10 +27,10 @@ def __(mo):
 
 
 @app.cell
-def __(pd, pickle):
-    sewershed_map = pickle.load(open('processed_data/step2/sewershed_map.pkl', 'rb'))
+def __(pd):
     facilities = pd.read_csv('processed_data/step2/cwns_facilities_merged.csv')
-    return facilities, sewershed_map
+    facilities = facilities[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
+    return facilities,
 
 
 @app.cell
@@ -146,6 +146,120 @@ def __(nx, plt):
         plt.tight_layout()
         return plt, G, pos
     return plot_sewershed,
+
+
+@app.cell
+def __():
+    def add_connection(row):
+        connection = [row['CWNS_ID'], row['DISCHARGES_TO_CWNSID'], row['PRESENT_DISCHARGE_PERCENTAGE']]
+        return connection
+    return add_connection,
+
+
+@app.cell
+def __(add_connection, facilities, pd):
+    discharges = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
+    areas_county = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/AREAS_COUNTY.csv', encoding='latin1', low_memory=False)
+    discharges = discharges.merge(facilities, on='CWNS_ID', how='left')
+    discharges = discharges.merge(areas_county, on='CWNS_ID', how='left')
+
+    # BUILD SEWERSHED MAP
+    sewershed_map = {}
+    rows_new_sewershed = []
+    facilities_already_mapped = []
+    for _, row in discharges[
+        discharges["DISCHARGE_TYPE"] == "Discharge To Another Facility"
+    ].iterrows():
+        cwns_id, discharges_to = row["CWNS_ID"], row["DISCHARGES_TO_CWNSID"]
+        if (
+            cwns_id not in facilities_already_mapped
+            and discharges_to not in facilities_already_mapped
+        ):
+            rows_new_sewershed.append(row.name)
+            new_sewershed_id = len(sewershed_map) + 1
+            sewershed_map[new_sewershed_id] = {
+                "nodes": set([cwns_id, discharges_to]),
+                "connections": [add_connection(row)],
+            }
+            facilities_already_mapped.extend([cwns_id, discharges_to])
+        else:
+            for sewershed_info in sewershed_map.values():
+                if (
+                    cwns_id in sewershed_info["nodes"]
+                    or discharges_to in sewershed_info["nodes"]
+                ):
+                    sewershed_info["nodes"].update([cwns_id, discharges_to])
+                    sewershed_info["connections"].append(add_connection(row))
+                    facilities_already_mapped.extend([cwns_id, discharges_to])
+                    break
+
+    # Consolidate sewersheds with redundant nodes
+    sewershed_ids = list(sewershed_map.keys())
+    for i in range(len(sewershed_ids)):
+        for j in range(i + 1, len(sewershed_ids)):
+            id1, id2 = sewershed_ids[i], sewershed_ids[j]
+            if id1 in sewershed_map and id2 in sewershed_map:
+                if sewershed_map[id1]["nodes"] & sewershed_map[id2]["nodes"]:
+                    # Merge sewersheds
+                    sewershed_map[id1]["nodes"].update(sewershed_map[id2]["nodes"])
+                    sewershed_map[id1]["connections"].extend(sewershed_map[id2]["connections"])
+                    del sewershed_map[id2]
+
+
+    new_sewershed_map = {}
+    name_used = {}
+    for _sewershed_info in sewershed_map.values():
+        county_names = discharges.loc[
+            discharges["CWNS_ID"].isin(_sewershed_info["nodes"]), "COUNTY_NAME"
+        ]
+        primary_county = (
+            county_names.value_counts().index[0]
+            if len(county_names.value_counts()) > 0
+            else "Unspecified"
+        )
+        primary_county = (
+            "Unspecified" if pd.isna(primary_county) else primary_county
+        )
+        name_used[primary_county] = name_used.get(primary_county, 0) + 1
+        new_name = f"{primary_county} County Sewershed {name_used[primary_county]}"
+        connection_counts = {}
+        for node in _sewershed_info["nodes"]:
+            count = 0
+            for connection in _sewershed_info["connections"]:
+                if connection[0] == node or connection[1] == node:
+                    count += 1
+            connection_counts[node] = count
+        center = max(connection_counts.items(), key=lambda x: x[1])[0]
+        _sewershed_info["center"] = center
+        new_sewershed_map[new_name] = _sewershed_info
+    sewershed_map = new_sewershed_map
+    return (
+        areas_county,
+        center,
+        connection,
+        connection_counts,
+        count,
+        county_names,
+        cwns_id,
+        discharges,
+        discharges_to,
+        facilities_already_mapped,
+        i,
+        id1,
+        id2,
+        j,
+        name_used,
+        new_name,
+        new_sewershed_id,
+        new_sewershed_map,
+        node,
+        primary_county,
+        row,
+        rows_new_sewershed,
+        sewershed_ids,
+        sewershed_info,
+        sewershed_map,
+    )
 
 
 @app.cell
