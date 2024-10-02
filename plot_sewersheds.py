@@ -10,9 +10,8 @@ def __():
     import numpy as np
     import matplotlib.pyplot as plt
     import networkx as nx
-    from helper_functions import read_dmr
     import pickle
-    return np, nx, pd, pickle, plt, read_dmr
+    return np, nx, pd, pickle, plt
 
 
 @app.cell
