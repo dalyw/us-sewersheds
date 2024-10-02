@@ -124,6 +124,80 @@ read_all_dmrs <- function(save = FALSE, load = TRUE) {
   return(data_list)
 }
 
+read_limits <- function(year) {
+  # Reads the CA DMR data for the given year
+  
+  data <- read.csv(sprintf('data/dmrs/CA_FY%d_NPDES_DMRS_LIMITS/CA_FY%d_NPDES_LIMITS.csv', year, year), 
+                   stringsAsFactors = FALSE)
+  
+  cat(sprintf('%d limits data has %d limits and %d unique permits\n', 
+              year, nrow(data), length(unique(data$EXTERNAL_PERMIT_NMBR))))
+  
+  columns_to_keep <- c(
+    'EXTERNAL_PERMIT_NMBR',
+    'LIMIT_SET_ID',
+    'PARAMETER_CODE',
+    'PARAMETER_DESC',
+    'MONITORING_LOCATION_CODE',
+    'LIMIT_VALUE_TYPE_CODE',
+    'LIMIT_VALUE_NMBR',
+    'LIMIT_VALUE_STANDARD_UNITS',
+    'LIMIT_UNIT_CODE',
+    'STANDARD_UNIT_CODE',
+    'STATISTICAL_BASE_CODE',
+    'STATISTICAL_BASE_TYPE_CODE',
+    'LIMIT_VALUE_QUALIFIER_CODE',
+    'LIMIT_FREQ_OF_ANALYSIS_CODE',
+    'LIMIT_TYPE_CODE'
+  )
+  
+  data <- data[, columns_to_keep]
+  
+  return(data)
+}
+
+read_esmr <- function(save = FALSE) {
+  # Reads the CA ESMR data for all years since 2006
+  
+  if (save) {
+    # Use data_dict to specify data types for reading the csv
+    data_dict <- read.csv('data/esmr/esmr_data_dictionary.csv')
+    dtype_dict <- setNames(data_dict$type, data_dict$column)
+    dtype_dict <- sapply(dtype_dict, function(dtype) if (dtype %in% c('text', 'timestamp')) 'character' else 'numeric')
+    
+    # Read the csv with the dtype_dict
+    data <- read.csv('data/esmr/esmr-analytical-export_years-2006-2024_2024-09-03.csv', 
+                     colClasses = dtype_dict)
+    
+    # Convert timestamp columns to datetime
+    timestamp_columns <- data_dict$column[data_dict$type == 'timestamp']
+    data[timestamp_columns] <- lapply(data[timestamp_columns], as.POSIXct, format = "%Y-%m-%d %H:%M:%S")
+    
+    data <- data[, columns_to_keep_esmr]
+    
+    cat(sprintf('ESMR data has %d ESMR events and %d unique facilities\n', 
+                nrow(data), length(unique(data$facility_place_id))))
+    
+    data <- data[!is.na(data$result), ]
+    
+    cat(sprintf('ESMR data has %d ESMR events and %d unique facilities that are not NA\n', 
+                nrow(data), length(unique(data$facility_place_id))))
+    
+    data$sampling_date_datetime <- as.Date(data$sampling_date)
+    data <- data[format(data$sampling_date_datetime, "%Y") %in% as.character(analysis_range), ]
+    
+    cat(sprintf('ESMR data has %d ESMR events and %d unique facilities that are not NA and are in the analysis date range\n', 
+                nrow(data), length(unique(data$facility_place_id))))
+    
+    write.csv(data, 'processed_data/step1/esmr_data.csv', row.names = FALSE)
+  } else {
+    # Load the data from the csv
+    data <- read.csv('processed_data/step1/esmr_data.csv')
+  }
+  
+  return(data)
+}
+
 categorize_parameters <- function(df, parameter_sorting_dict, desc_column) {
   # Categorize parameters in a dataframe based on a sorting dictionary.
   #
@@ -173,14 +247,20 @@ normalize_param_desc <- function(desc) {
 }
 
 match_parameter_desc <- function(row, target_df) {
-  normalized_desc <- normalize_param_desc(as.character(row$PARAMETER_DESC))
-  match <- target_df %>% filter(normalized_desc == !!normalized_desc)
+  normalized_desc <- normalize_param_desc(tolower(as.character(row$PARAMETER_DESC)))
+  print(paste("Normalized description:", normalized_desc))
+  print(paste("Data type:", class(normalized_desc)))
+  
+  match <- target_df %>% filter(tolower(normalized_desc) == !!normalized_desc)
   
   if (nrow(match) == 0) {
     normalized_desc_no_sum <- normalized_desc %>%
-      str_replace_all(", Sum|, Total|, sum|, total", "")
+      str_replace_all(", sum|, total", "")
+    print(paste("Normalized description without sum/total:", normalized_desc_no_sum))
+    print(paste("Data type:", class(normalized_desc_no_sum)))
+    
     match <- target_df %>%
-      filter(str_replace_all(normalized_desc, ", Sum|, Total|, sum|, total", "") == normalized_desc_no_sum)
+      filter(tolower(str_replace_all(normalized_desc, ", sum|, total", "")) == normalized_desc_no_sum)
   }
   
   ifelse(nrow(match) > 0, match$PARAMETER_DESC[1], "")

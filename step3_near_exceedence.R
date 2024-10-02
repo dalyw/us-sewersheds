@@ -18,10 +18,13 @@ slope_threshold <- 0.05
 limit_threshold <- 0.1
 fraction_threshold <- 0.5
 
+current_year <- '2023'
+
 create_facility_dict <- function(data_dict) {
   facility_dict <- list()
-  current_year <- 2023
-  
+
+  # convert analysis_range to characters
+  analysis_range <- as.character(analysis_range)
   # Pre-filter the data for selected pollutants
   filtered_data_dict <- map(analysis_range, ~data_dict[[current_year]] %>% 
                               filter(PARAMETER_CODE %in% unique_parameter_codes))
@@ -111,17 +114,23 @@ if (file.exists('processed_data/step3/facility_dict.rds')) {
 }
 
 # Print the combined length of data_dict[analysis_range]
-sum <- sum(map_dbl(analysis_range, ~nrow(data_dict[[.x]])))
+sum <- 0
+for (key in as.character(analysis_range)) {
+  if (!is.null(data_dict[[key]])) {
+    sum <- sum + nrow(data_dict[[key]])
+  }
+}
 cat(sprintf('%s DMR events in data_dict\n', format(sum, big.mark = ",")))
 
 # Analyze facilities
 facilities_with_slope <- list()
 facilities_with_near_exceedance <- list()
 
-for (NPDES_code in unique(data_dict[[2023]]$EXTERNAL_PERMIT_NMBR)) {
+for (NPDES_code in unique(data_dict[[current_year]]$EXTERNAL_PERMIT_NMBR)) {
   for (parameter_code in unique_parameter_codes) {
     for (year in analysis_range) {
-      if (max(facility_dict[[NPDES_code]][[parameter_code]]$data$MONITORING_PERIOD_END_DATE_NUMERIC) < 2023) {
+      current_year <- as.integer(format(Sys.Date(), "%Y"))
+      if (max(facility_dict[[NPDES_code]][[parameter_code]]$data$MONITORING_PERIOD_END_DATE_NUMERIC) < current_year) {
         next
       }
       
@@ -199,7 +208,7 @@ for (NPDES_CODE in unique(facilities_grouped$NPDES_CODE)) {
     }
   }
   
-  ggsave(sprintf('processed_figures/slope_and_near_exceedence/%s.png', NPDES_CODE), p, width = 10, height = 2*num_parameters)
+  ggsave(sprintf('processed_data/step3/figures_R/%s.png', NPDES_CODE), p, width = 10, height = 2*num_parameters)
 }
 
 # Barplot of facilities frequently above limits
@@ -248,7 +257,7 @@ ggsave("processed_figures/facilities_map.png", width = 10, height = 8)
 
 # Make a df with NPDES_CODE and the number of parameters with slope and near exceedance
 df <- num_parameters_per_facility %>%
-  right_join(tibble(NPDES_CODE = unique(data_dict[[2023]]$EXTERNAL_PERMIT_NMBR)), by = "NPDES_CODE") %>%
+  right_join(tibble(NPDES_CODE = unique(data_dict[[current_year]]$EXTERNAL_PERMIT_NMBR)), by = "NPDES_CODE") %>%
   replace_na(list(num_parameters = 0))
 
 write_csv(df, 'processed_data/step3/num_parameters_per_facility.csv')
