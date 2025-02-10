@@ -17,7 +17,6 @@ import re
 # - plot_facilities_map
 
 ### IMPORT DMR AND ESMR DATA
-analysis_range = range(2014, 2024)
 save = False
 load = True
 
@@ -38,6 +37,7 @@ columns_to_keep_limits = [
         'LIMIT_VALUE_STANDARD_UNITS',
         'LIMIT_UNIT_CODE',
         'STANDARD_UNIT_CODE',
+        'STANDARD_UNIT_DESC',
         'STATISTICAL_BASE_CODE',
         'STATISTICAL_BASE_TYPE_CODE',
         'LIMIT_VALUE_QUALIFIER_CODE',
@@ -248,20 +248,24 @@ def plot_facilities_map(num_parameters_per_facility, legend_label, label_thresho
     fig, ax = plt.subplots(figsize=(8, 5))
     ca_counties.plot(ax=ax, color='lightgray')
     facilities_gdf['num_parameters'] = facilities_gdf['NPDES_CODE'].map(num_parameters_per_facility)
-    scatter = facilities_gdf.plot(ax=ax, column='num_parameters', cmap='viridis', markersize=10, alpha=0.7)
+    
+    # Create a colormap
+    norm = plt.Normalize(vmin=facilities_gdf['num_parameters'].min(), vmax=facilities_gdf['num_parameters'].max())
+    cmap = plt.cm.viridis
+    
+    scatter = facilities_gdf.plot(ax=ax, column='num_parameters', cmap=cmap, norm=norm, markersize=10, alpha=0.7)
 
     # Sort facilities by number of parameters and get top 10 with highest values
     top_facilities = facilities_gdf[facilities_gdf['num_parameters'] >= label_threshold].sort_values('num_parameters', ascending=False).head(10)
 
     # Create a list to store label positions
     label_positions = []
-
     # Sort top facilities by latitude (north to south)
     top_facilities_sorted = top_facilities.sort_values('LATITUDE', ascending=False)
 
     # Calculate label positions
     label_x = ax.get_xlim()[0] + 0.02 * (ax.get_xlim()[1] - ax.get_xlim()[0])
-    label_y_start = ax.get_ylim()[1] - 0.65 * (ax.get_ylim()[1] - ax.get_ylim()[0])
+    label_y_start = ax.get_ylim()[1] - 0.57 * (ax.get_ylim()[1] - ax.get_ylim()[0])
     label_y_step = 0.03 * (ax.get_ylim()[1] - ax.get_ylim()[0])
 
     # Add labels and lines for top facilities
@@ -284,11 +288,16 @@ def plot_facilities_map(num_parameters_per_facility, legend_label, label_thresho
                     color='black', linewidth=0.5, alpha=0.5)
             
             label_positions.append((label_x, label_y))
+    
+    # Verify sorting
+    print("Facilities sorted by latitude (north to south):")
+    for _, row in top_facilities_sorted.iterrows():
+        print(f"NPDES_CODE: {row['NPDES_CODE']}, Latitude: {row['LATITUDE']}")
 
     # create a custom legend with dots for each integer
     unique_params = sorted(facilities_gdf['num_parameters'].unique())
     legend_elements = [plt.Line2D([0], [0], marker='o', color='w', label=str(int(value)),
-                                  markerfacecolor=plt.cm.viridis(value / max(unique_params)), markersize=10)
+                                  markerfacecolor=cmap(norm(value)), markersize=10)
                        for value in unique_params]
     ax.legend(handles=legend_elements, title=legend_label, loc='upper right', frameon=False)
     ax.set_xlabel('')

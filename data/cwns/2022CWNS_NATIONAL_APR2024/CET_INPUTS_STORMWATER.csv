@@ -1,0 +1,29 @@
+"CWNS_ID","FACILITY_ID","STATE_CODE","COST_METHOD","FACILITY_DOCUMENT_CET_ID","FACILITY_DOCUMENT_COST_ID","ZIP_CODE","PRACTICE_TYPE","CONSTRUCTION_TYPE","SIZING_METHOD","QUANTITY","CAPACITY","PRACTICE_VOLUME","PRACTICE_AREA","DRAINAGE_AREA","PERCENT_IMP"
+"38000000004",3607476,ND,Stormwater,3919,9823,"58075",Wet Pond,New Development,Area,1,,,277477,,
+"55000000168",3610331,WI,Stormwater,4484,20228,"53076",Wet Pond,New Development,Drainage Area,1,,,,39.2,9.6
+"55000000168",3610331,WI,Stormwater,4481,20226,"53076",Constructed Wetland,Redevelopment,Drainage Area,1,,,,50,9.6
+"55000000157",3610321,WI,Stormwater,4846,22003,"53121",Buffer Strip,Redevelopment,Area,1,,,375000,,
+"55000000168",3610331,WI,Stormwater,4482,20228,"53076",Wet Pond,New Development,Drainage Area,5,,,,50,9.6
+"55000000168",3610331,WI,Stormwater,4483,20228,"53076",Wet Pond,New Development,Drainage Area,1,,,,42.6,9.6
+"54000000080",3610480,WV,Stormwater,4744,21536,"26201",Underground Detention or Retention,Redevelopment,Drainage Area,4,,,,50,100
+"55000150000",3372299,WI,Stormwater,7844,36366,"53092",Buffer Strip,Redevelopment,Area,1,,,12844,,
+"55000150000",3372299,WI,Stormwater,7840,36366,"53092",Porous Pavement,Redevelopment,Area,1,,,10000,,
+"42000000087",3611628,PA,Stormwater,7201,32539,"15146",Bioretention,New Development,Drainage Area,23,,,,5,29
+"55000150000",3372299,WI,Stormwater,7846,36368,"53092",Underground Detention or Retention,Redevelopment,Volume,1,,6534.5,,,
+"55000150000",3372299,WI,Stormwater,7847,36366,"53092",Porous Pavement,Redevelopment,Area,1,,,4356,,
+"55000150000",3372299,WI,Stormwater,7842,36366,"53092",Porous Pavement,Redevelopment,Area,1,,,10000,,
+"42000000087",3611628,PA,Stormwater,7081,32539,"15146",Porous Pavement,New Development,Area,25,,,10000,,
+"55000150000",3372299,WI,Stormwater,7845,36366,"53092",Buffer Strip,Redevelopment,Area,1,,,3060,,
+"42000000087",3611628,PA,Stormwater,7202,32544,"15146",Vegetated Swale,New Development,Drainage Area,13,,,,5,20
+"55000150000",3372299,WI,Stormwater,7841,36366,"53092",Porous Pavement,Redevelopment,Area,1,,,3500,,
+"55000150000",3372299,WI,Stormwater,7843,36366,"53092",Bioretention,Redevelopment,Area,1,,,4000,,
+"13000000759",3612453,GA,Stormwater,8569,39074,"30120",Dry Pond,Redevelopment,Area,1,,,13352,,
+"47001180002",3612459,TN,Stormwater,8762,39107,"38080",Underground Detention or Retention,New Development,Volume,1,,18408,,,
+"13000000759",3612453,GA,Stormwater,8568,39074,"30120",Dry Pond,Redevelopment,Area,1,,,12236,,
+"13000000759",3612453,GA,Stormwater,8570,39074,"30120",Dry Pond,Redevelopment,Area,1,,,29373,,
+"13000000759",3612453,GA,Stormwater,8571,39074,"30121",Wet Pond,Redevelopment,Area,1,,,33130,,
+"34002310011",442666,NJ,Stormwater,8601,39520,"07856",Dry Pond,New Development,Drainage Area,1,,,,1.4,30
+"47001180002",3612459,TN,Stormwater,8761,39107,"38080",Underground Detention or Retention,Redevelopment,Volume,1,,12272,,,
+"55000000086",3610214,WI,Stormwater,9004,41626,"53019",Wet Pond,Redevelopment,Area,1,,,18730.8,,
+"55000000086",3610214,WI,Stormwater,9003,41624,"53019",Wet Pond,Redevelopment,Area,1,,,10890,,
+"54000000086",3610725,WV,Stormwater,10328,50143,"25438",Dry Pond,New Development,Drainage Area,1,,,,5,100

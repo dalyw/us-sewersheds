@@ -1,0 +1,18 @@
+"DISCHARGE_TYPE","DISPLAY_ORDER"
+Outfall To Surface Waters,1
+Discharge To Another Facility,2
+Evaporation,3
+Deep well disposal (UIC Class I),4
+"Overland Flow, No Discharge",5
+Reuse: Environmental restoration and groundwater discharge,6
+Reuse: Landscape-related irrigation,7
+Reuse: Agricultural-related and livestock watering,8
+Reuse: Industrial,9
+Reuse: Impoundments,11
+Reuse: Potable,12
+Reuse: Other Centralized Non-Potable,13
+CSO Discharge,13
+Ocean Discharge,14
+Overland Flow With Discharge,15
+Other,16
+"No Discharge, unknown",17
