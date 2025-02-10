@@ -18,7 +18,7 @@ st.markdown(
 )
 
 # Load data
-facilities = pd.read_csv('processed_data/step2/cwns_facilities_merged.csv')
+facilities = pd.read_csv('processed_data/cwns_facilities_merged.csv')
 facilities = facilities[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
 
 # DEFINE PLOTTING FUNCTIONS
