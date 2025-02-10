@@ -39,10 +39,23 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     nodes = sewershed_map[sewershed_id]['nodes']
     connections = sewershed_map[sewershed_id]['connections']
     center_node = sewershed_map[sewershed_id]['center']
-    facility_names = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}'.replace('(', '\n(', 1) if len(f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}') > 20 else f'{(facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_NAME'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else str(node))}' for node in nodes}
-    facility_permit_numbers = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
-    facility_pop = {node: f'{(facilities.loc[facilities['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}' for node in nodes}
-    node_labels = {node: f'{facility_names[node]}\nPermit: {facility_permit_numbers[node]}\nPop. 2022: {int(float(facility_pop[node])) if facility_pop[node] != "N/A" else facility_pop[node]}' for node in nodes}
+    facility_names = {}
+    for node in nodes:
+        # Get facility name from dataframe or use node ID if not found
+        facility_mask = facilities['CWNS_ID'] == node
+        if not facilities[facility_mask].empty:
+            name = facilities.loc[facility_mask, 'FACILITY_NAME'].iloc[0]
+        else:
+            name = str(node)
+            
+        # Add line break before parentheses if name is long
+        if len(name) > 20:
+            name = name.replace('(', '\n(', 1)
+            
+        facility_names[node] = name
+    facility_permit_numbers = {node: f"{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}" for node in nodes}
+    facility_pop = {node: f"{(facilities.loc[facilities['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}" for node in nodes}
+    node_labels = {node: f"{facility_names[node]}\nPermit: {facility_permit_numbers[node]}\nPop. 2022: {int(float(facility_pop[node])) if facility_pop[node] != 'N/A' else facility_pop[node]}" for node in nodes}
     G.add_nodes_from(nodes)
     G.add_edges_from([(conn[0], conn[1], {'label': f'{conn[2]}%'}) for conn in connections])
     
