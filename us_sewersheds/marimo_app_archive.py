@@ -1,3 +1,7 @@
 import marimo as mo
 
-mo.md("This application has been migrated to https://us-sewersheds.streamlit.app")
+app = mo.App()
+
+@app.cell
+def __(mo):
+    mo.md("This application has been migrated to https://us-sewersheds.streamlit.app")

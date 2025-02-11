@@ -7,7 +7,8 @@ cwns_2012 = pd.read_csv('data/cwns/2012/Facility_Details.csv')
 facility_permit = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FACILITY_PERMIT.csv', encoding='latin1', low_memory=False)
 facilities = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FACILITIES.csv', encoding='latin1', low_memory=False)[['CWNS_ID', 'FACILITY_NAME']]
 areas_county = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/AREAS_COUNTY.csv', encoding='latin1', low_memory=False)[['CWNS_ID', 'COUNTY_NAME']]
-facility_types = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FACILITY_TYPES.csv', encoding='latin1', low_memory=False)
+facility_types = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FACILITY_TYPES.csv', encoding='latin1', low_memory=False).drop('CHANGE_TYPE', axis=1).drop_duplicates()
+print(facility_types['FACILITY_TYPE'].unique())
 discharges = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
 population_wastewater = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/POPULATION_WASTEWATER.csv', encoding='latin1', low_memory=False)
 flow = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FLOW.csv', encoding='latin1', low_memory=False)
@@ -39,15 +40,15 @@ facilities_for_marimo = facilities.copy().merge(population_wastewater, on='CWNS_
 print(f'{len(facilities_for_marimo)} CWNS facilities after merging with population_wastewater')
 facilities_for_marimo.to_csv('processed_data/cwns_facilities_merged.csv', index=False)
 
-facilities = facilities[~facilities['FACILITY_NAME'].str.contains('stormwater', case=False)]
-print(f'{len(facilities)} CWNS facilities after dropping stormwater in name')
+# facilities = facilities[~facilities['FACILITY_NAME'].str.contains('stormwater', case=False)]
+# print(f'{len(facilities)} CWNS facilities after dropping stormwater in name')
 patterns_to_remove = [r'WDR ', r'WDR-', r'WDR', r'Order WQ ', r'WDR Order No. ', r'Order No. ', r'Order ', r'NO. ', r'ORDER NO. ', r'NO.', r'ORDER ', r'DWQ- ', r'NO.·', r'. ']
 replacements = {r'·': '-', r'\?': '-'}
 facilities['PERMIT_NUMBER_cwns_clean'] = facilities['PERMIT_NUMBER'].astype(str).replace('|'.join(patterns_to_remove), '', regex=True)
 for old, new in replacements.items():
     facilities['PERMIT_NUMBER_cwns_clean'] = facilities['PERMIT_NUMBER_cwns_clean'].str.replace(old, new, regex=True)
-facilities = facilities[facilities['PERMIT_NUMBER'] != '2006-0003-DWQ']
-print(f'{len(facilities)} CWNS facilities after dropping 2006-0003-DWQ from PERMIT_NUMBER')
+# facilities = facilities[facilities['PERMIT_NUMBER'] != '2006-0003-DWQ']
+# print(f'{len(facilities)} CWNS facilities after dropping 2006-0003-DWQ from PERMIT_NUMBER')
 
 # POPULATION
 cwns_facilities = facilities.merge(pop_served_cwns, on='CWNS_ID', how='left').dropna(subset=['PERMIT_NUMBER'])

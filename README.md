@@ -2,10 +2,7 @@
 
 This repository includes code to visualize sewershed interconnections int he US based on the 2022 Clean Watershed Needs Survey. The us_sewersheds folder includes two scripts:
 
-The facilities list of interest for the CA Wastewater Needs Assessment is housed under "data/facilities_list"
-
-
-2. Population Served
+1. merge_cwns_data.py
     Merges multiple sources for population served in to the primary facilities list.
 
     Data used:
@@ -15,3 +12,18 @@ The facilities list of interest for the CA Wastewater Needs Assessment is housed
 
 2. sewersheds_app.py
     Deploys Streamlit application to visualize different sewersheds in the US, by state and county
+
+
+The relevant national data is housed under "data"
+
+The processed data, containing a pickle file used for visualizing the plots, is housed under "us_sewersheds"
+
+The packages needed to run the scripts locally are contained in the poetry.lock file. A local environment can be created after installing Conda using the following command line prompts:
+    conda create --name us-sewersheds python=3.11
+    conda activate us-sewersheds
+    conda install poetry
+    poetry install
+
+Then the scripts can be run;
+    python us_sewersheds/merge_cwns_data.py
+    streamlit run us_sewersheds/sewersheds_app.py
