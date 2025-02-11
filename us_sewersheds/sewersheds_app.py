@@ -11,15 +11,16 @@ st.set_page_config(page_title="CA Sewersheds", layout="wide")
 # Add markdown description
 st.markdown(
     r"""
-    This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Suvey dataset. Data was downloaded from the "[2022 CWNS Dataset by State](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)" for California.
+    This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Survey dataset. 
+    Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
 
-    This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular California sewershed. For the most up-to-date information, see the [CA State Water Boards database](https://www.waterboards.ca.gov/ciwqs/).
+    This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
+    For the most up-to-date information, see state-specific databases (e.g. [CA State Water Boards](https://www.waterboards.ca.gov/ciwqs/) or the US EPA website.
     """
 )
 
 # Load data
-facilities = pd.read_csv('processed_data/cwns_facilities_merged.csv')
-facilities = facilities[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
+facilities = pd.read_csv('processed_data/cwns_facilities_merged.csv')[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
 
 # DEFINE PLOTTING FUNCTIONS
 def plot_sewershed(sewershed_id, sewershed_map, facilities):
@@ -149,104 +150,69 @@ def add_connection(row):
     connection = [row['CWNS_ID'], row['DISCHARGES_TO_CWNSID'], row['PRESENT_DISCHARGE_PERCENTAGE']]
     return connection
 
-# Load and process discharge data
-discharges = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
-areas_county = pd.read_csv('data/cwns/CA_2022CWNS_APR2024/AREAS_COUNTY.csv', encoding='latin1', low_memory=False)
-discharges = discharges.merge(facilities, on='CWNS_ID', how='left')
-discharges = discharges.merge(areas_county, on='CWNS_ID', how='left')
-
-# BUILD SEWERSHED MAP
-sewershed_map = {}
-rows_new_sewershed = []
-facilities_already_mapped = []
-for _, row in discharges[
-    discharges["DISCHARGE_TYPE"] == "Discharge To Another Facility"
-].iterrows():
-    cwns_id, discharges_to = row["CWNS_ID"], row["DISCHARGES_TO_CWNSID"]
-    if (
-        cwns_id not in facilities_already_mapped
-        and discharges_to not in facilities_already_mapped
-    ):
-        rows_new_sewershed.append(row.name)
-        new_sewershed_id = len(sewershed_map) + 1
-        sewershed_map[new_sewershed_id] = {
-            "nodes": set([cwns_id, discharges_to]),
-            "connections": [add_connection(row)],
-        }
-        facilities_already_mapped.extend([cwns_id, discharges_to])
-    else:
-        for sewershed_info in sewershed_map.values():
-            if (
-                cwns_id in sewershed_info["nodes"]
-                or discharges_to in sewershed_info["nodes"]
-            ):
-                sewershed_info["nodes"].update([cwns_id, discharges_to])
-                sewershed_info["connections"].append(add_connection(row))
-                facilities_already_mapped.extend([cwns_id, discharges_to])
-                break
-
-# Consolidate sewersheds with redundant nodes
-sewershed_ids = list(sewershed_map.keys())
-for i in range(len(sewershed_ids)):
-    for j in range(i + 1, len(sewershed_ids)):
-        id1, id2 = sewershed_ids[i], sewershed_ids[j]
-        if id1 in sewershed_map and id2 in sewershed_map:
-            if sewershed_map[id1]["nodes"] & sewershed_map[id2]["nodes"]:
-                # Merge sewersheds
-                sewershed_map[id1]["nodes"].update(sewershed_map[id2]["nodes"])
-                sewershed_map[id1]["connections"].extend(sewershed_map[id2]["connections"])
-                del sewershed_map[id2]
-
-# Create new sewershed map with county names
-new_sewershed_map = {}
-name_used = {}
-for _sewershed_info in sewershed_map.values():
-    county_names = discharges.loc[
-        discharges["CWNS_ID"].isin(_sewershed_info["nodes"]), "COUNTY_NAME"
-    ]
-    primary_county = (
-        county_names.value_counts().index[0]
-        if len(county_names.value_counts()) > 0
-        else "Unspecified"
-    )
-    primary_county = (
-        "Unspecified" if pd.isna(primary_county) else primary_county
-    )
-    name_used[primary_county] = name_used.get(primary_county, 0) + 1
-    new_name = f"{primary_county} County Sewershed {name_used[primary_county]}"
-    connection_counts = {}
-    for node in _sewershed_info["nodes"]:
-        count = 0
-        for connection in _sewershed_info["connections"]:
-            if connection[0] == node or connection[1] == node:
-                count += 1
-        connection_counts[node] = count
-    center = max(connection_counts.items(), key=lambda x: x[1])[0]
-    _sewershed_info["center"] = center
-    new_sewershed_map[new_name] = _sewershed_info
-sewershed_map = new_sewershed_map
+# Load pre-built sewershed map from pickle file
+with open('processed_data/sewershed_map.pkl', 'rb') as f:
+    sewershed_map = pickle.load(f)
 
 st.markdown("""
 ### Display the sewershed
 
 ##### You may try re-generating the graphic a few times to get an improved layout.
 """)
+# Get unique states and counties from sewershed names
+print(sewershed_map.keys())
+states = sorted(list(set([name.split(' - ')[0] for name in sewershed_map.keys() if ' - ' in name and name.split(' - ')[0] != 'Unspecified'])))
+print(states)
+states.insert(0, "All States")
+
+# Add state selection
+selected_state = st.selectbox("Select a state:", states)
+
+# Get counties for selected state
+counties = []
+if selected_state != "All States":
+    counties = sorted(list(set([
+        name.split(' - ')[1].split(' County Sewershed')[0]
+        for name in sewershed_map.keys() 
+        if ' - ' in name and name.split(' - ')[0] == selected_state
+    ])))
+    counties.insert(0, "All Counties")
+
+# Add county selection if state is selected
+if selected_state != "All States":
+    selected_county = st.selectbox("Select a county:", counties)
+else:
+    selected_county = None
 
 # Add search functionality
-keyword = st.text_input('Filter by facility name (or portion of name): ')
+keyword = st.text_input('Filter by facility name: ')
 
-# Filter results based on keyword
+# Filter results based on selections
 results_list = []
-if keyword:
-    for sewershed_id, _sewershed_info in sewershed_map.items():
-        facility_names = facilities.loc[facilities['CWNS_ID'].isin(_sewershed_info['nodes']), 'FACILITY_NAME']
-        if facility_names.str.contains(keyword, case=False, na=False).any():
-            results_list.append(sewershed_id)
+for sewershed_id in sewershed_map.keys():
+    if ' - ' not in sewershed_id:
+        continue
+        
+    state = sewershed_id.split(' - ')[0]
+    county = sewershed_id.split(' - ')[1].split(' County Sewershed')[0]
+    
+    # Check if sewershed matches state/county filters
+    state_match = selected_state == "All States" or state == selected_state
+    county_match = not selected_county or selected_county == "All Counties" or county == selected_county
+    
+    # Check if sewershed matches keyword search
+    keyword_match = True
+    if keyword:
+        facility_names = facilities.loc[facilities['CWNS_ID'].isin(sewershed_map[sewershed_id]['nodes']), 'FACILITY_NAME']
+        keyword_match = facility_names.str.contains(keyword, case=False, na=False).any()
+    
+    if state_match and county_match and keyword_match:
+        results_list.append(sewershed_id)
 
 # Add dropdown for sewershed selection
-dropdown = st.selectbox("Select a sewershed: ", sorted(results_list) if results_list else sorted(sewershed_map.keys()))
+dropdown = st.selectbox("Select a sewershed:", sorted(results_list) if results_list else ["No matching sewersheds"])
 
 # Add button to generate plot
-if st.button('Generate Sewershed Plot'):
+if st.button('Generate Sewershed Plot') and dropdown != "No matching sewersheds":
     fig, G, pos = plot_sewershed(dropdown, sewershed_map, facilities)
     st.pyplot(fig)
