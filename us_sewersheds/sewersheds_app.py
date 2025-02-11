@@ -1,150 +1,149 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import networkx as nx
 import pickle
+import plotly.graph_objects as go
+import streamlit.components.v1 as components
+import dash_cytoscape as cyto
+from dash import Dash, html
 
 # Set page config
-st.set_page_config(page_title="CA Sewersheds", layout="wide")
+st.set_page_config(page_title="CA Sewersheds", layout="wide", initial_sidebar_state="expanded")
 
-# Add markdown description
-st.markdown(
-    r"""
-    This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Survey dataset. 
-    Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
-
-    This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
-    For the most up-to-date information, see state-specific databases (e.g. [CA State Water Boards](https://www.waterboards.ca.gov/ciwqs/) or the US EPA website.
-    """
-)
+# Add CSS to ensure content is visible
+st.markdown("""
+    <style>
+        .main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stApp {
+            background-color: white;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 # Load data
 facilities = pd.read_csv('processed_data/cwns_facilities_merged.csv')[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
 
-# DEFINE PLOTTING FUNCTIONS
 def plot_sewershed(sewershed_id, sewershed_map, facilities):
     """
-    Each entry in sewershed_map is a dictionary with keys 'nodes' and 'connections'. 
-    Plots a directed graph of a given sewershed
+    Each entry in sewershed_map is a dictionary with keys 'nodes' and 'connections'.
+    Plots a directed graph of a given sewershed using Cytoscape for interactive visualization
 
     Inputs:
     - sewershed_id: string, the ID of the sewershed to plot
-    - sewershed_map: dictionary, the sewershed map
+    - sewershed_map: dictionary, the sewershed map  
     - facilities: pandas dataframe, the facilities dataframe
 
     Outputs:
-    - None
+    - HTML component
     """
-    G = nx.DiGraph()
     nodes = sewershed_map[sewershed_id]['nodes']
     connections = sewershed_map[sewershed_id]['connections']
-    center_node = sewershed_map[sewershed_id]['center']
-    facility_names = {}
+
+    # Create elements list for Cytoscape
+    elements = []
+    
+    # Add nodes
     for node in nodes:
-        # Get facility name from dataframe or use node ID if not found
         facility_mask = facilities['CWNS_ID'] == node
         if not facilities[facility_mask].empty:
             name = facilities.loc[facility_mask, 'FACILITY_NAME'].iloc[0]
         else:
             name = str(node)
             
-        # Add line break before parentheses if name is long
-        if len(name) > 20:
-            name = name.replace('(', '\n(', 1)
-            
-        facility_names[node] = name
-    facility_permit_numbers = {node: f"{(facilities.loc[facilities['CWNS_ID'] == node, 'PERMIT_NUMBER'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}" for node in nodes}
-    facility_pop = {node: f"{(facilities.loc[facilities['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not facilities[facilities['CWNS_ID'] == node].empty else 'N/A')}" for node in nodes}
-    node_labels = {node: f"{facility_names[node]}\nPermit: {facility_permit_numbers[node]}\nPop. 2022: {int(float(facility_pop[node])) if facility_pop[node] != 'N/A' else facility_pop[node]}" for node in nodes}
-    G.add_nodes_from(nodes)
-    G.add_edges_from([(conn[0], conn[1], {'label': f'{conn[2]}%'}) for conn in connections])
+        elements.append({
+            'data': {
+                'id': str(node),
+                'label': name
+            }
+        })
+
+    # Add edges
+    for conn in connections:
+        elements.append({
+            'data': {
+                'source': str(conn[0]),
+                'target': str(conn[1])
+            }
+        })
+
+    # Create Cytoscape component HTML with full JavaScript dependencies
+    cyto_html = f"""
+    <html>
+        <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+            <style>
+                #cy {{
+                    width: 100%;
+                    height: 600px;
+                    display: block;
+                    background-color: white;
+                    position: absolute;
+                }}
+                body {{
+                    margin: 0;
+                    padding: 0;
+                    background-color: white;
+                    overflow: hidden;
+                }}
+            </style>
+        </head>
+        <body>
+            <div id="cy"></div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {{
+                    var cy = cytoscape({{
+                        container: document.getElementById('cy'),
+                        elements: {elements},
+                        style: [
+                            {{
+                                selector: 'node',
+                                style: {{
+                                    'label': 'data(label)',
+                                    'text-wrap': 'wrap',
+                                    'background-color': '#666',
+                                    'color': '#000',
+                                    'font-size': '12px',
+                                    'text-valign': 'center',
+                                    'text-halign': 'center'
+                                }}
+                            }},
+                            {{
+                                selector: 'edge',
+                                style: {{
+                                    'width': 2,
+                                    'line-color': '#999',
+                                    'curve-style': 'bezier',
+                                    'target-arrow-shape': 'triangle'
+                                }}
+                            }}
+                        ],
+                        layout: {{
+                            name: 'cose',
+                            padding: 50,
+                            animate: false,
+                            randomize: true,
+                            componentSpacing: 100,
+                            nodeOverlap: 20
+                        }},
+                        minZoom: 0.2,
+                        maxZoom: 3
+                    }});
+                }});
+            </script>
+        </body>
+    </html>
+    """
     
-    # Use a spring layout as a starting point
-    pos = nx.spring_layout(G)
-
-    # Function to calculate repulsive forces between nodes
-    def repulsive_force(pos1, pos2, k=0.1):
-        dx = pos1[0] - pos2[0]
-        dy = pos1[1] - pos2[1]
-        distance = max((dx**2 + dy**2)**0.5, 0.01)
-        force = k / distance**2
-        return force * dx / distance, force * dy / distance
-
-    # Function to calculate attractive forces for connected nodes
-    def attractive_force(pos1, pos2, k=0.01):
-        dx = pos2[0] - pos1[0]
-        dy = pos2[1] - pos1[1]
-        distance = max((dx**2 + dy**2)**0.5, 0.01)
-        force = k * distance
-        return force * dx / distance, force * dy / distance
-
-    # Iteratively adjust positions
-    iterations = 50
-    for _ in range(iterations):
-        new_pos = pos.copy()
-        for node in G.nodes():
-            fx, fy = 0, 0
-            for other in G.nodes():
-                if node != other:
-                    dfx, dfy = repulsive_force(pos[node], pos[other])
-                    fx += dfx
-                    fy += dfy
-            for neighbor in G.neighbors(node):
-                dfx, dfy = attractive_force(pos[node], pos[neighbor])
-                fx += dfx
-                fy += dfy
-            new_pos[node] = (pos[node][0] + fx, pos[node][1] + fy)
-        pos = new_pos
-
-    # Normalize positions
-    x_values, y_values = zip(*pos.values())
-    x_min, x_max = min(x_values), max(x_values)
-    y_min, y_max = min(y_values), max(y_values)
-    for node in pos:
-        x = (pos[node][0] - x_min) / (x_max - x_min) if x_max > x_min else 0.5
-        y = (pos[node][1] - y_min) / (y_max - y_min) if y_max > y_min else 0.5
-        pos[node] = (x, y)
-
-    # Add buffer around edges
-    buffer = 0.1
-    for node in pos:
-        x, y = pos[node]
-        x = max(buffer, min(1 - buffer, x))
-        y = max(buffer, min(1 - buffer, y))
-        pos[node] = (x, y)
-
-    # Ensure minimum distance between nodes
-    min_dist = 0.2
-    for _ in range(20):
-        for node1 in G.nodes():
-            for node2 in G.nodes():
-                if node1 != node2:
-                    dx = pos[node2][0] - pos[node1][0]
-                    dy = pos[node2][1] - pos[node1][1]
-                    dist = max((dx**2 + dy**2)**0.5, 0.01)
-                    if dist < min_dist:
-                        move = (min_dist - dist) / 2
-                        pos[node1] = (pos[node1][0] - move*dx/dist, pos[node1][1] - move*dy/dist)
-                        pos[node2] = (pos[node2][0] + move*dx/dist, pos[node2][1] + move*dy/dist)
-
-    fig = plt.figure(figsize=(6+4*len(nodes)/10, 4+3*len(nodes)/10))
-    ax1 = plt.subplot(111)
-    ax1.margins(0.5*(3/len(nodes))) 
-    nx.draw_networkx_edge_labels(G, pos, ax=ax1, edge_labels=nx.get_edge_attributes(G, 'label'))
-
-    node_shapes = {node: 's' if any('Treatment' in facility_type for facility_type in facilities.loc[facilities['CWNS_ID'] == node, 'FACILITY_TYPE']) else '2' for node in nodes}
-    for shape in set(node_shapes.values()):
-        node_list = [node for node in nodes if node_shapes[node] == shape]
-        nx.draw_networkx_nodes(G, pos, ax=ax1, nodelist=node_list, node_shape=shape, node_size=3000, node_color='lightblue', alpha = 0.7)
-
-    nx.draw_networkx_edges(G, pos, ax=ax1, edge_color='gray', alpha=0.7, arrows=True, arrowsize=20, arrowstyle='->', min_source_margin=30, min_target_margin=30)
-    nx.draw_networkx_labels(G, pos, ax=ax1, labels=node_labels, font_size=10)
-
-    plt.title(f'{sewershed_id}')
-    plt.axis('off')
-    plt.tight_layout()
-    return fig, G, pos
+    return cyto_html
 
 def add_connection(row):
     connection = [row['CWNS_ID'], row['DISCHARGES_TO_CWNSID'], row['PRESENT_DISCHARGE_PERCENTAGE']]
@@ -155,14 +154,11 @@ with open('processed_data/sewershed_map.pkl', 'rb') as f:
     sewershed_map = pickle.load(f)
 
 st.markdown("""
-### Display the sewershed
-
-##### You may try re-generating the graphic a few times to get an improved layout.
+### Generate U.S. sewershed maps
 """)
+
 # Get unique states and counties from sewershed names
-print(sewershed_map.keys())
 states = sorted(list(set([name.split(' - ')[0] for name in sewershed_map.keys() if ' - ' in name and name.split(' - ')[0] != 'Unspecified'])))
-print(states)
 states.insert(0, "All States")
 
 # Add state selection
@@ -212,7 +208,22 @@ for sewershed_id in sewershed_map.keys():
 # Add dropdown for sewershed selection
 dropdown = st.selectbox("Select a sewershed:", sorted(results_list) if results_list else ["No matching sewersheds"])
 
-# Add button to generate plot
-if st.button('Generate Sewershed Plot') and dropdown != "No matching sewersheds":
-    fig, G, pos = plot_sewershed(dropdown, sewershed_map, facilities)
-    st.pyplot(fig)
+# Display plot directly in Streamlit when sewershed is selected
+if dropdown != "No matching sewersheds":
+    try:
+        html_plot = plot_sewershed(dropdown, sewershed_map, facilities)
+        components.html(html_plot, height=600, scrolling=False)
+    except Exception as e:
+        st.error(f"Error plotting sewershed: {e}")
+        print(f"Error plotting sewershed: {e}")
+
+# Add markdown description
+st.markdown(
+    r"""
+    This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Survey dataset. 
+    Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
+
+    This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
+    For the most up-to-date information, see state-specific databases (e.g. CA State Water Boards) or the US EPA website.
+    """
+)

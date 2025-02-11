@@ -10,6 +10,7 @@ areas_county = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/AREAS_COUNTY.csv
 facility_types = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FACILITY_TYPES.csv', encoding='latin1', low_memory=False)
 discharges = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/DISCHARGES.csv', encoding='latin1', low_memory=False)
 population_wastewater = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/POPULATION_WASTEWATER.csv', encoding='latin1', low_memory=False)
+flow = pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/FLOW.csv', encoding='latin1', low_memory=False)
 discharges['DISCHARGES_TO_CWNSID'] = pd.to_numeric(discharges['DISCHARGES_TO_CWNSID'], errors='coerce').astype('Int64')
 discharges['CWNS_ID'] = pd.to_numeric(discharges['CWNS_ID'], errors='coerce').astype('Int64')
 discharges = discharges.merge(facilities, on='CWNS_ID', how='left')
@@ -20,6 +21,9 @@ pop_served_cwns = pd.concat([
     pd.read_csv('data/cwns/2022CWNS_NATIONAL_APR2024/POPULATION_DECENTRALIZED.csv', encoding='latin1', low_memory=False)
 ])
 
+# Get total flow data
+total_flow = flow[flow['FLOW_TYPE'] == 'Total Flow'][['CWNS_ID', 'CURRENT_DESIGN_FLOW']]
+
 # save intermediate file for sewersheds_app.py
 facilities[['CWNS_ID', 'FACILITY_NAME']].to_csv('processed_data/cwns_facilities_merged.csv', index=False)
 
@@ -29,6 +33,8 @@ facilities = facilities.merge(facility_permit, on='CWNS_ID', how='left')
 print(f'{len(facilities)} CWNS facilities after merging with facility_permit')
 facilities = facilities.merge(facility_types, on='CWNS_ID', how='left')
 print(f'{len(facilities)} CWNS facilities after merging with facility_types')
+facilities = facilities.merge(total_flow, on='CWNS_ID', how='left')
+print(f'{len(facilities)} CWNS facilities after merging with flow')
 facilities_for_marimo = facilities.copy().merge(population_wastewater, on='CWNS_ID', how='left')
 print(f'{len(facilities_for_marimo)} CWNS facilities after merging with population_wastewater')
 facilities_for_marimo.to_csv('processed_data/cwns_facilities_merged.csv', index=False)
@@ -48,8 +54,10 @@ cwns_facilities = facilities.merge(pop_served_cwns, on='CWNS_ID', how='left').dr
 cwns_facilities = cwns_facilities.groupby(['CWNS_ID', 'PERMIT_NUMBER_cwns_clean'], as_index=False).agg({
     'TOTAL_RES_POPULATION_2022': 'sum',
     'TOTAL_RES_POPULATION_2042': 'sum',
+    'CURRENT_DESIGN_FLOW': 'first',
     **{col: 'first' for col in cwns_facilities.columns if col not in ['CWNS_ID', 'PERMIT_NUMBER_cwns_clean', 
-                                                                      'TOTAL_RES_POPULATION_2022', 'TOTAL_RES_POPULATION_2042']}
+                                                                      'TOTAL_RES_POPULATION_2022', 'TOTAL_RES_POPULATION_2042',
+                                                                      'CURRENT_DESIGN_FLOW']}
 })
 print(f'{len(cwns_facilities)} CWNS facilities after merging with pop served and cleaning')
 
@@ -150,6 +158,16 @@ for _sewershed_info in sewershed_map.values():
     center = max(connection_counts.items(), key=lambda x: x[1])[0]
     
     _sewershed_info["center"] = center
+    
+    # Add flow and population data for each node
+    node_data = {}
+    for node in _sewershed_info["nodes"]:
+        node_data[node] = {
+            'flow': cwns_facilities.loc[cwns_facilities['CWNS_ID'] == node, 'CURRENT_DESIGN_FLOW'].iloc[0] if not cwns_facilities[cwns_facilities['CWNS_ID'] == node].empty else None,
+            'population': cwns_facilities.loc[cwns_facilities['CWNS_ID'] == node, 'TOTAL_RES_POPULATION_2022'].iloc[0] if not cwns_facilities[cwns_facilities['CWNS_ID'] == node].empty else None
+        }
+    _sewershed_info["node_data"] = node_data
+    
     new_sewershed_map[new_name] = _sewershed_info
 
 sewershed_map = new_sewershed_map
