@@ -5,7 +5,10 @@ import pickle
 import plotly.graph_objects as go
 import streamlit.components.v1 as components
 import dash_cytoscape as cyto
+cyto.load_extra_layouts()
 from dash import Dash, html
+app = Dash()
+server=app.server
 
 # Set page config
 st.set_page_config(page_title="U.S. Sewersheds", layout="wide", initial_sidebar_state="expanded")
@@ -30,7 +33,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load data
-facilities = pd.read_csv('processed_data/cwns_facilities_merged.csv')[['CWNS_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','FACILITY_TYPE']]
+facilities = pd.read_csv('processed_data/facilities_2022_merged.csv')[['CWNS_ID', 'DUMMY_ID', 'FACILITY_NAME','PERMIT_NUMBER','TOTAL_RES_POPULATION_2022','CURRENT_DESIGN_FLOW','FACILITY_TYPE']]
+
+def add_newlines(text, max_length=20):
+    """Add newlines after spaces for text longer than max_length"""
+    if len(text) <= max_length:
+        return text
+        
+    space_pos = text.find(' ', max_length)
+    if space_pos == -1:
+        return text
+        
+    return text[:space_pos] + '\n' + add_newlines(text[space_pos+1:], max_length)
 
 def plot_sewershed(sewershed_id, sewershed_map, facilities):
     """
@@ -46,74 +60,42 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     - HTML component
     """
     nodes = sewershed_map[sewershed_id]['nodes']
+    print(nodes)
     connections = sewershed_map[sewershed_id]['connections']
+    print(connections)
     elements = []
     
-    # Define color mapping for facility types, sorted by color
-    facility_colors = {
-        # Black - other
-        'Brownfields': '#000000',
-        'Estuary Management': '#000000', 
-        'Marinas': '#000000',
-        'Silviculture': '#000000',
-        'Agriculture - Animals': '#000000',
-        'Agriculture - Cropland': '#000000',
-        'Ground Water - Unknown Source': '#000000',
-        'Other': '#000000',
-
-        # Blue - treatment
-        'Treatment Plant': '#1f77b4',
-        'Biosolids Handling Facility': '#1f77b4',
-        'Clustered System': '#1f77b4',
-
-        # Brown - collection
-        'Collection: Separate Sewers': '#8B4513',
-        'Collection: Pump Stations': '#8B4513',
-        'Collection: Combined Sewers': '#8B4513', 
-        'Collection: Interceptor Sewers': '#8B4513',
-
-        # Grey - storage
-        'Storage Tanks': '#808080',
-        'Storage Facility': '#808080',
-
-        # Orange - OWTS
-        'Onsite Wastewater Treatment System': '#FFA500',
-        'Phase II MS4': '#FFA500',
-        'Phase I MS4': '#FFA500',
-        'Non-traditional MS4': '#FFA500',
-        'Sanitary Landfills': '#FFA500',
-        'Honey Bucket Lagoon': '#FFA500',
-
-        # Purple - reuse/resourec recovery
-        'Water Reuse': '#9370DB',
-        'Resource Extraction': '#9370DB',
-        'Desalination - WW': '#9370DB',
-
-        # Brown - stormwater
-        'Unregulated Community Stormwater': '#8B4513',
-        'Hydromodification': '#8B4513'
-    }
-    
-    # Track which colors are used
     used_colors = set()
     
+    # Find max population in network
+    max_pop = 0
     for node in nodes:
-        facility_mask = facilities['CWNS_ID'] == node
+        facility_mask = facilities['DUMMY_ID'] == node
+        if not facilities[facility_mask].empty:
+            population = facilities.loc[facility_mask, 'TOTAL_RES_POPULATION_2022'].iloc[0]
+            if pd.notna(population) and population > max_pop:
+                max_pop = population
+    
+    for node in nodes:
+        facility_mask = facilities['DUMMY_ID'] == node
         if not facilities[facility_mask].empty:
             name = facilities.loc[facility_mask, 'FACILITY_NAME'].iloc[0]
-            # Add newline after first space after 16 chars
-            if len(name) > 16:
-                space_pos = name.find(' ', 16)
-                if space_pos != -1:
-                    name = name[:space_pos] + '\n' + name[space_pos+1:]
+            population = facilities.loc[facility_mask, 'TOTAL_RES_POPULATION_2022'].iloc[0]
+            flow = facilities.loc[facility_mask, 'CURRENT_DESIGN_FLOW'].iloc[0]
+            permit_number = facilities.loc[facility_mask, 'PERMIT_NUMBER'].iloc[0]
+            dummy_id = facilities.loc[facility_mask, 'DUMMY_ID'].iloc[0]
+    
+            # Add newlines after spaces after every 16 chars
+            if len(name) > 20:
+                name = add_newlines(name)
             facility_type = facilities.loc[facility_mask, 'FACILITY_TYPE'].iloc[0]
-            color = facility_colors.get(facility_type, facility_colors['Other'])
+            color = sewershed_map[sewershed_id]['node_data'][node]['color']
             used_colors.add(color)
-            # Set shape to diamond if facility type contains "collection"
-            shape = 'diamond' if facility_type and 'collection' in facility_type.lower() else 'ellipse'
+            shape = 'diamond' if facility_type and 'collection' in facility_type.lower() else 'ellipse' # different shape for collection
         else:
             name = str(node)
-            color = facility_colors['Other']
+            population = 0
+            color = sewershed_map[sewershed_id]['node_data'][node]['color']
             used_colors.add(color)
             shape = 'ellipse'
             
@@ -122,31 +104,36 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 'id': str(node),
                 'label': name,
                 'color': color,
-                'shape': shape
+                'shape': shape,
+                'TOTAL_RES_POPULATION_2022': str(int(population)) if pd.notna(population) else 'N/A',
+                'CURRENT_DESIGN_FLOW': str(int(flow)) if pd.notna(flow) else 'N/A',
+                'PERMIT_NUMBER': str(permit_number) if pd.notna(permit_number) else 'N/A',
+                'DUMMY_ID': dummy_id
             }
         })
 
     for conn in connections:
         elements.append({
             'data': {
-                'source': str(conn[0]),
-                'target': str(conn[1])
+                'source': str(conn[0]), 
+                'target': str(conn[1]),
+                'label': f'{conn[2]}%'  # Add flow percentage label
             }
         })
 
     # Build legend items based on used colors
     legend_items = []
-    if '#1f77b4' in used_colors:
+    if '#ADD8E6' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #1f77b4;"></div>
+                <div class="legend-color" style="background-color: #ADD8E6;"></div>
                 Centralized Treatment
             </div>
         """)
-    if '#8B4513' in used_colors:
+    if '#C4A484' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #8B4513;"></div>
+                <div class="legend-color" style="background-color: #C4A484;"></div>
                 Collection
             </div>
         """)
@@ -171,18 +158,28 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 Water Reuse & Resource Recovery
             </div>
         """)
-    if '#000000' in used_colors:
+    if '#FFFFC5' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #000000;"></div>
+                <div class="legend-color" style="background-color: #FFFFC5;"></div>
                 Other
+            </div>
+        """)
+    if '#90EE90' in used_colors:
+        legend_items.append("""
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #90EE90;"></div>
+                Outfall
             </div>
         """)
 
     cyto_html = f"""
+
     <html>
         <head>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
             <style>
                 #cy {{
                     width: 100%;
@@ -216,6 +213,16 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                     margin-right: 5px;
                     vertical-align: middle;
                 }}
+                #info-display {{
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: rgba(255, 255, 255, 0.9);
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    display: none;
+                }}
             </style>
         </head>
         <body>
@@ -223,6 +230,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
             <div id="legend">
                 {''.join(legend_items)}
             </div>
+            <div id="info-display"></div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {{
                     var cy = cytoscape({{
@@ -248,22 +256,48 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                                     'width': 2,
                                     'line-color': '#999',
                                     'curve-style': 'bezier',
-                                    'target-arrow-shape': 'triangle'
+                                    'target-arrow-shape': 'triangle',
+                                    'label': 'data(label)',
+                                    'font-size': '10px',
+                                    'text-rotation': 'autorotate',
+                                    'text-margin-y': -10
                                 }}
                             }}
                         ],
                         layout: {{
-                            name: 'cose',
-                            padding: 10,
+                            name: 'dagre',
+                            rankDir: 'LR',
+                            nodeSep: 50,
+                            edgeSep: 50,
+                            rankSep: 20,
+                            padding: 30,
                             animate: false,
-                            randomize: true,
-                            componentSpacing: 4000,
-                            nodeOverlap: 2,
-                            nodeRepulsion: 500000,
-                            idealEdgeLength: 10
+                            fit: true,
+                            spacingFactor: 1.3,
+                            nodeDimensionsIncludeLabels: true
                         }},
                         minZoom: 0.2,
                         maxZoom: 3
+                    }});
+                    var infoDisplay = document.getElementById('info-display');
+                    
+                    cy.on('tap', 'node', function(evt){{
+                        var node = evt.target;
+                        var info = 'Population served: ' + node.data('TOTAL_RES_POPULATION_2022');
+                        if (node.data('PERMIT_NUMBER') && node.data('PERMIT_NUMBER') !== 'NA') {{
+                            info = 'Permit No: ' + node.data('PERMIT_NUMBER') + '<br>' + info;
+                        }}
+                        if (node.data('CURRENT_DESIGN_FLOW') && node.data('CURRENT_DESIGN_FLOW') !== 'NA') {{
+                            info = 'Current Design Flow: ' + node.data('CURRENT_DESIGN_FLOW') + '<br>' + info;
+                        }}
+                        infoDisplay.innerHTML = info;
+                        infoDisplay.style.display = 'block';
+                    }});
+
+                    cy.on('tap', function(evt){{
+                        if(evt.target === cy){{
+                            infoDisplay.style.display = 'none';
+                        }}
                     }});
                 }});
             </script>
@@ -298,7 +332,7 @@ with col2:
     else:
         selected_county = None
 with col3:
-    keyword = st.text_input('Filter by facility name:', key="keyword_input")
+    keyword = st.text_input('Filter by facility name or permit number:', key="keyword_input")
 
 # Filter results
 results_list = []
@@ -314,8 +348,12 @@ for sewershed_id in sewershed_map.keys():
     
     keyword_match = True
     if keyword:
-        facility_names = facilities.loc[facilities['CWNS_ID'].isin(sewershed_map[sewershed_id]['nodes']), 'FACILITY_NAME']
-        keyword_match = facility_names.str.contains(keyword, case=False, na=False).any()
+        facility_mask = facilities['DUMMY_ID'].isin(sewershed_map[sewershed_id]['nodes'])
+        facility_names = facilities.loc[facility_mask, 'FACILITY_NAME']
+        permit_numbers = facilities.loc[facility_mask, 'PERMIT_NUMBER']
+        name_match = facility_names.str.contains(keyword, case=False, na=False).any()
+        permit_match = permit_numbers.str.contains(keyword, case=False, na=False).any()
+        keyword_match = name_match or permit_match
     
     if state_match and county_match and keyword_match:
         results_list.append(sewershed_id)
@@ -328,6 +366,7 @@ if dropdown != "No matching sewersheds":
     try:
         html_plot = plot_sewershed(dropdown, sewershed_map, facilities)
         components.html(html_plot, height=600, scrolling=False)
+
     except Exception as e:
         st.error(f"Error plotting sewershed: {e}")
 
@@ -336,5 +375,5 @@ This tool visualizes facility connection system and treatment plant connections 
 Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
 
 This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
-For the most up-to-date information, see state-specific databases (e.g. CA State Water Boards) or the US EPA website.
+For the most up-to-date information, confirm with local or state authorities.
 """)

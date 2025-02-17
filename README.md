@@ -27,3 +27,7 @@ The packages needed to run the scripts locally are contained in the poetry.lock 
 Then the scripts can be run;
     python us_sewersheds/merge_cwns_data.py
     streamlit run us_sewersheds/sewersheds_app.py
+
+
+Notes:
+Some facilities and sewersheds may be located across multiple counties. When this is the case, the sewershed is logged with its primary county, as defined by the county housing a plurality of nodes.
