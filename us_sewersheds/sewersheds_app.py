@@ -267,7 +267,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                         layout: {{
                             name: 'dagre',
                             rankDir: 'LR',
-                            nodeSep: 50,
+                            nodeSep: 10,
                             edgeSep: 50,
                             rankSep: 20,
                             padding: 30,
