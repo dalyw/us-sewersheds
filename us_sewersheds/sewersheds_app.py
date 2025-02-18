@@ -371,9 +371,9 @@ if dropdown != "No matching sewersheds":
         st.error(f"Error plotting sewershed: {e}")
 
 st.markdown("""
-This tool visualizes facility connection system and treatment plant connections as described in the 2022 Clean Watersheds Needs Survey dataset. 
+This tool visualizes sewers, treatment facilities, outfalls, and connections as described in the 2022 Clean Watersheds Needs Survey dataset. 
 Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
 
-This tool should be used for guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
+This tool should be used for approximation and guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed. 
 For the most up-to-date information, confirm with local or state authorities.
 """)
