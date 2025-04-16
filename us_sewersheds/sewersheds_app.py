@@ -60,9 +60,9 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     - HTML component
     """
     nodes = sewershed_map[sewershed_id]['nodes']
-    print(nodes)
+    # print(nodes)
     connections = sewershed_map[sewershed_id]['connections']
-    print(connections)
+    # print(connections)
     elements = []
     
     used_colors = set()
@@ -81,7 +81,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
         if not facilities[facility_mask].empty:
             name = facilities.loc[facility_mask, 'FACILITY_NAME'].iloc[0]
             population = facilities.loc[facility_mask, 'TOTAL_RES_POPULATION_2022'].iloc[0]
-            flow = facilities.loc[facility_mask, 'CURRENT_DESIGN_FLOW'].iloc[0]
+            flow = facilities.loc[facility_mask, 'CURRENT_DESIGN_FLOW'].iloc[0] if pd.notna(facilities.loc[facility_mask, 'CURRENT_DESIGN_FLOW'].iloc[0]) else None
             permit_number = facilities.loc[facility_mask, 'PERMIT_NUMBER'].iloc[0]
             dummy_id = facilities.loc[facility_mask, 'DUMMY_ID'].iloc[0]
     
@@ -95,6 +95,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
         else:
             name = str(node)
             population = 0
+            flow = None
             color = sewershed_map[sewershed_id]['node_data'][node]['color']
             used_colors.add(color)
             shape = 'ellipse'
@@ -106,9 +107,9 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 'color': color,
                 'shape': shape,
                 'TOTAL_RES_POPULATION_2022': str(int(population)) if pd.notna(population) else 'N/A',
-                'CURRENT_DESIGN_FLOW': str(int(flow)) if pd.notna(flow) else 'N/A',
-                'PERMIT_NUMBER': str(permit_number) if pd.notna(permit_number) else 'N/A',
-                'DUMMY_ID': dummy_id
+                'CURRENT_DESIGN_FLOW': str(int(flow)) if flow is not None else 'N/A',
+                'PERMIT_NUMBER': str(permit_number) if 'permit_number' in locals() and pd.notna(permit_number) else 'N/A',
+                'DUMMY_ID': dummy_id if 'dummy_id' in locals() else node
             }
         })
 
@@ -126,49 +127,49 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     if '#ADD8E6' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #ADD8E6;"></div>
+                <div class="legend-color" style="background-color: #C2E1EF;"></div>
                 Centralized Treatment
             </div>
         """)
     if '#C4A484' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #C4A484;"></div>
+                <div class="legend-color" style="background-color: #D4BCA0;"></div>
                 Collection
             </div>
         """)
     if '#808080' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #808080;"></div>
+                <div class="legend-color" style="background-color: #A0A0A0;"></div>
                 Storage Tanks & Facilities
             </div>
         """)
     if '#FFA500' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFA500;"></div>
+                <div class="legend-color" style="background-color: #FFBE4D;"></div>
                 OWTS, MS4s, Landfills
             </div>
         """)
     if '#9370DB' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #9370DB;"></div>
+                <div class="legend-color" style="background-color: #B095E6;"></div>
                 Water Reuse & Resource Recovery
             </div>
         """)
     if '#FFFFC5' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFFFC5;"></div>
+                <div class="legend-color" style="background-color: #FFFFD8;"></div>
                 Other
             </div>
         """)
     if '#90EE90' in used_colors:
         legend_items.append("""
             <div class="legend-item">
-                <div class="legend-color" style="background-color: #90EE90;"></div>
+                <div class="legend-color" style="background-color: #B0F5B0;"></div>
                 Outfall
             </div>
         """)
@@ -254,9 +255,10 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                                 selector: 'edge',
                                 style: {{
                                     'width': 2,
-                                    'line-color': '#999',
+                                    'line-color': '#CCCCCC',
                                     'curve-style': 'bezier',
                                     'target-arrow-shape': 'triangle',
+                                    'target-arrow-color': '#CCCCCC',
                                     'label': 'data(label)',
                                     'font-size': '10px',
                                     'text-rotation': 'autorotate',
@@ -274,7 +276,16 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                             animate: false,
                             fit: true,
                             spacingFactor: 1.3,
-                            nodeDimensionsIncludeLabels: true
+                            nodeDimensionsIncludeLabels: true,
+                            // Add slight waterfall effect with nodes on left higher than right
+                            transform: function(node, pos) {{
+                                // Calculate a vertical offset based on the horizontal position
+                                // The further right, the lower the node
+                                return {{
+                                    x: pos.x,
+                                    y: pos.y + (pos.x * 0.1) // Adjust the 0.2 multiplier to control the slope
+                                }};
+                            }}
                         }},
                         minZoom: 0.2,
                         maxZoom: 3
@@ -283,12 +294,17 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                     
                     cy.on('tap', 'node', function(evt){{
                         var node = evt.target;
-                        var info = 'Population served: ' + node.data('TOTAL_RES_POPULATION_2022');
+                        var info = 'Upstream population served: ' + node.data('TOTAL_RES_POPULATION_2022');
                         if (node.data('PERMIT_NUMBER') && node.data('PERMIT_NUMBER') !== 'NA') {{
-                            info = 'Permit No: ' + node.data('PERMIT_NUMBER') + '<br>' + info;
+                            // Remove brackets if present in permit number
+                            var permitNumber = node.data('PERMIT_NUMBER');
+                            if (permitNumber.startsWith('[') && permitNumber.endsWith(']')) {{
+                                permitNumber = permitNumber.substring(1, permitNumber.length - 1);
+                            }}
+                            info = 'Permit Number: ' + permitNumber + '<br>' + info;
                         }}
                         if (node.data('CURRENT_DESIGN_FLOW') && node.data('CURRENT_DESIGN_FLOW') !== 'NA') {{
-                            info = 'Current Design Flow: ' + node.data('CURRENT_DESIGN_FLOW') + '<br>' + info;
+                            info = 'Current Design Flow: ' + node.data('CURRENT_DESIGN_FLOW') + ' MGD' + '<br>' + info;
                         }}
                         infoDisplay.innerHTML = info;
                         infoDisplay.style.display = 'block';

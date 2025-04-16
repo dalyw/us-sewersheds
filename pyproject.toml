@@ -1,10 +1,13 @@
 [tool.poetry]
 name = "us-sewersheds"
 version = "0.1.0"
-description = ""
+description = "Process and analyze US sewershed data from CWNS"
 authors = ["Daly Wettermark <139182397+dalyw@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/dalywettermark/us-sewersheds"
+repository = "https://github.com/dalywettermark/us-sewersheds"
+keywords = ["sewersheds", "wastewater", "CWNS", "data"]
 packages = [{include = "us_sewersheds"}]
 
 [tool.poetry.dependencies]
@@ -16,8 +19,7 @@ streamlit = "^1.42.0"
 plotly = "^5.20.0"
 dash = "^2.18.2"
 dash_cytoscape = "^1.0.2"
-
-
+urllib3 = ">=2.0.0"
 
 [build-system]
 requires = ["poetry-core"]

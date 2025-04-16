@@ -1,33 +1,29 @@
-# us-sewersheds
+# US Sewersheds
 
-This repository includes code to visualize sewershed interconnections int he US based on the 2022 Clean Watershed Needs Survey. The us_sewersheds folder includes two scripts:
+Process and analyze US sewershed data from the Clean Watersheds Needs Survey (CWNS).
 
-1. merge_cwns_data.py
-    Merges multiple sources for population served in to the primary facilities list.
+## Overview
 
-    Data used:
-     -- data/cwns: Clean Watersheds Needs Survey 2022 dataset
-     -- data/ww_surveillance: COVID monitoring dataset which also includes facility population served
-     -- data/sso: SSO Annual Report ("Questionnaire")
+This repository includes code to visualize sewershed interconnections in the US based on the 2022 Clean Watershed Needs Survey. The us_sewersheds folder includes two scripts:
 
-2. sewersheds_app.py
-    Deploys Streamlit application to visualize different sewersheds in the US, by state and county
+1. **merge_cwns_data.py**
+   - Merges multiple sources for population served into the primary facilities list.
+   - Functions:
+     - `main(state=None)`: Main processing function that can process all states or a single state.
+     - `merge_population_data(facilities_df, ww_df, sso_df)`: Merges population data from multiple sources.
+     - `build_sewershed_map(facilities_df)`: Creates network connections between treatment facilities.
+   - Required inputs:
+     - data/2022CWNS_NATIONAL_APR2024: Clean Watersheds Needs Survey 2022 dataset
+       - FACILITIES.csv: Main facilities data
+       - FACILITY_PERMIT.csv: Facility permit information
+       - AREAS_COUNTY.csv: County area information
+       - FACILITY_TYPES.csv: Facility type information
+       - FLOW.csv: Flow data
+       - POPULATION_WASTEWATER.csv: Wastewater population data
+       - POPULATION_WASTEWATER_CONFIRMED.csv: Confirmed wastewater population data
+       - POPULATION_DECENTRALIZED.csv: Decentralized population data
+       - DISCHARGES.csv: Discharge information
+2. **sewersheds_app.py**
+   - Deploys Streamlit application to visualize different sewersheds in the US, by state and county
 
-
-The relevant national data is housed under "data"
-
-The processed data, containing a pickle file used for visualizing the plots, is housed under "us_sewersheds"
-
-The packages needed to run the scripts locally are contained in the poetry.lock file. A local environment can be created after installing Conda using the following command line prompts:
-    conda create --name us-sewersheds python=3.11
-    conda activate us-sewersheds
-    conda install poetry
-    poetry install
-
-Then the scripts can be run;
-    python us_sewersheds/merge_cwns_data.py
-    streamlit run us_sewersheds/sewersheds_app.py
-
-
-Notes:
-Some facilities and sewersheds may be located across multiple counties. When this is the case, the sewershed is logged with its primary county, as defined by the county housing a plurality of nodes.
+## Installation
