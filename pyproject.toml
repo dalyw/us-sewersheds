@@ -9,14 +9,13 @@ description = "Process and analyze US sewershed data from CWNS"
 authors = [
     {name = "Daly Wettermark", email = "139182397+dalyw@users.noreply.github.com"}
 ]
-license = {text = "MIT"}
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"
 keywords = ["sewersheds", "wastewater", "CWNS", "data"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
