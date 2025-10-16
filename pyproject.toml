@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "us-sewersheds"
-version = "0.1.1"
+version = "0.1.2"
 description = "Process and analyze US sewershed data from CWNS"
 authors = [
     {name = "Daly Wettermark", email = "139182397+dalyw@users.noreply.github.com"}
