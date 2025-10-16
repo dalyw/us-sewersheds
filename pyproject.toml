@@ -1,26 +1,49 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "us-sewersheds"
 version = "0.1.1"
 description = "Process and analyze US sewershed data from CWNS"
-authors = ["Daly Wettermark <139182397+dalyw@users.noreply.github.com>"]
-license = "MIT"
+authors = [
+    {name = "Daly Wettermark", email = "139182397+dalyw@users.noreply.github.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
-homepage = "https://github.com/dalyw/us-sewersheds"
-repository = "https://github.com/dalyw/us-sewersheds"
+requires-python = ">=3.11"
 keywords = ["sewersheds", "wastewater", "CWNS", "data"]
-packages = [{include = "us_sewersheds"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-pandas = "^2.2.3"
-networkx = "^3.4.2"
-numpy = "^2.2.2"
-streamlit = "^1.42.0"
-plotly = "^5.20.0"
-dash = "^2.18.2"
-dash_cytoscape = "^1.0.2"
-urllib3 = ">=2.0.0"
+dependencies = [
+    "pandas>=2.2.3",
+    "networkx>=3.4.2", 
+    "numpy>=2.2.2",
+    "streamlit>=1.42.0",
+    "plotly>=5.20.0",
+    "dash>=2.18.2",
+    "dash_cytoscape>=1.0.2",
+    "urllib3>=2.0.0",
+]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "flake8",
+    "bumpversion",
+]
+
+[project.urls]
+Homepage = "https://github.com/dalyw/us-sewersheds"
+Repository = "https://github.com/dalyw/us-sewersheds"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["us_sewersheds*"]

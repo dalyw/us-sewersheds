@@ -8,5 +8,5 @@ from .merge_cwns_data import (
     clean_permit_numbers
 )
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
