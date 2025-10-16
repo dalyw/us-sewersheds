@@ -4,6 +4,7 @@ import pickle
 import streamlit.components.v1 as components
 import dash_cytoscape as cyto
 from dash import Dash
+from spatial_analysis import create_folium_map
 
 cyto.load_extra_layouts()
 
@@ -47,6 +48,9 @@ facilities = pd.read_csv("processed_data/facilities_2022_merged.csv")[
         "TOTAL_RES_POPULATION_2022",
         "CURRENT_DESIGN_FLOW",
         "FACILITY_TYPE",
+        "LATITUDE",
+        "LONGITUDE",
+        "CITY",
     ]
 ]
 
@@ -77,9 +81,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     - HTML component
     """
     nodes = sewershed_map[sewershed_id]["nodes"]
-    # print(nodes)
     connections = sewershed_map[sewershed_id]["connections"]
-    # print(connections)
     elements = []
 
     used_colors = set()
@@ -387,6 +389,9 @@ with open("processed_data/sewershed_map.pkl", "rb") as f:
 st.title("U.S. Sewershed Network Visualization")
 st.markdown("### Generate U.S. sewershed maps")
 
+# Add view selection
+view_option = st.radio("Select view:", ["Network Graph", "US Map"], horizontal=True)
+
 # Get states and counties
 states = sorted(
     list(
@@ -466,17 +471,40 @@ with col4:
     )
 
 if dropdown != "No matching sewersheds":
-    try:
-        html_plot = plot_sewershed(dropdown, sewershed_map, facilities)
-        components.html(html_plot, height=600, scrolling=False)
+    if view_option == "Network Graph":
+        try:
+            html_plot = plot_sewershed(dropdown, sewershed_map, facilities)
+            components.html(html_plot, height=600, scrolling=False)
+        except Exception as e:
+            st.error(f"Error plotting sewershed: {e}")
 
-    except Exception as e:
-        st.error(f"Error plotting sewershed: {e}")
+    elif view_option == "US Map":
+        try:
+            # Filter facilities for selected sewershed
+            sewershed_facilities = facilities[
+                facilities["DUMMY_ID"].isin(sewershed_map[dropdown]["nodes"])
+            ]
+
+            # Create folium map
+            folium_map = create_folium_map(sewershed_facilities)
+
+            # Convert to HTML and display
+            map_html = folium_map._repr_html_()
+            components.html(map_html, height=600, scrolling=False)
+
+            st.info(
+                f"**Spatial Analysis Info:** {sewershed_map['_spatial_metadata']['spatial_analysis_method']}"
+            )
+
+        except Exception as e:
+            st.error(f"Error creating Map: {e}")
 
 st.markdown(
     """
 This tool visualizes sewers, treatment facilities, outfalls, and connections as described in the 2022 Clean Watersheds Needs Survey dataset.
 Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
+
+**Spatial Analysis Credits:** H3 hexagonal indexing methodology adapted from the [USEPA Sewersheds repository](https://github.com/USEPA/Sewersheds/blob/main/functions/route_h3.R).
 
 This tool should be used for approximation and guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed.
 For the most up-to-date information, confirm with local or state authorities.

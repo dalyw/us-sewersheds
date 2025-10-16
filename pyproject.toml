@@ -30,6 +30,10 @@ dependencies = [
     "dash>=2.18.2",
     "dash_cytoscape>=1.0.2",
     "urllib3>=2.0.0",
+    "h3>=3.7.6",
+    "geopandas>=0.14.0",
+    "folium>=0.14.0",
+    "shapely>=2.0.0",
 ]
 
 [project.optional-dependencies]

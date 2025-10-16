@@ -1,8 +1,24 @@
 import pandas as pd
 import pickle
 import copy
-from typing import List
-from .plotting_configs import get_node_color, DEFAULT_NODE_COLOR
+from collections import Counter
+import os
+import glob
+# TODO: clean this up
+try:
+    from .plotting_configs import get_node_color, DEFAULT_NODE_COLOR
+    from .spatial_analysis import (
+        add_h3_indexing,
+        # find_spatial_neighbors,
+        aggregate_by_h3_hexagon,
+    )
+except ImportError:
+    from plotting_configs import get_node_color, DEFAULT_NODE_COLOR
+    from spatial_analysis import (
+        add_h3_indexing,
+        # find_spatial_neighbors,
+        aggregate_by_h3_hexagon,
+    )
 
 
 def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
@@ -79,6 +95,17 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
         [pop_data["confirmed"], pop_data["wastewater"], pop_data["decentralized"]]
     ).drop_duplicates(subset="CWNS_ID", keep="first")
 
+    # Load physical location data with coordinates (if available)
+    try:
+        physical_location = pd.read_csv(
+            f"{data_dir}PHYSICAL_LOCATION.csv", encoding="latin1", low_memory=False
+        )[["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY", "STATE_CODE"]]
+    except FileNotFoundError:
+        # Create empty DataFrame if PHYSICAL_LOCATION.csv is not available
+        physical_location = pd.DataFrame(
+            columns=["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY", "STATE_CODE"]
+        )
+
     return {
         "facilities": facilities_2022,
         "permits": facility_permit,
@@ -86,6 +113,7 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
         "types": facility_types,
         "flow": total_flow,
         "population": pop_served_cwns,
+        "physical_location": physical_location,
     }
 
 
@@ -187,9 +215,11 @@ def process_facility_types(facilities_df, discharges_df):
     discharges_df["CWNS_ID"] = pd.to_numeric(
         discharges_df["CWNS_ID"], errors="coerce"
     ).astype("Int64")
-    discharges_df["DUMMY_ID"] = copy.deepcopy(
-        [str(id) for id in discharges_df["CWNS_ID"]]
-    )
+    
+    # Create unique DUMMY_IDs for each discharge record
+    discharges_df["DUMMY_ID"] = [
+        f"{cwns_id}_d{i}" for i, cwns_id in enumerate(discharges_df["CWNS_ID"])
+    ]
     discharges_df["DISCHARGES_TO_DUMMY_ID"] = copy.deepcopy(
         [str(id) for id in discharges_df["DISCHARGES_TO_CWNSID"]]
     )
@@ -390,6 +420,82 @@ def process_facility_types(facilities_df, discharges_df):
     return facilities_df, discharges_df
 
 
+def enhance_sewershed_map_with_spatial_analysis(
+    sewershed_map, facilities_df, h3_resolution=8
+):
+    """
+    Enhance sewershed map with H3 spatial indexing methodology from USEPA Sewersheds repository.
+
+    This function adds spatial analysis capabilities to the traditional sewershed network,
+    incorporating H3 hexagonal grid indexing for geographic clustering and spatial routing.
+
+    Args:
+        sewershed_map: Dictionary containing sewershed mapping data
+        facilities_df: DataFrame containing facility information with coordinates
+        h3_resolution: H3 resolution level for spatial indexing (default 8)
+
+    Returns:
+        Enhanced sewershed map with spatial information
+
+    References:
+        USEPA Sewersheds repository: https://github.com/USEPA/Sewersheds
+    """
+    # Add H3 indexing to facilities with coordinates
+    facilities_with_coords = facilities_df.dropna(subset=["LATITUDE", "LONGITUDE"])
+
+    facilities_with_h3 = add_h3_indexing(
+        facilities_with_coords, resolution=h3_resolution
+    )
+    # facilities_with_neighbors = find_spatial_neighbors(facilities_with_h3)
+    spatial_clusters = aggregate_by_h3_hexagon(facilities_with_h3)
+
+    # Add spatial information to sewershed map
+    enhanced_sewershed_map = sewershed_map.copy()
+
+    # Add metadata about spatial analysis
+    enhanced_sewershed_map["_spatial_metadata"] = {
+        "h3_resolution": h3_resolution,
+        "spatial_analysis_method": "USEPA Sewersheds H3 Methodology",
+        "facilities_with_coordinates": len(facilities_with_h3),
+        "spatial_clusters": len(spatial_clusters),
+        "reference": "https://github.com/USEPA/Sewersheds/blob/main/functions/route_h3.R",
+    }
+
+    # Add spatial clusters data
+    enhanced_sewershed_map["_spatial_clusters"] = spatial_clusters.to_dict("records")
+
+    # Enhance each sewershed with spatial information
+    for sewershed_id, sewershed_data in enhanced_sewershed_map.items():
+        if sewershed_id.startswith("_"):  # Skip metadata entries
+            continue
+
+        # Add H3 information to each node
+        for node_id in sewershed_data["nodes"]:
+            facility_match = facilities_with_h3[
+                facilities_with_h3["DUMMY_ID"] == node_id
+            ]
+            if not facility_match.empty:
+                facility = facility_match.iloc[0]
+
+                # Add H3 spatial data to node_data
+                if "node_data" not in sewershed_data:
+                    sewershed_data["node_data"] = {}
+                if node_id not in sewershed_data["node_data"]:
+                    sewershed_data["node_data"][node_id] = {}
+
+                sewershed_data["node_data"][node_id].update(
+                    {
+                        "h3_index": facility.get("H3_INDEX"),
+                        "h3_neighbors": facility.get("H3_NEIGHBORS", []),
+                        "latitude": facility.get("LATITUDE"),
+                        "longitude": facility.get("LONGITUDE"),
+                        "city": facility.get("CITY"),
+                    }
+                )
+
+    return enhanced_sewershed_map
+
+
 def build_sewershed_map(facilities_df, discharges_df):
     """
     Build sewershed map from facilities and discharges data
@@ -402,7 +508,7 @@ def build_sewershed_map(facilities_df, discharges_df):
         Dictionary containing sewershed mapping data
     """
 
-    def add_connection(row: pd.Series) -> List:
+    def add_connection(row):
         return [
             row["DUMMY_ID"],
             row["DISCHARGES_TO_DUMMY_ID"],
@@ -468,29 +574,44 @@ def build_sewershed_map(facilities_df, discharges_df):
     new_sewershed_map = {}
     state_county_used = {}
     print("Adding state and county info")
+    
+    # Pre-compute lookups for performance optimization
+    print("Pre-computing location and facility lookups")
+    
+    # Check for duplicate DUMMY_IDs in discharges
+    duplicate_discharge_ids = discharges_df[discharges_df.duplicated(subset="DUMMY_ID", keep=False)]
+    if not duplicate_discharge_ids.empty:
+        print(f"Warning: Found {len(duplicate_discharge_ids)} duplicate DUMMY_IDs in discharges")
+        print("Dropping duplicates, keeping first occurrence")
+        discharges_df = discharges_df.drop_duplicates(subset="DUMMY_ID", keep="first")
+    
+    # Check for duplicate DUMMY_IDs in facilities
+    duplicate_facility_ids = facilities_df[facilities_df.duplicated(subset="DUMMY_ID", keep=False)]
+    if not duplicate_facility_ids.empty:
+        print(f"Warning: Found {len(duplicate_facility_ids)} duplicate DUMMY_IDs in facilities")
+        print("Dropping duplicates, keeping first occurrence")
+        facilities_df = facilities_df.drop_duplicates(subset="DUMMY_ID", keep="first")
+    
+    discharge_lookup = discharges_df.set_index("DUMMY_ID")[["STATE_CODE", "COUNTY_NAME"]].to_dict("index")
+    facility_lookup = facilities_df.set_index("DUMMY_ID").to_dict("index")
+    
     for sewershed_id, sewershed_info in sewershed_map.items():
         # Get location info for nodes
         node_info = []
         for node in sewershed_info["nodes"]:
-            node_data = discharges_df[discharges_df["DUMMY_ID"] == node][
-                ["STATE_CODE", "COUNTY_NAME"]
-            ]
-            if not node_data.empty:
-                node_info.append(node_data.iloc[0].to_dict())
+            if node in discharge_lookup:
+                node_info.append(discharge_lookup[node])
 
         # Get primary state and county
         if len(node_info) > 0:
-            node_info_df = pd.DataFrame(node_info)
-            state_counts = node_info_df["STATE_CODE"].value_counts()
-            primary_state = (
-                state_counts.index[0] if len(state_counts) > 0 else "Unspecified"
+            # Use Counter for faster counting
+            state_counts = Counter(info["STATE_CODE"] for info in node_info)
+            primary_state = state_counts.most_common(1)[0][0] if state_counts else "Unspecified"
+            county_counts = Counter(
+                info["COUNTY_NAME"] for info in node_info 
+                if info["STATE_CODE"] == primary_state
             )
-            county_counts = node_info_df[node_info_df["STATE_CODE"] == primary_state][
-                "COUNTY_NAME"
-            ].value_counts()
-            primary_county = (
-                county_counts.index[0] if len(county_counts) > 0 else "Unspecified"
-            )
+            primary_county = county_counts.most_common(1)[0][0] if county_counts else "Unspecified"
         else:
             primary_state = "Unspecified"
             primary_county = "Unspecified"
@@ -502,38 +623,33 @@ def build_sewershed_map(facilities_df, discharges_df):
         )
         new_name = f"{primary_state} - {primary_county} County Sewershed {state_county_used[state_county_key]}"
 
-        # Add node data
+        # Add node data using pre-computed lookup
+        facility_columns = [
+            "CURRENT_DESIGN_FLOW",
+            "TOTAL_RES_POPULATION_2022",
+            "PERMIT_NUMBER",
+            "CWNS_ID",
+            "DUMMY_ID",
+            "FACILITY_NAME",
+            "FACILITY_TYPE",
+        ]
         node_data = {}
         for node in sewershed_info["nodes"]:
             node_data[node] = {}
-            facility_mask = facilities_df["DUMMY_ID"] == node
-            if not facilities_df[facility_mask].empty:
-                facility = facilities_df[facility_mask].iloc[0]
-                for key in [
-                    "CURRENT_DESIGN_FLOW",
-                    "TOTAL_RES_POPULATION_2022",
-                    "PERMIT_NUMBER",
-                    "CWNS_ID",
-                    "DUMMY_ID",
-                    "FACILITY_NAME",
-                    "FACILITY_TYPE",
-                ]:
-                    node_data[node][key] = facility[key]
-                node_data[node]["color"] = get_node_color(
-                    facility["FACILITY_TYPE"], facility["FACILITY_NAME"]
-                )
-            else:
-                for key in [
-                    "CURRENT_DESIGN_FLOW",
-                    "TOTAL_RES_POPULATION_2022",
-                    "PERMIT_NUMBER",
-                    "CWNS_ID",
-                    "DUMMY_ID",
-                    "FACILITY_NAME",
-                    "FACILITY_TYPE",
-                ]:
-                    node_data[node][key] = None
-                node_data[node]["color"] = DEFAULT_NODE_COLOR
+            # TODO: get rid of "get"
+            facility = facility_lookup.get(node)
+            
+            for key in facility_columns:
+                if key == "DUMMY_ID":
+                    node_data[node][key] = node  # Use the node itself as DUMMY_ID
+                else:
+                    node_data[node][key] = facility.get(key) if facility else None
+            
+            node_data[node]["color"] = (
+                get_node_color(facility["FACILITY_TYPE"], facility["FACILITY_NAME"])
+                if facility
+                else DEFAULT_NODE_COLOR
+            )
 
         sewershed_info["node_data"] = node_data
         new_sewershed_map[new_name] = sewershed_info
@@ -662,6 +778,7 @@ def load_and_merge_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/", state=N
             "TOTAL_RES_POPULATION_2022",
             "TOTAL_RES_POPULATION_2042",
         ],
+        "physical_location": ["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY"],
     }
 
     # Merge all dataframes
@@ -675,6 +792,51 @@ def load_and_merge_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/", state=N
     return facilities
 
 
+def load_or_compute_checkpoint(checkpoint_name, compute_func, output_dir="processed_data/", state=None, *args):
+    """
+    Load checkpoint if exists, otherwise compute and save it.
+    
+    Args:
+        checkpoint_name: Name of the checkpoint (e.g., "merged_data", "discharges")
+        compute_func: Function to call if checkpoint doesn't exist
+        output_dir: Directory for checkpoint files
+        state: Optional state code for state-specific checkpoints
+        *args: Additional arguments to pass to compute_func
+        
+    Returns:
+        The loaded or computed data
+    """
+    checkpoint_file = (f"{output_dir}{state}_checkpoint_{checkpoint_name}.pkl" 
+                      if state else f"{output_dir}checkpoint_{checkpoint_name}.pkl")
+    
+    if os.path.exists(checkpoint_file):
+        print(f"Loading {checkpoint_name}")
+        with open(checkpoint_file, "rb") as f:
+            return pickle.load(f)
+    else:
+        print(f"Computing and saving {checkpoint_name}")
+        result = compute_func(*args)
+        with open(checkpoint_file, "wb") as f:
+            pickle.dump(result, f)
+        return result
+
+
+def cleanup_checkpoints(output_dir="processed_data/", state=None):
+    """
+    Clean up intermediate checkpoint files.
+    """
+    
+    pattern = f"{output_dir}{state}_checkpoint_*.pkl" if state else f"{output_dir}checkpoint_*.pkl"
+    checkpoint_files = glob.glob(pattern)
+    
+    for file in checkpoint_files:
+        try:
+            os.remove(file)
+            print(f"Removed checkpoint: {file}")
+        except OSError as e:
+            print(f"Error removing {file}: {e}")
+    
+    
 def main(
     data_dir="data/2022CWNS_NATIONAL_APR2024/", output_dir="processed_data/", state=None
 ):
@@ -686,32 +848,54 @@ def main(
         output_dir: Directory for output files
         state: Optional state code to filter data (e.g., 'CA' for California)
     """
-    # Load and merge CWNS data
-    print("Loading and merging CWNS data")
-    facilities_2022 = load_and_merge_cwns_data(data_dir, state)
-
-    # Load and process discharges
-    print("Loading discharge data")
-    discharges = pd.read_csv(
-        f"{data_dir}DISCHARGES.csv", encoding="latin1", low_memory=False
+    
+    # 1: Load and merge basic data
+    facilities_2022 = load_or_compute_checkpoint(
+        "1_merged_data", 
+        lambda: load_and_merge_cwns_data(data_dir, state),
+        output_dir, state
     )
 
-    # Filter discharges by state if specified
-    if state:
-        state_facilities = set(facilities_2022["CWNS_ID"].unique())
-        discharges = discharges[
-            (discharges["CWNS_ID"].isin(state_facilities))
-            | (discharges["DISCHARGES_TO_CWNSID"].isin(state_facilities))
-        ]
-        print(
-            f"Found {len(discharges)} discharge connections involving {state} facilities"
+    # 2: Process discharges
+    def compute_discharges(facilities_df):
+        discharges = pd.read_csv(
+            f"{data_dir}DISCHARGES.csv", encoding="latin1", low_memory=False
         )
 
-    # Process facility types and build sewershed map
-    print("Processing facility types")
-    facilities_2022, discharges = process_facility_types(facilities_2022, discharges)
-    print("Building sewershed map")
-    sewershed_map = build_sewershed_map(facilities_2022, discharges)
+        # Filter discharges by state if specified
+        if state:
+            state_facilities = set(facilities_df["CWNS_ID"].unique())
+            discharges = discharges[
+                (discharges["CWNS_ID"].isin(state_facilities))
+                | (discharges["DISCHARGES_TO_CWNSID"].isin(state_facilities))
+            ]
+            print(f"{len(discharges)} discharge connections in {state}")
+
+        print("Processing facility types")
+        updated_facilities, updated_discharges = process_facility_types(facilities_df, discharges)
+        return updated_facilities, updated_discharges
+    
+    facilities_2022, discharges = load_or_compute_checkpoint(
+        "2_discharges", 
+        compute_discharges,
+        output_dir, state, facilities_2022
+    )
+
+    # 3: Sewershed map
+    sewershed_map = load_or_compute_checkpoint(
+        "3_sewershed_map", 
+        lambda fac_df, dis_df: build_sewershed_map(fac_df, dis_df),
+        output_dir, state, facilities_2022, discharges
+    )
+
+    # 4: Spatial analysis
+    sewershed_map = load_or_compute_checkpoint(
+        "4_spatial", 
+        lambda sew_map, fac_df: enhance_sewershed_map_with_spatial_analysis(
+            sew_map, fac_df, h3_resolution=8
+        ),
+        output_dir, state, sewershed_map, facilities_2022
+    )
 
     print("Saving outputs")
     output_prefix = f"{state}_" if state else ""
@@ -725,6 +909,9 @@ def main(
         "CURRENT_DESIGN_FLOW",
         "COUNTY_NAME",
         "STATE_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "CITY",
     ]
     facilities_2022[output_columns].to_csv(
         f"{output_dir}{output_prefix}facilities_2022_merged.csv", index=False
@@ -734,5 +921,5 @@ def main(
 
 
 if __name__ == "__main__":
-    # main(state = "CA")
+    # main(state="CA")
     main()
