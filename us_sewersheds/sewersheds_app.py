@@ -4,7 +4,7 @@ import pickle
 import streamlit.components.v1 as components
 import dash_cytoscape as cyto
 from dash import Dash
-from spatial_analysis import create_folium_map
+from us_sewersheds.spatial_analysis import create_folium_map
 
 cyto.load_extra_layouts()
 
