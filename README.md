@@ -27,3 +27,10 @@ This repository includes code to visualize sewershed interconnections in the US 
    - Deploys Streamlit application to visualize different sewersheds in the US, by state and county
 
 ## Installation
+
+### From PyPI
+```bash
+pip install us-sewersheds
+```
+
+### From Source
