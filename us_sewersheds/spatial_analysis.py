@@ -26,7 +26,9 @@ def add_h3_indexing(facilities_df, resolution=8):
 
     valid_coords = facilities_df.dropna(subset=["LATITUDE", "LONGITUDE"])
     valid_coords["H3_INDEX"] = valid_coords.apply(
-        lambda row: h3.latlng_to_cell(row["LATITUDE"], row["LONGITUDE"], resolution),
+        lambda row: h3.latlng_to_cell(
+            row["LATITUDE"], row["LONGITUDE"], resolution
+        ),
         axis=1,
     )
 
@@ -86,9 +88,13 @@ def calculate_spatial_distances(facilities_df, max_distance_km=50.0):
     facilities_list = facilities_df[["CWNS_ID", "LATITUDE", "LONGITUDE"]].values
 
     for i, (cwns_id1, lat1, lon1) in enumerate(facilities_list):
-        for j, (cwns_id2, lat2, lon2) in enumerate(facilities_list[i + 1 :], i + 1):
+        for j, (cwns_id2, lat2, lon2) in enumerate(
+            facilities_list[i + 1 :], i + 1
+        ):
             if cwns_id1 != cwns_id2:
-                distance_km = h3.latlng_distance((lat1, lon1), (lat2, lon2), unit="km")
+                distance_km = h3.latlng_distance(
+                    (lat1, lon1), (lat2, lon2), unit="km"
+                )
                 if distance_km <= max_distance_km:
                     distances.append(
                         {
@@ -103,7 +109,9 @@ def calculate_spatial_distances(facilities_df, max_distance_km=50.0):
 
 def create_spatial_network_map(facilities_df, h3_resolution=8):
     """Create spatial network map with H3 spatial analysis."""
-    facilities_with_h3 = add_h3_indexing(facilities_df, resolution=h3_resolution)
+    facilities_with_h3 = add_h3_indexing(
+        facilities_df, resolution=h3_resolution
+    )
     spatial_clusters = aggregate_by_h3_hexagon(facilities_with_h3)
     spatial_distances = calculate_spatial_distances(facilities_with_h3)
 
@@ -117,7 +125,8 @@ def create_spatial_network_map(facilities_df, h3_resolution=8):
 
 
 def create_folium_map(facilities_df, h3_clusters=None):
-    """Create interactive Folium map showing facilities and spatial relationships."""
+    """Create interactive Folium map showing
+    facilities and spatial relationships."""
     center_lat = facilities_df["LATITUDE"].mean()
     center_lon = facilities_df["LONGITUDE"].mean()
 
@@ -175,7 +184,7 @@ def create_folium_map(facilities_df, h3_clusters=None):
     # Add H3 cluster visualization if provided
     if h3_clusters is not None and not h3_clusters.empty:
         for _, cluster in h3_clusters.iterrows():
-            if pd.notna(cluster["CENTROID_LAT"]) and pd.notna(cluster["CENTROID_LON"]):
+            if pd.notna(cluster["CENTROID_LAT"]):
                 hex_boundary = h3.cell_to_boundary(cluster["H3_INDEX"])
                 hex_coords = [[lat, lon] for lon, lat in hex_boundary]
 
@@ -195,7 +204,9 @@ def export_spatial_analysis(
     facilities_df, output_dir="processed_data/", h3_resolution=8
 ):
     """Export spatial analysis results to various formats."""
-    facilities_with_h3 = add_h3_indexing(facilities_df, resolution=h3_resolution)
+    facilities_with_h3 = add_h3_indexing(
+        facilities_df, resolution=h3_resolution
+    )
     spatial_clusters = aggregate_by_h3_hexagon(facilities_with_h3)
     spatial_distances = calculate_spatial_distances(facilities_with_h3)
 
@@ -204,7 +215,9 @@ def export_spatial_analysis(
     facilities_with_h3.to_csv(
         f"{output_dir}facilities_with_h3_indexing.csv", index=False
     )
-    output_files["facilities_h3"] = f"{output_dir}facilities_with_h3_indexing.csv"
+    output_files["facilities_h3"] = (
+        f"{output_dir}facilities_with_h3_indexing.csv"
+    )
 
     spatial_clusters.to_csv(f"{output_dir}h3_spatial_clusters.csv", index=False)
     output_files["spatial_clusters"] = f"{output_dir}h3_spatial_clusters.csv"

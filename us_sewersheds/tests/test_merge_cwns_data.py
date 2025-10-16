@@ -63,8 +63,16 @@ def test_load_cwns_data(data_dir, expected_keys):
             "CA",
             ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"],
         ),
-        ("us_sewersheds/tests/data/", None, ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"]),
-        ("us_sewersheds/tests/data/", "CA", ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"]),
+        (
+            "us_sewersheds/tests/data/",
+            None,
+            ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"],
+        ),
+        (
+            "us_sewersheds/tests/data/",
+            "CA",
+            ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"],
+        ),
     ],
 )
 def test_load_and_merge_cwns_data(data_dir, state, expected_columns):
@@ -95,7 +103,9 @@ def create_test_facilities_df():
     facilities_df = pd.read_csv("us_sewersheds/tests/data/FACILITIES.csv")
     facilities_df["DUMMY_ID"] = facilities_df["CWNS_ID"].astype(str)
     # Convert PERMIT_NUMBER to list format as expected by the function
-    facilities_df["PERMIT_NUMBER"] = facilities_df["PERMIT_NUMBER"].apply(lambda x: [x])
+    facilities_df["PERMIT_NUMBER"] = facilities_df["PERMIT_NUMBER"].apply(
+        lambda x: [x]
+    )
     return facilities_df
 
 

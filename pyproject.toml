@@ -51,3 +51,6 @@ Repository = "https://github.com/dalyw/us-sewersheds"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["us_sewersheds*"]
+
+[tool.black]
+line-length = 80

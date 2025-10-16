@@ -4,6 +4,7 @@ import copy
 from collections import Counter
 import os
 import glob
+
 # TODO: clean this up
 try:
     from .plotting_configs import get_node_color, DEFAULT_NODE_COLOR
@@ -41,7 +42,9 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
         f"{data_dir}FACILITY_PERMIT.csv", encoding="latin1", low_memory=False
     )[["CWNS_ID", "PERMIT_NUMBER"]]
     facility_permit = (
-        facility_permit.groupby("CWNS_ID")["PERMIT_NUMBER"].agg(list).reset_index()
+        facility_permit.groupby("CWNS_ID")["PERMIT_NUMBER"]
+        .agg(list)
+        .reset_index()
     )
 
     # Load county data
@@ -56,21 +59,29 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
     facility_types = pd.read_csv(
         f"{data_dir}FACILITY_TYPES.csv", encoding="latin1", low_memory=False
     )
-    facility_types = facility_types.drop("CHANGE_TYPE", axis=1).drop_duplicates()
+    facility_types = facility_types.drop(
+        "CHANGE_TYPE", axis=1
+    ).drop_duplicates()
 
     # Load flow data
-    flow = pd.read_csv(f"{data_dir}FLOW.csv", encoding="latin1", low_memory=False)[
-        ["CWNS_ID", "FLOW_TYPE", "CURRENT_DESIGN_FLOW"]
-    ]
+    flow = pd.read_csv(
+        f"{data_dir}FLOW.csv", encoding="latin1", low_memory=False
+    )[["CWNS_ID", "FLOW_TYPE", "CURRENT_DESIGN_FLOW"]]
     total_flow = flow[flow["FLOW_TYPE"] == "Total Flow"][
         ["CWNS_ID", "CURRENT_DESIGN_FLOW"]
     ]
 
     # Load and merge population data
-    pop_columns = ["CWNS_ID", "TOTAL_RES_POPULATION_2022", "TOTAL_RES_POPULATION_2042"]
+    pop_columns = [
+        "CWNS_ID",
+        "TOTAL_RES_POPULATION_2022",
+        "TOTAL_RES_POPULATION_2042",
+    ]
     pop_data = {
         "wastewater": pd.read_csv(
-            f"{data_dir}POPULATION_WASTEWATER.csv", encoding="latin1", low_memory=False
+            f"{data_dir}POPULATION_WASTEWATER.csv",
+            encoding="latin1",
+            low_memory=False,
         )[pop_columns],
         "confirmed": pd.read_csv(
             f"{data_dir}POPULATION_WASTEWATER_CONFIRMED.csv",
@@ -92,13 +103,19 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
     }
 
     pop_served_cwns = pd.concat(
-        [pop_data["confirmed"], pop_data["wastewater"], pop_data["decentralized"]]
+        [
+            pop_data["confirmed"],
+            pop_data["wastewater"],
+            pop_data["decentralized"],
+        ]
     ).drop_duplicates(subset="CWNS_ID", keep="first")
 
     # Load physical location data with coordinates (if available)
     try:
         physical_location = pd.read_csv(
-            f"{data_dir}PHYSICAL_LOCATION.csv", encoding="latin1", low_memory=False
+            f"{data_dir}PHYSICAL_LOCATION.csv",
+            encoding="latin1",
+            low_memory=False,
         )[["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY", "STATE_CODE"]]
     except FileNotFoundError:
         # Create empty DataFrame if PHYSICAL_LOCATION.csv is not available
@@ -144,9 +161,9 @@ def clean_permit_numbers(facilities_df):
         .replace("|".join(patterns_to_remove), "", regex=True)
     )
     for old, new in replacements.items():
-        df["PERMIT_NUMBER_cwns_clean"] = df["PERMIT_NUMBER_cwns_clean"].str.replace(
-            old, new, regex=True
-        )
+        df["PERMIT_NUMBER_cwns_clean"] = df[
+            "PERMIT_NUMBER_cwns_clean"
+        ].str.replace(old, new, regex=True)
     return df
 
 
@@ -215,7 +232,7 @@ def process_facility_types(facilities_df, discharges_df):
     discharges_df["CWNS_ID"] = pd.to_numeric(
         discharges_df["CWNS_ID"], errors="coerce"
     ).astype("Int64")
-    
+
     # Create unique DUMMY_IDs for each discharge record
     discharges_df["DUMMY_ID"] = [
         f"{cwns_id}_d{i}" for i, cwns_id in enumerate(discharges_df["CWNS_ID"])
@@ -256,9 +273,9 @@ def process_facility_types(facilities_df, discharges_df):
                     facilities_df.loc[mask, "DUMMY_ID"] = new_dummy_id
 
                     # Only update name if it doesn't already contain the facility type
-                    mask_name = mask & ~facilities_df["FACILITY_NAME"].str.contains(
-                        f"({fac_type})", regex=False, na=False
-                    )
+                    mask_name = mask & ~facilities_df[
+                        "FACILITY_NAME"
+                    ].str.contains(f"({fac_type})", regex=False, na=False)
                     facilities_df.loc[mask_name, "FACILITY_NAME"] = (
                         facilities_df.loc[mask_name, "FACILITY_NAME"]
                         + " ("
@@ -268,11 +285,18 @@ def process_facility_types(facilities_df, discharges_df):
 
                     # Track IDs if found
                     if fac_type == "Treatment Plant":
-                        treatment_plant_mapping[copy.deepcopy(cwns_id)] = new_dummy_id
-                    elif "reuse" in fac_type.lower() or "reclaim" in fac_type.lower():
+                        treatment_plant_mapping[copy.deepcopy(cwns_id)] = (
+                            new_dummy_id
+                        )
+                    elif (
+                        "reuse" in fac_type.lower()
+                        or "reclaim" in fac_type.lower()
+                    ):
                         reuse_mapping[copy.deepcopy(cwns_id)] = new_dummy_id
                     elif "collection" in fac_type.lower():
-                        collection_mapping[copy.deepcopy(cwns_id)] = new_dummy_id
+                        collection_mapping[copy.deepcopy(cwns_id)] = (
+                            new_dummy_id
+                        )
 
                 # Create connections between consecutive types
                 for t in range(len(sorted_types) - 1):
@@ -285,7 +309,9 @@ def process_facility_types(facilities_df, discharges_df):
                             "CWNS_ID": [copy.deepcopy(cwns_id)],
                             "DUMMY_ID": [processed_types[fac_type1]],
                             "DISCHARGES_TO_CWNSID": [copy.deepcopy(cwns_id)],
-                            "DISCHARGES_TO_DUMMY_ID": [processed_types[fac_type2]],
+                            "DISCHARGES_TO_DUMMY_ID": [
+                                processed_types[fac_type2]
+                            ],
                             "DISCHARGE_TYPE": [
                                 f"Internal connection from {fac_type1} to {fac_type2}"
                             ],
@@ -375,7 +401,9 @@ def process_facility_types(facilities_df, discharges_df):
             # Create descriptive name combining parent facility and discharge type
             parent_name = facility["FACILITY_NAME"]
             discharge_type = discharge["DISCHARGE_TYPE"]
-            new_facility_row["FACILITY_NAME"] = f"{parent_name} - {discharge_type}"
+            new_facility_row["FACILITY_NAME"] = (
+                f"{parent_name} - {discharge_type}"
+            )
 
             new_facility_row["FACILITY_TYPE"] = (
                 "Reuse"
@@ -414,7 +442,9 @@ def process_facility_types(facilities_df, discharges_df):
     # Add the new discharge facility rows to the facilities DataFrame
     if all_new_facility_rows:
         new_facilities_df = pd.DataFrame(all_new_facility_rows)
-        facilities_df = pd.concat([facilities_df, new_facilities_df], ignore_index=True)
+        facilities_df = pd.concat(
+            [facilities_df, new_facilities_df], ignore_index=True
+        )
         print(f"Added {len(all_new_facility_rows)} new discharge facility rows")
 
     return facilities_df, discharges_df
@@ -441,7 +471,9 @@ def enhance_sewershed_map_with_spatial_analysis(
         USEPA Sewersheds repository: https://github.com/USEPA/Sewersheds
     """
     # Add H3 indexing to facilities with coordinates
-    facilities_with_coords = facilities_df.dropna(subset=["LATITUDE", "LONGITUDE"])
+    facilities_with_coords = facilities_df.dropna(
+        subset=["LATITUDE", "LONGITUDE"]
+    )
 
     facilities_with_h3 = add_h3_indexing(
         facilities_with_coords, resolution=h3_resolution
@@ -462,7 +494,9 @@ def enhance_sewershed_map_with_spatial_analysis(
     }
 
     # Add spatial clusters data
-    enhanced_sewershed_map["_spatial_clusters"] = spatial_clusters.to_dict("records")
+    enhanced_sewershed_map["_spatial_clusters"] = spatial_clusters.to_dict(
+        "records"
+    )
 
     # Enhance each sewershed with spatial information
     for sewershed_id, sewershed_data in enhanced_sewershed_map.items():
@@ -545,9 +579,13 @@ def build_sewershed_map(facilities_df, discharges_df):
                     discharge_from_id in sewershed_info["nodes"]
                     or discharges_to in sewershed_info["nodes"]
                 ):
-                    sewershed_info["nodes"].update([discharge_from_id, discharges_to])
+                    sewershed_info["nodes"].update(
+                        [discharge_from_id, discharges_to]
+                    )
                     sewershed_info["connections"].append(add_connection(row))
-                    nodes_already_mapped.extend([discharge_from_id, discharges_to])
+                    nodes_already_mapped.extend(
+                        [discharge_from_id, discharges_to]
+                    )
                     break
 
     # Consolidate sewersheds with redundant nodes
@@ -561,7 +599,9 @@ def build_sewershed_map(facilities_df, discharges_df):
             if id1 in sewershed_map and id2 in sewershed_map:
                 if sewershed_map[id1]["nodes"] & sewershed_map[id2]["nodes"]:
                     # Merge sewersheds
-                    sewershed_map[id1]["nodes"].update(sewershed_map[id2]["nodes"])
+                    sewershed_map[id1]["nodes"].update(
+                        sewershed_map[id2]["nodes"]
+                    )
                     sewershed_map[id1]["connections"].extend(
                         sewershed_map[id2]["connections"]
                     )
@@ -574,27 +614,41 @@ def build_sewershed_map(facilities_df, discharges_df):
     new_sewershed_map = {}
     state_county_used = {}
     print("Adding state and county info")
-    
+
     # Pre-compute lookups for performance optimization
     print("Pre-computing location and facility lookups")
-    
+
     # Check for duplicate DUMMY_IDs in discharges
-    duplicate_discharge_ids = discharges_df[discharges_df.duplicated(subset="DUMMY_ID", keep=False)]
+    duplicate_discharge_ids = discharges_df[
+        discharges_df.duplicated(subset="DUMMY_ID", keep=False)
+    ]
     if not duplicate_discharge_ids.empty:
-        print(f"Warning: Found {len(duplicate_discharge_ids)} duplicate DUMMY_IDs in discharges")
+        print(
+            f"Warning: Found {len(duplicate_discharge_ids)} duplicate DUMMY_IDs in discharges"
+        )
         print("Dropping duplicates, keeping first occurrence")
-        discharges_df = discharges_df.drop_duplicates(subset="DUMMY_ID", keep="first")
-    
+        discharges_df = discharges_df.drop_duplicates(
+            subset="DUMMY_ID", keep="first"
+        )
+
     # Check for duplicate DUMMY_IDs in facilities
-    duplicate_facility_ids = facilities_df[facilities_df.duplicated(subset="DUMMY_ID", keep=False)]
+    duplicate_facility_ids = facilities_df[
+        facilities_df.duplicated(subset="DUMMY_ID", keep=False)
+    ]
     if not duplicate_facility_ids.empty:
-        print(f"Warning: Found {len(duplicate_facility_ids)} duplicate DUMMY_IDs in facilities")
+        print(
+            f"Warning: Found {len(duplicate_facility_ids)} duplicate DUMMY_IDs in facilities"
+        )
         print("Dropping duplicates, keeping first occurrence")
-        facilities_df = facilities_df.drop_duplicates(subset="DUMMY_ID", keep="first")
-    
-    discharge_lookup = discharges_df.set_index("DUMMY_ID")[["STATE_CODE", "COUNTY_NAME"]].to_dict("index")
+        facilities_df = facilities_df.drop_duplicates(
+            subset="DUMMY_ID", keep="first"
+        )
+
+    discharge_lookup = discharges_df.set_index("DUMMY_ID")[
+        ["STATE_CODE", "COUNTY_NAME"]
+    ].to_dict("index")
     facility_lookup = facilities_df.set_index("DUMMY_ID").to_dict("index")
-    
+
     for sewershed_id, sewershed_info in sewershed_map.items():
         # Get location info for nodes
         node_info = []
@@ -606,12 +660,21 @@ def build_sewershed_map(facilities_df, discharges_df):
         if len(node_info) > 0:
             # Use Counter for faster counting
             state_counts = Counter(info["STATE_CODE"] for info in node_info)
-            primary_state = state_counts.most_common(1)[0][0] if state_counts else "Unspecified"
+            primary_state = (
+                state_counts.most_common(1)[0][0]
+                if state_counts
+                else "Unspecified"
+            )
             county_counts = Counter(
-                info["COUNTY_NAME"] for info in node_info 
+                info["COUNTY_NAME"]
+                for info in node_info
                 if info["STATE_CODE"] == primary_state
             )
-            primary_county = county_counts.most_common(1)[0][0] if county_counts else "Unspecified"
+            primary_county = (
+                county_counts.most_common(1)[0][0]
+                if county_counts
+                else "Unspecified"
+            )
         else:
             primary_state = "Unspecified"
             primary_county = "Unspecified"
@@ -638,15 +701,21 @@ def build_sewershed_map(facilities_df, discharges_df):
             node_data[node] = {}
             # TODO: get rid of "get"
             facility = facility_lookup.get(node)
-            
+
             for key in facility_columns:
                 if key == "DUMMY_ID":
-                    node_data[node][key] = node  # Use the node itself as DUMMY_ID
+                    node_data[node][
+                        key
+                    ] = node  # Use the node itself as DUMMY_ID
                 else:
-                    node_data[node][key] = facility.get(key) if facility else None
-            
+                    node_data[node][key] = (
+                        facility.get(key) if facility else None
+                    )
+
             node_data[node]["color"] = (
-                get_node_color(facility["FACILITY_TYPE"], facility["FACILITY_NAME"])
+                get_node_color(
+                    facility["FACILITY_TYPE"], facility["FACILITY_NAME"]
+                )
                 if facility
                 else DEFAULT_NODE_COLOR
             )
@@ -689,13 +758,15 @@ def update_external_discharges(
         if (
             discharge_to_id in collection_mapping.keys()
             and "collection"
-            in facilities_df[facilities_df["CWNS_ID"] == cwns_id]["FACILITY_TYPE"]
+            in facilities_df[facilities_df["CWNS_ID"] == cwns_id][
+                "FACILITY_TYPE"
+            ]
             .iloc[0]
             .lower()
         ):
-            discharges_df.loc[index, "DISCHARGES_TO_DUMMY_ID"] = collection_mapping[
-                discharge_to_id
-            ]
+            discharges_df.loc[index, "DISCHARGES_TO_DUMMY_ID"] = (
+                collection_mapping[discharge_to_id]
+            )
 
         # Case 2: Facility discharging to reuse end-uses
         elif cwns_id in reuse_mapping.keys() and any(
@@ -735,7 +806,9 @@ def update_external_discharges(
                 and discharge_to_facilities["FACILITY_TYPE"].iloc[0]
                 == "Treatment Plant"
             ):
-                discharges_df.loc[index, "DUMMY_ID"] = collection_mapping[cwns_id]
+                discharges_df.loc[index, "DUMMY_ID"] = collection_mapping[
+                    cwns_id
+                ]
 
         # Case 5: Discharge to treatment plant
         elif discharge_to_id in treatment_plant_mapping.keys():
@@ -745,10 +818,14 @@ def update_external_discharges(
 
         # Case 6: Discharge from treatment plant
         elif cwns_id in treatment_plant_mapping.keys():
-            discharges_df.loc[index, "DUMMY_ID"] = treatment_plant_mapping[cwns_id]
+            discharges_df.loc[index, "DUMMY_ID"] = treatment_plant_mapping[
+                cwns_id
+            ]
 
 
-def load_and_merge_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/", state=None):
+def load_and_merge_cwns_data(
+    data_dir="data/2022CWNS_NATIONAL_APR2024/", state=None
+):
     """
     Load and merge CWNS data for a specific state or all states.
 
@@ -792,23 +869,32 @@ def load_and_merge_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/", state=N
     return facilities
 
 
-def load_or_compute_checkpoint(checkpoint_name, compute_func, output_dir="processed_data/", state=None, *args):
+def load_or_compute_checkpoint(
+    checkpoint_name,
+    compute_func,
+    output_dir="processed_data/",
+    state=None,
+    *args,
+):
     """
     Load checkpoint if exists, otherwise compute and save it.
-    
+
     Args:
         checkpoint_name: Name of the checkpoint (e.g., "merged_data", "discharges")
         compute_func: Function to call if checkpoint doesn't exist
         output_dir: Directory for checkpoint files
         state: Optional state code for state-specific checkpoints
         *args: Additional arguments to pass to compute_func
-        
+
     Returns:
         The loaded or computed data
     """
-    checkpoint_file = (f"{output_dir}{state}_checkpoint_{checkpoint_name}.pkl" 
-                      if state else f"{output_dir}checkpoint_{checkpoint_name}.pkl")
-    
+    checkpoint_file = (
+        f"{output_dir}{state}_checkpoint_{checkpoint_name}.pkl"
+        if state
+        else f"{output_dir}checkpoint_{checkpoint_name}.pkl"
+    )
+
     if os.path.exists(checkpoint_file):
         print(f"Loading {checkpoint_name}")
         with open(checkpoint_file, "rb") as f:
@@ -825,20 +911,26 @@ def cleanup_checkpoints(output_dir="processed_data/", state=None):
     """
     Clean up intermediate checkpoint files.
     """
-    
-    pattern = f"{output_dir}{state}_checkpoint_*.pkl" if state else f"{output_dir}checkpoint_*.pkl"
+
+    pattern = (
+        f"{output_dir}{state}_checkpoint_*.pkl"
+        if state
+        else f"{output_dir}checkpoint_*.pkl"
+    )
     checkpoint_files = glob.glob(pattern)
-    
+
     for file in checkpoint_files:
         try:
             os.remove(file)
             print(f"Removed checkpoint: {file}")
         except OSError as e:
             print(f"Error removing {file}: {e}")
-    
-    
+
+
 def main(
-    data_dir="data/2022CWNS_NATIONAL_APR2024/", output_dir="processed_data/", state=None
+    data_dir="data/2022CWNS_NATIONAL_APR2024/",
+    output_dir="processed_data/",
+    state=None,
 ):
     """
     Main function to process CWNS data and create sewershed map
@@ -848,12 +940,13 @@ def main(
         output_dir: Directory for output files
         state: Optional state code to filter data (e.g., 'CA' for California)
     """
-    
+
     # 1: Load and merge basic data
     facilities_2022 = load_or_compute_checkpoint(
-        "1_merged_data", 
+        "1_merged_data",
         lambda: load_and_merge_cwns_data(data_dir, state),
-        output_dir, state
+        output_dir,
+        state,
     )
 
     # 2: Process discharges
@@ -872,29 +965,35 @@ def main(
             print(f"{len(discharges)} discharge connections in {state}")
 
         print("Processing facility types")
-        updated_facilities, updated_discharges = process_facility_types(facilities_df, discharges)
+        updated_facilities, updated_discharges = process_facility_types(
+            facilities_df, discharges
+        )
         return updated_facilities, updated_discharges
-    
+
     facilities_2022, discharges = load_or_compute_checkpoint(
-        "2_discharges", 
-        compute_discharges,
-        output_dir, state, facilities_2022
+        "2_discharges", compute_discharges, output_dir, state, facilities_2022
     )
 
     # 3: Sewershed map
     sewershed_map = load_or_compute_checkpoint(
-        "3_sewershed_map", 
+        "3_sewershed_map",
         lambda fac_df, dis_df: build_sewershed_map(fac_df, dis_df),
-        output_dir, state, facilities_2022, discharges
+        output_dir,
+        state,
+        facilities_2022,
+        discharges,
     )
 
     # 4: Spatial analysis
     sewershed_map = load_or_compute_checkpoint(
-        "4_spatial", 
+        "4_spatial",
         lambda sew_map, fac_df: enhance_sewershed_map_with_spatial_analysis(
             sew_map, fac_df, h3_resolution=8
         ),
-        output_dir, state, sewershed_map, facilities_2022
+        output_dir,
+        state,
+        sewershed_map,
+        facilities_2022,
     )
 
     print("Saving outputs")

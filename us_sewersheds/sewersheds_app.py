@@ -13,7 +13,9 @@ server = app.server
 
 # Set page config
 st.set_page_config(
-    page_title="U.S. Sewersheds", layout="wide", initial_sidebar_state="expanded"
+    page_title="U.S. Sewersheds",
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
 # Add CSS to ensure content is visible
@@ -64,7 +66,11 @@ def add_newlines(text, max_length=20):
     if space_pos == -1:
         return text
 
-    return text[:space_pos] + "\n" + add_newlines(text[space_pos + 1 :], max_length)
+    return (
+        text[:space_pos]
+        + "\n"
+        + add_newlines(text[space_pos + 1 :], max_length)
+    )
 
 
 def plot_sewershed(sewershed_id, sewershed_map, facilities):
@@ -111,13 +117,17 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 )
                 else None
             )
-            permit_number = facilities.loc[facility_mask, "PERMIT_NUMBER"].iloc[0]
+            permit_number = facilities.loc[facility_mask, "PERMIT_NUMBER"].iloc[
+                0
+            ]
             dummy_id = facilities.loc[facility_mask, "DUMMY_ID"].iloc[0]
 
             # Add newlines after spaces after every 16 chars
             if len(name) > 20:
                 name = add_newlines(name)
-            facility_type = facilities.loc[facility_mask, "FACILITY_TYPE"].iloc[0]
+            facility_type = facilities.loc[facility_mask, "FACILITY_TYPE"].iloc[
+                0
+            ]
             color = sewershed_map[sewershed_id]["node_data"][node]["color"]
             used_colors.add(color)
             shape = (
@@ -148,7 +158,8 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                     ),
                     "PERMIT_NUMBER": (
                         str(permit_number)
-                        if "permit_number" in locals() and pd.notna(permit_number)
+                        if "permit_number" in locals()
+                        and pd.notna(permit_number)
                         else "N/A"
                     ),
                     "DUMMY_ID": dummy_id if "dummy_id" in locals() else node,
@@ -390,7 +401,9 @@ st.title("U.S. Sewershed Network Visualization")
 st.markdown("### Generate U.S. sewershed maps")
 
 # Add view selection
-view_option = st.radio("Select view:", ["Network Graph", "US Map"], horizontal=True)
+view_option = st.radio(
+    "Select view:", ["Network Graph", "US Map"], horizontal=True
+)
 
 # Get states and counties
 states = sorted(
@@ -419,13 +432,16 @@ with col2:
                     [
                         name.split(" - ")[1].split(" County Sewershed")[0]
                         for name in sewershed_map.keys()
-                        if " - " in name and name.split(" - ")[0] == selected_state
+                        if " - " in name
+                        and name.split(" - ")[0] == selected_state
                     ]
                 )
             )
         )
         counties.insert(0, "All Counties")
-        selected_county = st.selectbox("Select county:", counties, key="county_select")
+        selected_county = st.selectbox(
+            "Select county:", counties, key="county_select"
+        )
     else:
         selected_county = None
 with col3:
@@ -456,8 +472,12 @@ for sewershed_id in sewershed_map.keys():
         )
         facility_names = facilities.loc[facility_mask, "FACILITY_NAME"]
         permit_numbers = facilities.loc[facility_mask, "PERMIT_NUMBER"]
-        name_match = facility_names.str.contains(keyword, case=False, na=False).any()
-        permit_match = permit_numbers.str.contains(keyword, case=False, na=False).any()
+        name_match = facility_names.str.contains(
+            keyword, case=False, na=False
+        ).any()
+        permit_match = permit_numbers.str.contains(
+            keyword, case=False, na=False
+        ).any()
         keyword_match = name_match or permit_match
 
     if state_match and county_match and keyword_match:
