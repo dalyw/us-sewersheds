@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "us-sewersheds"
-version = "0.1.0"
+version = "0.1.1"
 description = "Process and analyze US sewershed data from CWNS"
 authors = ["Daly Wettermark <139182397+dalyw@users.noreply.github.com>"]
 license = "MIT"
