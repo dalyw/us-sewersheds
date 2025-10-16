@@ -3,8 +3,9 @@ import numpy as np
 import pickle
 import copy
 from typing import Dict, List, Set, Tuple, Any
+from plotting_configs import get_node_color, DEFAULT_NODE_COLOR
 
-def load_cwns_data(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/') -> Dict[str, pd.DataFrame]:
+def load_cwns_data(data_dir = 'data/2022CWNS_NATIONAL_APR2024/'):
     """
     Load all CWNS data files from specified directory
     
@@ -63,7 +64,8 @@ def load_cwns_data(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/') -> Dict[st
         'population': pop_served_cwns
     }
 
-def clean_permit_numbers(facilities_df: pd.DataFrame) -> pd.DataFrame:
+
+def clean_permit_numbers(facilities_df):
     """Clean permit numbers by removing common patterns and standardizing format"""
     patterns_to_remove = [
         r'WDR ', r'WDR-', r'WDR', r'Order WQ ', r'WDR Order No. ',
@@ -78,7 +80,8 @@ def clean_permit_numbers(facilities_df: pd.DataFrame) -> pd.DataFrame:
         df['PERMIT_NUMBER_cwns_clean'] = df['PERMIT_NUMBER_cwns_clean'].str.replace(old, new, regex=True)
     return df
 
-def get_facility_type_order() -> Dict[str, int]:
+
+def get_facility_type_order():
     """Return dictionary mapping facility types to their processing order"""
     return {
         # Brown collection types
@@ -113,7 +116,8 @@ def get_facility_type_order() -> Dict[str, int]:
         'Other': 6
     }
 
-def process_facility_types(facilities_df: pd.DataFrame, discharges_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, List[Dict]]:
+
+def process_facility_types(facilities_df, discharges_df):
     """
     Process facilities with multiple types and create necessary connections
     
@@ -225,21 +229,25 @@ def process_facility_types(facilities_df: pd.DataFrame, discharges_df: pd.DataFr
                 ]
                 
                 if not reuse_discharges.empty and not outfall_discharges.empty:
-                    # Handle reuse discharges
-                    if 'reuse' in discharge['DISCHARGE_TYPE'].lower():
-                        new_facility_row = handle_reuse_discharge(
-                            facility, discharge, d_count, cwns_id,
-                            treatment_plant_mapping, reuse_mapping
-                        )
-                        all_new_facility_rows.append(new_facility_row)
-                        continue
-                    
-                    # Handle outfall discharges
-                    if 'outfall' in discharge['DISCHARGE_TYPE'].lower():
-                        new_facility_row = handle_outfall_discharge(
-                            facility, discharge, d_count,
-                            treatment_plant_mapping
-                        )
+                    # Handle reuse and outfall types
+                    discharge_type_lower = discharge['DISCHARGE_TYPE'].lower()
+                    if 'reuse' in discharge_type_lower or 'outfall' in discharge_type_lower:
+                        new_DUMMY_ID = facility['DUMMY_ID'] + 'd' + str(d_count)
+                        new_facility_row = facility.copy()
+                        new_facility_row['DUMMY_ID'] = new_DUMMY_ID
+                        
+                        # Create descriptive name combining parent facility and discharge type
+                        parent_name = facility['FACILITY_NAME']
+                        discharge_type = discharge['DISCHARGE_TYPE']
+                        new_facility_row['FACILITY_NAME'] = f"{parent_name} - {discharge_type}"
+                        
+                        if 'reuse' in discharge_type_lower:
+                            new_facility_row['FACILITY_TYPE'] = 'Reuse'
+                        elif 'outfall' in discharge_type_lower:
+                            new_facility_row['FACILITY_TYPE'] = 'Ocean Discharge' if 'Ocean' in discharge['DISCHARGE_TYPE'] else 'Other'
+                        
+                        new_facility_row['PERMIT_NUMBER'] = None
+                        new_facility_row['CURRENT_DESIGN_FLOW'] = None
                         all_new_facility_rows.append(new_facility_row)
                         continue
 
@@ -247,8 +255,13 @@ def process_facility_types(facilities_df: pd.DataFrame, discharges_df: pd.DataFr
             new_DUMMY_ID = facility['DUMMY_ID'] + 'd' + str(d_count)
             new_facility_row = facility.copy()
             new_facility_row['DUMMY_ID'] = new_DUMMY_ID
-            new_facility_row['FACILITY_NAME'] = discharge['DISCHARGE_TYPE']
-            new_facility_row['FACILITY_TYPE'] = get_discharge_facility_type(discharge['DISCHARGE_TYPE'])
+            
+            # Create descriptive name combining parent facility and discharge type
+            parent_name = facility['FACILITY_NAME']
+            discharge_type = discharge['DISCHARGE_TYPE']
+            new_facility_row['FACILITY_NAME'] = f"{parent_name} - {discharge_type}"
+            
+            new_facility_row['FACILITY_TYPE'] = 'Reuse' if 'Reuse' in discharge['DISCHARGE_TYPE'] else 'Ocean Discharge' if 'Ocean' in discharge['DISCHARGE_TYPE'] else 'Other'
             new_facility_row['PERMIT_NUMBER'] = None
             new_facility_row['CURRENT_DESIGN_FLOW'] = None
             all_new_facility_rows.append(new_facility_row)
@@ -264,16 +277,16 @@ def process_facility_types(facilities_df: pd.DataFrame, discharges_df: pd.DataFr
     )
 
     # Merge county and state information into discharges
-    # First check if STATE_CODE already exists in discharges_df
     if 'STATE_CODE' in discharges_df.columns:
         discharges_df = discharges_df.drop('STATE_CODE', axis=1)
     
     location_info = facilities_df[['DUMMY_ID', 'COUNTY_NAME', 'STATE_CODE']].drop_duplicates()
-    discharges_df = discharges_df.merge(location_info, on='DUMMY_ID', how='left')
+    discharges_df = discharges_df.merge(location_info, on='DUMMY_ID', how='left', suffixes=('', '_facilities'))
 
     return facilities_df, discharges_df, all_new_facility_rows
 
-def build_sewershed_map(facilities_df: pd.DataFrame, discharges_df: pd.DataFrame) -> Dict:
+
+def build_sewershed_map(facilities_df, discharges_df):
     """
     Build sewershed map from facilities and discharges data
     
@@ -318,50 +331,6 @@ def build_sewershed_map(facilities_df: pd.DataFrame, discharges_df: pd.DataFrame
 
     # Consolidate sewersheds with redundant nodes
     print(f'{len(sewershed_map)} sewersheds before combining sewersheds w/ repetitive nodes')
-    sewershed_map = consolidate_sewersheds(sewershed_map)
-    print(f'{len(sewershed_map)} sewersheds after combining sewersheds w/ repetitive nodes')
-
-    # Add state and county information
-    sewershed_map = add_location_info(sewershed_map, facilities_df, discharges_df)
-    
-    return sewershed_map
-
-# Helper functions for process_facility_types
-def handle_reuse_discharge(facility: pd.Series, discharge: pd.Series, d_count: int, 
-                         cwns_id: str, treatment_plant_mapping: Dict, reuse_mapping: Dict) -> Dict:
-    """Handle reuse discharge for facilities with both reuse and treatment capabilities"""
-    new_DUMMY_ID = facility['DUMMY_ID'] + 'd' + str(d_count)
-    new_facility_row = facility.copy()
-    new_facility_row['DUMMY_ID'] = new_DUMMY_ID
-    new_facility_row['FACILITY_NAME'] = discharge['DISCHARGE_TYPE']
-    new_facility_row['FACILITY_TYPE'] = 'Reuse'
-    new_facility_row['PERMIT_NUMBER'] = None
-    new_facility_row['CURRENT_DESIGN_FLOW'] = None
-    return new_facility_row
-
-def handle_outfall_discharge(facility: pd.Series, discharge: pd.Series, d_count: int, 
-                           treatment_plant_mapping: Dict) -> Dict:
-    """Handle outfall discharge for facilities with both reuse and treatment capabilities"""
-    new_DUMMY_ID = facility['DUMMY_ID'] + 'd' + str(d_count)
-    new_facility_row = facility.copy()
-    new_facility_row['DUMMY_ID'] = new_DUMMY_ID
-    new_facility_row['FACILITY_NAME'] = discharge['DISCHARGE_TYPE']
-    new_facility_row['FACILITY_TYPE'] = 'Ocean Discharge' if 'Ocean' in discharge['DISCHARGE_TYPE'] else 'Other'
-    new_facility_row['PERMIT_NUMBER'] = None
-    new_facility_row['CURRENT_DESIGN_FLOW'] = None
-    return new_facility_row
-
-def get_discharge_facility_type(discharge_type: str) -> str:
-    """Determine facility type based on discharge type"""
-    if 'Reuse' in discharge_type:
-        return 'Reuse'
-    elif 'Ocean' in discharge_type:
-        return 'Ocean Discharge'
-    return 'Other'
-
-# Helper functions for build_sewershed_map
-def consolidate_sewersheds(sewershed_map: Dict) -> Dict:
-    """Consolidate sewersheds that share nodes"""
     DUMMY_IDS = list(sewershed_map.keys())
     for i in range(len(DUMMY_IDS)):
         for j in range(i + 1, len(DUMMY_IDS)):
@@ -372,20 +341,29 @@ def consolidate_sewersheds(sewershed_map: Dict) -> Dict:
                     sewershed_map[id1]["nodes"].update(sewershed_map[id2]["nodes"])
                     sewershed_map[id1]["connections"].extend(sewershed_map[id2]["connections"])
                     del sewershed_map[id2]
-    return sewershed_map
+    print(f'{len(sewershed_map)} sewersheds after combining sewersheds w/ repetitive nodes')
 
-def add_location_info(sewershed_map: Dict, facilities_df: pd.DataFrame, 
-                     discharges_df: pd.DataFrame) -> Dict:
-    """Add state and county information to sewershed map"""
+    # Add state and county information
     new_sewershed_map = {}
     state_county_used = {}
-
     for sewershed_id, sewershed_info in sewershed_map.items():
         # Get location info for nodes
-        node_info = get_node_location_info(sewershed_info["nodes"], discharges_df)
+        node_info = []
+        for node in sewershed_info["nodes"]:
+            node_data = discharges_df[discharges_df['DUMMY_ID'] == node][['STATE_CODE', 'COUNTY_NAME']]
+            if not node_data.empty:
+                node_info.append(node_data.iloc[0].to_dict())
         
         # Get primary state and county
-        primary_state, primary_county = get_primary_location(node_info)
+        if len(node_info) > 0:
+            node_info_df = pd.DataFrame(node_info)
+            state_counts = node_info_df["STATE_CODE"].value_counts()
+            primary_state = state_counts.index[0] if len(state_counts) > 0 else "Unspecified"
+            county_counts = node_info_df[node_info_df["STATE_CODE"] == primary_state]["COUNTY_NAME"].value_counts()
+            primary_county = county_counts.index[0] if len(county_counts) > 0 else "Unspecified"
+        else:
+            primary_state = "Unspecified"
+            primary_county = "Unspecified"
         
         # Create new sewershed name
         state_county_key = f"{primary_state}_{primary_county}"
@@ -393,34 +371,30 @@ def add_location_info(sewershed_map: Dict, facilities_df: pd.DataFrame,
         new_name = f"{primary_state} - {primary_county} County Sewershed {state_county_used[state_county_key]}"
         
         # Add node data
-        sewershed_info["node_data"] = get_node_data(sewershed_info["nodes"], facilities_df)
+        node_data = {}
+        for node in sewershed_info["nodes"]:
+            node_data[node] = {}
+            facility_mask = facilities_df['DUMMY_ID'] == node
+            if not facilities_df[facility_mask].empty:
+                facility = facilities_df[facility_mask].iloc[0]
+                for key in ['CURRENT_DESIGN_FLOW', 'TOTAL_RES_POPULATION_2022', 'PERMIT_NUMBER', 
+                           'CWNS_ID', 'DUMMY_ID', 'FACILITY_NAME', 'FACILITY_TYPE']:
+                    node_data[node][key] = facility[key]
+                node_data[node]['color'] = get_node_color(facility['FACILITY_TYPE'], facility['FACILITY_NAME'])
+            else:
+                for key in ['CURRENT_DESIGN_FLOW', 'TOTAL_RES_POPULATION_2022', 'PERMIT_NUMBER', 
+                           'CWNS_ID', 'DUMMY_ID', 'FACILITY_NAME', 'FACILITY_TYPE']:
+                    node_data[node][key] = None
+                node_data[node]['color'] = DEFAULT_NODE_COLOR
+        
+        sewershed_info["node_data"] = node_data
         new_sewershed_map[new_name] = sewershed_info
+    sewershed_map = new_sewershed_map
+    
+    return sewershed_map
 
-    return new_sewershed_map
 
-def get_node_color(facility_type: str, facility_name: str) -> str:
-    """Determine node color based on facility type and name"""
-    if 'Reuse' in facility_type or 'Reuse' in facility_name:
-        return '#9370DB'  # Purple
-    elif 'Ocean Discharge' in facility_type or 'Ocean Discharge' in facility_name:
-        return '#90EE90'  # Green
-    elif 'Treatment Plant' in facility_type or '(Treatment Plant)' in facility_name:
-        return '#ADD8E6'  # Blue
-    elif any(x in facility_type or x in facility_name for x in ['Collection:', 'Pump Station']):
-        return '#C4A484'  # Brown
-    elif any(x in facility_type or x in facility_name for x in ['Storage']):
-        return '#808080'  # Grey
-    elif any(x in facility_type or x in facility_name for x in ['MS4', 'Onsite', 'Landfill', 'Honey Bucket']):
-        return '#FFD580'  # Orange
-    elif 'Outfall' in facility_type or 'Outfall' in facility_name:
-        return '#90EE90'  # Green
-    return '#FFFFC5'  # Light yellow for other/unknown
-
-def update_external_discharges(discharges_df: pd.DataFrame, 
-                             facilities_df: pd.DataFrame,
-                             collection_mapping: Dict,
-                             reuse_mapping: Dict,
-                             treatment_plant_mapping: Dict) -> None:
+def update_external_discharges(discharges_df, facilities_df, collection_mapping, reuse_mapping, treatment_plant_mapping):
     """
     Update external discharges involving facilities with multiple types
     
@@ -469,119 +443,25 @@ def update_external_discharges(discharges_df: pd.DataFrame,
         elif cwns_id in treatment_plant_mapping.keys():
             discharges_df.loc[index, 'DUMMY_ID'] = treatment_plant_mapping[cwns_id]
 
-def get_node_location_info(nodes: Set[str], discharges_df: pd.DataFrame) -> List[Dict]:
-    """
-    Get state and county information for a set of nodes
-    
-    Args:
-        nodes: Set of node IDs
-        discharges_df: DataFrame containing discharge information with location data
-        
-    Returns:
-        List of dictionaries containing state and county information for each node
-    """
-    node_info = []
-    for node in nodes:
-        # Handle potential variations in STATE_CODE column name
-        state_col = 'STATE_CODE' if 'STATE_CODE' in discharges_df.columns else 'STATE_CODE_x' if 'STATE_CODE_x' in discharges_df.columns else None
-        if state_col is None:
-            print("Warning: STATE_CODE column not found in discharges dataframe")
-            continue
-            
-        node_data = discharges_df[discharges_df['DUMMY_ID'] == node][[state_col, 'COUNTY_NAME']]
-        if not node_data.empty:
-            # Ensure consistent column naming
-            if state_col != 'STATE_CODE':
-                node_data = node_data.rename(columns={state_col: 'STATE_CODE'})
-            node_info.append(node_data.iloc[0].to_dict())
-    return node_info
 
-def get_primary_location(node_info: List[Dict]) -> Tuple[str, str]:
+def load_and_merge_cwns_data(data_dir = 'data/2022CWNS_NATIONAL_APR2024/', state = None):
     """
-    Get the most common state and county from node location information
+    Load and merge CWNS data for a specific state or all states.
     
     Args:
-        node_info: List of dictionaries containing state and county information
-        
-    Returns:
-        Tuple of (primary_state, primary_county)
-    """
-    if len(node_info) > 0:
-        node_info_df = pd.DataFrame(node_info)
-        state_counts = node_info_df["STATE_CODE"].value_counts()
-        primary_state = state_counts.index[0] if len(state_counts) > 0 else "Unspecified"
-        
-        county_counts = node_info_df[
-            node_info_df["STATE_CODE"] == primary_state
-        ]["COUNTY_NAME"].value_counts()
-        primary_county = county_counts.index[0] if len(county_counts) > 0 else "Unspecified"
-    else:
-        primary_state = "Unspecified"
-        primary_county = "Unspecified"
-    
-    return primary_state, primary_county
-
-def get_node_data(nodes: Set[str], facilities_df: pd.DataFrame) -> Dict:
-    """
-    Get facility data for each node in a sewershed
-    
-    Args:
-        nodes: Set of node IDs
-        facilities_df: DataFrame containing facility information
-        
-    Returns:
-        Dictionary containing data for each node
-    """
-    node_data = {}
-    for node in nodes:
-        node_data[node] = {}
-        facility_mask = facilities_df['DUMMY_ID'] == node
-        if not facilities_df[facility_mask].empty:
-            facility = facilities_df[facility_mask].iloc[0]
-            for key in ['CURRENT_DESIGN_FLOW', 'TOTAL_RES_POPULATION_2022', 'PERMIT_NUMBER', 
-                       'CWNS_ID', 'DUMMY_ID', 'FACILITY_NAME', 'FACILITY_TYPE']:
-                node_data[node][key] = facility[key]
-            
-            # Add color based on facility type/name
-            node_data[node]['color'] = get_node_color(facility['FACILITY_TYPE'], facility['FACILITY_NAME'])
-        else:
-            for key in ['CURRENT_DESIGN_FLOW', 'TOTAL_RES_POPULATION_2022', 'PERMIT_NUMBER', 
-                       'CWNS_ID', 'DUMMY_ID', 'FACILITY_NAME', 'FACILITY_TYPE']:
-                node_data[node][key] = None
-            node_data[node]['color'] = '#FFFFC5'  # Light yellow for missing data
-            
-    return node_data
-
-def main(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/', 
-         output_dir: str = 'processed_data/',
-         print_status: bool = True,
-         state: str = None) -> None:
-    """
-    Main function to process CWNS data and create sewershed map
-    
-    Args:
-        data_dir: Directory containing input CWNS data files
-        output_dir: Directory for output files
-        print_status: Whether to print status updates during processing
+        data_dir: Directory containing CWNS data files
         state: Optional state code to filter data (e.g., 'CA' for California)
+        
+    Returns:
+        DataFrame containing merged CWNS facilities data with all related information
     """
     # Load data
-    if print_status:
-        print("Loading CWNS data...")
     data_dict = load_cwns_data(data_dir)
-    facilities_2022 = data_dict['facilities']
+    facilities = data_dict['facilities']
     
     # Filter by state if specified
     if state:
-        if print_status:
-            print(f"Filtering data for state: {state}")
-        facilities_2022 = facilities_2022[facilities_2022['STATE_CODE'] == state]
-        if print_status:
-            print(f"Found {len(facilities_2022)} facilities in {state}")
-    
-    # Merge all dataframes
-    if print_status:
-        print("Merging data...")
+        facilities = facilities[facilities['STATE_CODE'] == state]
     
     # Define which columns to keep from each dataframe
     merge_columns = {
@@ -592,20 +472,37 @@ def main(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/',
         'population': ['CWNS_ID', 'TOTAL_RES_POPULATION_2022', 'TOTAL_RES_POPULATION_2042']
     }
     
+    # Merge all dataframes
     for df_name, columns in merge_columns.items():
-        if print_status:
-            print(f"Merging {df_name}...")
         df = data_dict[df_name][columns]
-        facilities_2022 = facilities_2022.merge(df, on='CWNS_ID', how='left')
+        facilities = facilities.merge(df, on='CWNS_ID', how='left')
     
     # Clean permit numbers
-    if print_status:
-        print("Cleaning permit numbers...")
-    facilities_2022 = clean_permit_numbers(facilities_2022)
+    facilities = clean_permit_numbers(facilities)
+    
+    return facilities
+
+
+def main(data_dir = 'data/2022CWNS_NATIONAL_APR2024/', 
+         output_dir = 'processed_data/',
+         state = None):
+    """
+    Main function to process CWNS data and create sewershed map
+    
+    Args:
+        data_dir: Directory containing input CWNS data files
+        output_dir: Directory for output files
+        state: Optional state code to filter data (e.g., 'CA' for California)
+    """
+    # Load and merge CWNS data
+    print("Loading and merging CWNS data...")
+    facilities_2022 = load_and_merge_cwns_data(data_dir, state)
+    
+    if state:
+        print(f"Found {len(facilities_2022)} facilities in {state}")
     
     # Load and process discharges
-    if print_status:
-        print("Loading discharge data...")
+    print("Loading discharge data...")
     discharges = pd.read_csv(f'{data_dir}DISCHARGES.csv', encoding='latin1', low_memory=False)
     
     # Filter discharges by state if specified
@@ -615,21 +512,16 @@ def main(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/',
             (discharges['CWNS_ID'].isin(state_facilities)) | 
             (discharges['DISCHARGES_TO_CWNSID'].isin(state_facilities))
         ]
-        if print_status:
-            print(f"Found {len(discharges)} discharge connections involving {state} facilities")
+        print(f"Found {len(discharges)} discharge connections involving {state} facilities")
     
     # Process facility types and build sewershed map
-    if print_status:
-        print("Processing facility types...")
     facilities_2022, discharges, new_rows = process_facility_types(facilities_2022, discharges)
     
-    if print_status:
-        print("Building sewershed map...")
+    print("Building sewershed map...")
     sewershed_map = build_sewershed_map(facilities_2022, discharges)
     
     # Save outputs
-    if print_status:
-        print("Saving outputs...")
+    print("Saving outputs...")
     output_prefix = f"{state}_" if state else ""
     
     output_columns = [
@@ -645,9 +537,6 @@ def main(data_dir: str = 'data/2022CWNS_NATIONAL_APR2024/',
     
     with open(f'{output_dir}{output_prefix}sewershed_map.pkl', 'wb') as f:
         pickle.dump(sewershed_map, f)
-    
-    if print_status:
-        print("Processing complete!")
 
 if __name__ == "__main__":
     # main(state = "CA")

@@ -5,8 +5,8 @@ description = "Process and analyze US sewershed data from CWNS"
 authors = ["Daly Wettermark <139182397+dalyw@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/dalywettermark/us-sewersheds"
-repository = "https://github.com/dalywettermark/us-sewersheds"
+homepage = "https://github.com/dalyw/us-sewersheds"
+repository = "https://github.com/dalyw/us-sewersheds"
 keywords = ["sewersheds", "wastewater", "CWNS", "data"]
 packages = [{include = "us_sewersheds"}]
 
