@@ -2,7 +2,7 @@ import pandas as pd
 import pickle
 import copy
 from typing import List
-from plotting_configs import get_node_color, DEFAULT_NODE_COLOR
+from .plotting_configs import get_node_color, DEFAULT_NODE_COLOR
 
 
 def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):

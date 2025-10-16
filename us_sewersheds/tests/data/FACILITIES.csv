@@ -1,0 +1,6 @@
+CWNS_ID,FACILITY_NAME,STATE_CODE,COUNTY_NAME,CURRENT_DESIGN_FLOW,FACILITY_TYPE,TOTAL_RES_POPULATION_2022,PERMIT_NUMBER
+1001,Test Treatment Plant,CA,Test County,1.5,Treatment Plant,1000,CA0012345
+1002,Sample Collection System,CA,Test County,2.0,Collection: Pump Stations,800,CA0012347
+1003,Another Facility,TX,Sample County,3.5,Treatment Plant,1500,TX0012348
+1004,Test WWTP,CA,Test County,1.0,Treatment Plant,600,CA0012349
+1005,Sample Pump Station,TX,Sample County,0.8,Collection: Separate Sewers,400,TX0012350
