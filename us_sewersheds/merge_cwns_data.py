@@ -2,19 +2,83 @@ import pandas as pd
 from collections import Counter
 import pickle
 
-# TODO: clean this up
-try:
-    from .plotting_configs import (
-        get_node_color,
-        DEFAULT_NODE_COLOR,
-        get_facility_type_order,
-    )
-except ImportError:
-    from plotting_configs import (
-        get_node_color,
-        DEFAULT_NODE_COLOR,
-        get_facility_type_order,
-    )
+from plotting_configs import (
+    get_node_color,
+    DEFAULT_NODE_COLOR,
+    get_facility_type_order,
+)
+
+
+file_configs = {
+    "facilities": {
+        "file": "FACILITIES.csv",
+        "columns": ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"],
+    },
+    "permits": {
+        "file": "FACILITY_PERMIT.csv",
+        "columns": ["CWNS_ID", "PERMIT_NUMBER"],
+        "groupby": {"CWNS_ID": ["PERMIT_NUMBER"]},
+    },
+    "counties": {
+        "file": "AREAS_COUNTY.csv",
+        "columns": ["CWNS_ID", "COUNTY_NAME", "COUNTY_PRIMARY_FLAG"],
+        "filter": {"COUNTY_PRIMARY_FLAG": "Y"},
+        "select": ["CWNS_ID", "COUNTY_NAME"],
+    },
+    "types": {
+        "file": "FACILITY_TYPES.csv",
+        "columns": ["CWNS_ID", "FACILITY_TYPE"],
+    },
+    "flow": {
+        "file": "FLOW.csv",
+        "columns": ["CWNS_ID", "FLOW_TYPE", "CURRENT_DESIGN_FLOW"],
+        "filter": {"FLOW_TYPE": "Total Flow"},
+        "select": ["CWNS_ID", "CURRENT_DESIGN_FLOW"],
+    },
+    "physical_location": {
+        "file": "PHYSICAL_LOCATION.csv",
+        "columns": [
+            "CWNS_ID",
+            "LATITUDE",
+            "LONGITUDE",
+            "CITY",
+            "STATE_CODE",
+        ],
+    },
+    "population_wastewater": {
+        "file": "POPULATION_WASTEWATER.csv",
+        "columns": [
+            "CWNS_ID",
+            "TOTAL_RES_POPULATION_2022",
+            "TOTAL_RES_POPULATION_2042",
+        ],
+    },
+    "population_wastewater_confirmed": {
+        "file": "POPULATION_WASTEWATER_CONFIRMED.csv",
+        "columns": [
+            "CWNS_ID",
+            "TOTAL_RES_POPULATION_2022",
+            "TOTAL_RES_POPULATION_2042",
+        ],
+    },
+    "population_decentralized": {
+        "file": "POPULATION_DECENTRALIZED.csv",
+        "columns": [
+            "CWNS_ID",
+            "RESIDENTIAL_POP_2022",
+            "RESIDENTIAL_POP_2042",
+        ],
+        "rename": {
+            "RESIDENTIAL_POP_2022": "TOTAL_RES_POPULATION_2022",
+            "RESIDENTIAL_POP_2042": "TOTAL_RES_POPULATION_2042",
+        },
+        "select": [
+            "CWNS_ID",
+            "TOTAL_RES_POPULATION_2022",
+            "TOTAL_RES_POPULATION_2042",
+        ],
+    },
+}
 
 
 def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
@@ -27,104 +91,111 @@ def load_cwns_data(data_dir="data/2022CWNS_NATIONAL_APR2024/"):
     Returns:
         Dictionary of DataFrames containing cleaned CWNS data
     """
-    file_configs = {
-        "facilities": {
-            "file": "FACILITIES.csv",
-            "columns": ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"],
-        },
-        "permits": {
-            "file": "FACILITY_PERMIT.csv", 
-            "columns": ["CWNS_ID", "PERMIT_NUMBER"],
-            "groupby": {"CWNS_ID": ["PERMIT_NUMBER"]}
-        },
-          "counties": {
-              "file": "AREAS_COUNTY.csv",
-              "columns": ["CWNS_ID", "COUNTY_NAME", "COUNTY_PRIMARY_FLAG"],
-              "filter": {"COUNTY_PRIMARY_FLAG": "Y"},
-              "select": ["CWNS_ID", "COUNTY_NAME"]
-          },
-        "types": {
-            "file": "FACILITY_TYPES.csv",
-            "columns": ["CWNS_ID", "FACILITY_TYPE"]
-        },
-        "flow": {
-            "file": "FLOW.csv",
-            "columns": ["CWNS_ID", "FLOW_TYPE", "CURRENT_DESIGN_FLOW"],
-            "filter": {"FLOW_TYPE": "Total Flow"},
-            "select": ["CWNS_ID", "CURRENT_DESIGN_FLOW"]
-        },
-        "physical_location": {
-            "file": "PHYSICAL_LOCATION.csv",
-            "columns": ["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY", "STATE_CODE"],
-        }
-    }
 
     # Load all CSV files
     data = {}
     for name, config in file_configs.items():
         try:
-            df = pd.read_csv(f"{data_dir}{config['file']}", encoding="latin1", low_memory=False)
+            df = pd.read_csv(
+                f"{data_dir}{config['file']}",
+                encoding="latin1",
+                low_memory=False,
+            )
             df = df[config["columns"]]
-            
+
             # Apply filters
             if "filter" in config:
                 for col, value in config["filter"].items():
                     df = df[df[col] == value]
-            
+
             # Drop columns
             if "drop" in config:
                 df = df.drop(config["drop"], axis=1)
-            
+
+            # Rename columns
+            if "rename" in config:
+                df = df.rename(columns=config["rename"])
+
             # Select final columns
             if "select" in config:
                 df = df[config["select"]]
-            
+
             # Groupby operations
             if "groupby" in config:
                 for group_col, agg_cols in config["groupby"].items():
                     # For permits, collect all permit numbers for each facility
-                    df = df.groupby(group_col)[agg_cols[0]].apply(list).reset_index()
+                    df = (
+                        df.groupby(group_col)[agg_cols[0]]
+                        .apply(list)
+                        .reset_index()
+                    )
                     # Keep lists as they represent multiple permits per facility
             else:
                 df = df.drop_duplicates()
-            
+
             data[name] = df
-            
+
         except FileNotFoundError:
             raise
 
-    data['facilities'] = normalize_cwns_ids(data['facilities'], ['CWNS_ID'])
+    data["facilities"] = normalize_cwns_ids(data["facilities"], ["CWNS_ID"])
 
     # Consolidate population data files
-    pop_files = ["POPULATION_WASTEWATER.csv", "POPULATION_WASTEWATER_CONFIRMED.csv", "POPULATION_DECENTRALIZED.csv"]
-    pop_dfs = []
-    
-    for pop_file in pop_files:
-        try:
-            df = pd.read_csv(f"{data_dir}{pop_file}", encoding="latin1", low_memory=False)
-            
-            # Standardize column names for decentralized data
-            if "DECENTRALIZED" in pop_file:
-                df = df.rename(columns={
-                    "RESIDENTIAL_POP_2022": "TOTAL_RES_POPULATION_2022",
-                    "RESIDENTIAL_POP_2042": "TOTAL_RES_POPULATION_2042",
-                })
-            
-            # Select standard columns
-            pop_columns = ["CWNS_ID", "TOTAL_RES_POPULATION_2022", "TOTAL_RES_POPULATION_2042"]
-            df = df[pop_columns]
-            pop_dfs.append(df)
-            
-        except FileNotFoundError:
-            raise
-    
-    # Consolidate population data
-    if pop_dfs:
-        data["population"] = pd.concat(pop_dfs).drop_duplicates(subset="CWNS_ID", keep="first")
-    else:
-        data["population"] = pd.DataFrame(columns=["CWNS_ID", "TOTAL_RES_POPULATION_2022", "TOTAL_RES_POPULATION_2042"])
+    pop_dfs = [
+        data["population_wastewater"],
+        data["population_wastewater_confirmed"],
+        data["population_decentralized"],
+    ]
+    data["population"] = pd.concat(pop_dfs).drop_duplicates(
+        subset="CWNS_ID", keep="first"
+    )
+
+    # Remove individual population files from data dict
+    for pop_key in [
+        "population_wastewater",
+        "population_wastewater_confirmed",
+        "population_decentralized",
+    ]:
+        del data[pop_key]
 
     return data
+
+
+def get_columns_from_configs(
+    include_facility_base=True, include_calculated=True
+):
+    """Generate columns dynamically from file_configs
+
+    Args:
+        include_facility_base: Include base facility columns like DUMMY_ID, FACILITY_NAME
+        include_calculated: Include calculated columns like POPULATION_PERCENT_INCREASE
+    """
+    # Aggregate all columns from all configs
+    all_columns = set()
+    for config_name, config in file_configs.items():
+        # Get the final columns after processing (select takes precedence over columns)
+        if "select" in config:
+            columns = config["select"]
+        else:
+            columns = config["columns"]
+        all_columns.update(columns)
+
+    # Start with base columns if requested
+    if include_facility_base:
+        result_columns = ["CWNS_ID", "DUMMY_ID", "FACILITY_NAME"]
+    else:
+        result_columns = []
+
+    # Add all other columns
+    for col in sorted(all_columns):
+        if col not in result_columns:
+            result_columns.append(col)
+
+    # Add calculated columns if requested
+    if include_calculated:
+        result_columns.append("POPULATION_PERCENT_INCREASE")
+
+    return result_columns
 
 
 def normalize_cwns_ids(df, cwns_id_columns):
@@ -200,10 +271,17 @@ def preprocess_facilities_and_discharges(facilities_df, discharges_df):
     if "DUMMY_ID" not in facilities_df.columns:
         facilities_df["DUMMY_ID"] = facilities_df["CWNS_ID"].astype(str)
 
-    # Step 3: Create unique DUMMY_IDs for each discharge record
-    discharges_df["DUMMY_ID"] = [
-        f"{cwns_id}_d{i}" for i, cwns_id in enumerate(discharges_df["CWNS_ID"])
-    ]
+    # Step 3: Create unique DUMMY_IDs for each discharge record (per CWNS_ID)
+    discharge_counter = {}
+    discharge_dummy_ids = []
+
+    for cwns_id in discharges_df["CWNS_ID"]:
+        if cwns_id not in discharge_counter:
+            discharge_counter[cwns_id] = 0
+        discharge_counter[cwns_id] += 1
+        discharge_dummy_ids.append(f"{cwns_id}_d{discharge_counter[cwns_id]}")
+
+    discharges_df["DUMMY_ID"] = discharge_dummy_ids
     discharges_df["DISCHARGES_TO_DUMMY_ID"] = discharges_df[
         "DISCHARGES_TO_CWNSID"
     ].astype(str)
@@ -235,48 +313,62 @@ def _process_multi_type_facilities(
         f"Processing {len(multi_type_facilities)} facilities with multiple types"
     )
 
+    # Collect all changes and apply them at once
     facilities_processed = 0
+    new_facilities = []
+    new_discharges = []
+
     for cwns_id in multi_type_facilities:
         facilities_processed += 1
         if facilities_processed % 2000 == 0:
-            print(f"{facilities_processed} out of {len(multi_type_facilities)} multi-type facilities processed")
-        
+            print(
+                f"{facilities_processed} out of {len(multi_type_facilities)} multi-type facilities processed"
+            )
+
         group = facilities_df[facilities_df["CWNS_ID"] == cwns_id]
 
         if len(group) > 1:
             # Sort facility types by priority, excluding pump stations
+            types_in_group = group["FACILITY_TYPE"].unique()
+            non_pump_types = [
+                t for t in types_in_group if t != "Collection: Pump Stations"
+            ]
             sorted_types = sorted(
-                group["FACILITY_TYPE"][
-                    group["FACILITY_TYPE"] != "Collection: Pump Stations"
-                ].unique(),
-                key=lambda x: facility_types_order.get(x, 999),
+                non_pump_types, key=lambda x: facility_types_order.get(x, 999)
             )
 
-            # Create nodes for each facility type
+            if len(sorted_types) <= 1:
+                # Keep the original facility if only one type
+                original_facility = group.iloc[0].copy()
+                original_facility["DUMMY_ID"] = str(
+                    cwns_id
+                )  # Convert to string for consistency with dummy ids
+                new_facilities.append(original_facility.to_frame().T)
+                continue
+
+            # Create new facility records for each type
             for t, fac_type in enumerate(sorted_types):
+                type_facilities = group[
+                    group["FACILITY_TYPE"] == fac_type
+                ].copy()
                 new_dummy_id = f"{cwns_id}t{t}"
+                type_facilities["DUMMY_ID"] = new_dummy_id
 
-                # Update DUMMY_ID and name for this facility type
-                mask = (facilities_df["CWNS_ID"] == cwns_id) & (
-                    facilities_df["FACILITY_TYPE"] == fac_type
-                )
-                facilities_df.loc[mask, "DUMMY_ID"] = new_dummy_id
-
-                # Update name if it doesn't already contain the facility type
-                name_mask = mask & ~facilities_df["FACILITY_NAME"].str.contains(
+                # Update names that don't already contain the facility type
+                name_mask = ~type_facilities["FACILITY_NAME"].str.contains(
                     f"({fac_type})", regex=False, na=False
                 )
-                facilities_df.loc[name_mask, "FACILITY_NAME"] = (
-                    facilities_df.loc[name_mask, "FACILITY_NAME"]
+                type_facilities.loc[name_mask, "FACILITY_NAME"] = (
+                    type_facilities.loc[name_mask, "FACILITY_NAME"]
                     + f" ({fac_type})"
                 )
+
+                new_facilities.append(type_facilities)
 
             # Create connections between consecutive types
             for t in range(len(sorted_types) - 1):
                 fac_type1, fac_type2 = sorted_types[t], sorted_types[t + 1]
                 dummy_id1, dummy_id2 = f"{cwns_id}t{t}", f"{cwns_id}t{t+1}"
-
-                # Add connection between the two facility types
                 new_discharge = pd.DataFrame(
                     {
                         "CWNS_ID": [cwns_id],
@@ -289,9 +381,22 @@ def _process_multi_type_facilities(
                         "PRESENT_DISCHARGE_PERCENTAGE": [100],
                     }
                 )
-                discharges_df = pd.concat(
-                    [discharges_df, new_discharge], ignore_index=True
-                )
+                new_discharges.append(new_discharge)
+
+    # Remove original multi-type facilities and add new ones
+    print("Applying updates to multi-type facilities")
+
+    # Keep single-type facilities (not in multi_type_facilities)
+    single_type_facilities = facilities_df[
+        ~facilities_df["CWNS_ID"].isin(multi_type_facilities)
+    ].copy()
+
+    # Combine single-type facilities with processed multi-type facilities
+    all_facilities = [single_type_facilities] + new_facilities
+    facilities_df = pd.concat(all_facilities, ignore_index=True)
+    discharges_df = pd.concat(
+        [discharges_df] + new_discharges, ignore_index=True
+    )
 
     return facilities_df, discharges_df
 
@@ -317,7 +422,13 @@ def _process_final_discharges(facilities_df, discharges_df):
         else:
             facility_final_discharges = pd.DataFrame()
 
-        # Process each discharge
+        # Process each discharge from treatment facilities
+        facility_type = facility.get("FACILITY_TYPE", "").lower()
+
+        # Skip creating dummy IDs for collection systems - they should keep their original CWNS_ID
+        if "collection" in facility_type:
+            continue
+
         for d_count, (d, discharge) in enumerate(
             facility_final_discharges.iterrows(), 1
         ):
@@ -376,7 +487,17 @@ def _apply_node_spacing(facilities_df):
     return facilities_df
 
 
-def build_sewershed_map(facilities_df, discharges_df):
+def add_connection(row):
+    return [
+        row["DUMMY_ID"],
+        row["DISCHARGES_TO_DUMMY_ID"],
+        row["PRESENT_DISCHARGE_PERCENTAGE"],
+    ]
+
+
+def build_sewershed_map(
+    facilities_df, discharges_df, discharge_facility_lookup
+):
     """
     Build sewershed map from facilities and discharges data
 
@@ -387,13 +508,6 @@ def build_sewershed_map(facilities_df, discharges_df):
     Returns:
         Dictionary containing sewershed mapping data
     """
-
-    def add_connection(row):
-        return [
-            row["DUMMY_ID"],
-            row["DISCHARGES_TO_DUMMY_ID"],
-            row["PRESENT_DISCHARGE_PERCENTAGE"],
-        ]
 
     sewershed_map = {}
     nodes_already_mapped = []
@@ -481,37 +595,6 @@ def build_sewershed_map(facilities_df, discharges_df):
         f"{len(sewershed_map)} sewersheds after combining sewersheds w/ repetitive nodes"
     )
 
-    # Pre-compute lookups for performance optimization
-    print("Pre-computing location and facility lookups")
-
-    # Check for duplicate DUMMY_IDs in discharges
-    duplicate_discharge_ids = discharges_df[
-        discharges_df.duplicated(subset="DUMMY_ID", keep=False)
-    ]
-    if not duplicate_discharge_ids.empty:
-        print(
-            f"Warning: Found {len(duplicate_discharge_ids)} duplicate DUMMY_IDs in discharges"
-        )
-        print("Dropping duplicates, keeping first occurrence")
-        discharges_df = discharges_df.drop_duplicates(
-            subset="DUMMY_ID", keep="first"
-        )
-
-    # Check for duplicate DUMMY_IDs in facilities
-    duplicate_facility_ids = facilities_df[
-        facilities_df.duplicated(subset="DUMMY_ID", keep=False)
-    ]
-    if not duplicate_facility_ids.empty:
-        print(
-            f"Warning: Dropping {len(duplicate_facility_ids)} duplicate DUMMY_IDs in facilities"
-        )
-        facilities_df = facilities_df.drop_duplicates(
-            subset="DUMMY_ID", keep="first"
-        )
-
-    discharge_facility_lookup = facilities_df.set_index("DUMMY_ID").to_dict(
-        "index"
-    )
     discharge_location_data = discharges_df.set_index("DUMMY_ID")[
         ["STATE_CODE", "COUNTY_NAME"]
     ].to_dict("index")
@@ -562,15 +645,9 @@ def build_sewershed_map(facilities_df, discharges_df):
         new_name = f"{primary_state} - {primary_county} County Sewershed {state_county_used[state_county_key]}"
 
         # Add node data using pre-computed lookup
-        facility_columns = [
-            "CURRENT_DESIGN_FLOW",
-            "TOTAL_RES_POPULATION_2022",
-            "PERMIT_NUMBER",
-            "CWNS_ID",
-            "DUMMY_ID",
-            "FACILITY_NAME",
-            "FACILITY_TYPE",
-        ]
+        facility_columns = get_columns_from_configs(
+            include_facility_base=True, include_calculated=False
+        )
         node_data = {}
         for node in sewershed_info["nodes"]:
             node_data[node] = {}
@@ -590,11 +667,37 @@ def build_sewershed_map(facilities_df, discharges_df):
                 get_node_color(
                     facility["FACILITY_TYPE"], facility["FACILITY_NAME"]
                 )
-                if facility
+                if facility and "FACILITY_TYPE" in facility
                 else DEFAULT_NODE_COLOR
             )
 
         sewershed_info["node_data"] = node_data
+
+        # Calculate aggregated sewershed population data for 2022 and 2042
+        total_pop_2022 = 0
+        total_pop_2042 = 0
+        for node, data in node_data.items():
+            if data.get("TOTAL_RES_POPULATION_2022"):
+                total_pop_2022 += (
+                    float(data["TOTAL_RES_POPULATION_2022"])
+                    if data["TOTAL_RES_POPULATION_2022"]
+                    else 0
+                )
+            if data.get("TOTAL_RES_POPULATION_2042"):
+                total_pop_2042 += (
+                    float(data["TOTAL_RES_POPULATION_2042"])
+                    if data["TOTAL_RES_POPULATION_2042"]
+                    else 0
+                )
+
+        sewershed_info["total_population_2022"] = total_pop_2022
+        sewershed_info["total_population_2042"] = total_pop_2042
+        sewershed_info["population_percent_increase"] = (
+            ((total_pop_2042 - total_pop_2022) / total_pop_2022 * 100)
+            if total_pop_2022 > 0
+            else 0
+        )
+
         new_sewershed_map[new_name] = sewershed_info
     print("Finished building sewershed map")
     sewershed_map = new_sewershed_map
@@ -744,6 +847,7 @@ def main(
     # 1: Load and merge CWNS facility and discharges data
     facilities_2022 = load_and_merge_cwns_data(data_dir, state)
 
+    # 2: Load discharges data
     discharges = pd.read_csv(
         f"{data_dir}DISCHARGES.csv", encoding="latin1", low_memory=False
     )
@@ -757,32 +861,101 @@ def main(
         ]
         print(f"{len(discharges)} discharge connections in {state}")
 
-    # 2: Preprocess facilities and discharges
+    # Add COUNTY_NAME to discharges via lookup from facilities
+    county_lookup = facilities_2022[
+        ["CWNS_ID", "COUNTY_NAME"]
+    ].drop_duplicates()
+    discharges = discharges.merge(county_lookup, on="CWNS_ID", how="left")
+
+    # 3: Preprocess facilities and discharges
     print("Preprocessing facilities and discharges")
     facilities_2022, discharges = preprocess_facilities_and_discharges(
         facilities_2022, discharges
     )
 
-    # 3: Build sewershed map
+    # Create discharge facility lookup after preprocessing and adding new dummy IDs
+    discharge_facility_lookup = facilities_2022.set_index("DUMMY_ID").to_dict(
+        "index"
+    )
+
+    # Handle duplicate CWNS_IDs by keeping the first occurrence
+    facilities_unique_cwns = facilities_2022.drop_duplicates(
+        subset="CWNS_ID", keep="first"
+    )
+    cwns_facility_lookup = facilities_unique_cwns.set_index("CWNS_ID").to_dict(
+        "index"
+    )
+
+    discharge_location_data = discharges.set_index("DUMMY_ID")[
+        ["STATE_CODE", "COUNTY_NAME", "CWNS_ID", "DISCHARGE_TYPE"]
+    ].to_dict("index")
+
+    for dummy_id, location_info in discharge_location_data.items():
+        cwns_id = location_info["CWNS_ID"]
+
+    for dummy_id, location_info in discharge_location_data.items():
+        cwns_id = location_info["CWNS_ID"]
+        # Copy facility info and add discharge-specific location info
+        discharge_facility_lookup[dummy_id] = cwns_facility_lookup[
+            cwns_id
+        ].copy()
+
+        # Map discharge types to facility types based on facility_type_groups.json
+        discharge_type = str(location_info["DISCHARGE_TYPE"]).lower()
+        if "ocean" in discharge_type or "marine" in discharge_type:
+            facility_type = "Ocean Discharge"
+        elif (
+            "reuse" in discharge_type
+            or "reclamation" in discharge_type
+            or "land application" in discharge_type
+            or "irrigation" in discharge_type
+            or "groundwater" in discharge_type
+            or "injection" in discharge_type
+        ):
+            facility_type = "Reuse"
+        else:
+            facility_type = "Other"
+
+        discharge_facility_lookup[dummy_id].update(
+            {
+                "STATE_CODE": location_info["STATE_CODE"],
+                "COUNTY_NAME": location_info["COUNTY_NAME"],
+                "FACILITY_TYPE": facility_type,
+            }
+        )
+
+    # 4: Build sewershed map
     print("Building sewershed map")
-    sewershed_map = build_sewershed_map(facilities_2022, discharges)
+    sewershed_map = build_sewershed_map(
+        facilities_2022, discharges, discharge_facility_lookup
+    )
+
+    # Calculate population percent increase, handling division by zero
+    pop_2022 = facilities_2022["TOTAL_RES_POPULATION_2022"].astype(float)
+    pop_2042 = facilities_2022["TOTAL_RES_POPULATION_2042"].astype(float)
+
+    # Avoid division by zero by replacing 0 with 1
+    pop_2022_safe = pop_2022.replace(0, 1)
+
+    facilities_2022["POPULATION_PERCENT_INCREASE"] = (
+        (pop_2042 - pop_2022) / pop_2022_safe * 100
+    ).round(2)
+
+    # Handle cases where 2022 population was 0 - set increase to 0
+    zero_pop_mask = pop_2022 == 0
+    facilities_2022.loc[zero_pop_mask, "POPULATION_PERCENT_INCREASE"] = 0
+    # Replace infinite values and NaN with 0
+    facilities_2022["POPULATION_PERCENT_INCREASE"] = (
+        facilities_2022["POPULATION_PERCENT_INCREASE"]
+        .replace([float("inf"), -float("inf")], 0)
+        .fillna(0)
+    )
 
     print("Saving outputs")
     output_prefix = f"{state}_" if state else ""
-    output_columns = [
-        "CWNS_ID",
-        "DUMMY_ID",
-        "FACILITY_NAME",
-        "PERMIT_NUMBER",
-        "TOTAL_RES_POPULATION_2022",
-        "FACILITY_TYPE",
-        "CURRENT_DESIGN_FLOW",
-        "COUNTY_NAME",
-        "STATE_CODE",
-        "LATITUDE",
-        "LONGITUDE",
-        "CITY",
-    ]
+    output_columns = get_columns_from_configs(
+        include_facility_base=True, include_calculated=True
+    )
     facilities_2022[output_columns].to_csv(
         f"{output_dir}{output_prefix}facilities_2022_merged.csv", index=False
     )

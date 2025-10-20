@@ -1,7 +1,6 @@
 import json
 import os
 import pandas as pd
-import folium
 
 # Default color for missing data
 DEFAULT_NODE_COLOR = "#FFFFC5"  # Light yellow
@@ -33,6 +32,7 @@ def get_facility_type_order():
 def get_node_color(facility_type, facility_name=None):
     """
     Determine node color based on facility type and name.
+    Priority: facility_type > facility_name keywords > default
     """
     # Check if facility type is in any of the groups
     for group_name, group_data in FACILITY_TYPE_GROUPS.items():
@@ -119,6 +119,13 @@ def create_network_map(facilities_df, sewershed_map, sewershed_id):
     """Create interactive Folium map showing network nodes and connections
     at their actual geographic coordinates."""
 
+    try:
+        import folium  # Lazy import folium to avoid dependency issues
+    except ImportError:
+        raise ImportError(
+            "folium is required for map. Install with: pip install folium"
+        )
+
     # Get nodes and connections for the sewershed
     nodes = sewershed_map[sewershed_id]["nodes"]
     connections = sewershed_map[sewershed_id]["connections"]
@@ -166,7 +173,6 @@ def create_network_map(facilities_df, sewershed_map, sewershed_id):
                 and pd.notna(target_facility["LATITUDE"])
                 and pd.notna(target_facility["LONGITUDE"])
             ):
-
                 # Calculate line thickness based on design flow of
                 # downstream (target) node
                 design_flow = target_facility.get("CURRENT_DESIGN_FLOW", 0)

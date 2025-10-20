@@ -372,6 +372,20 @@ with col3:
         "Filter by facility name or permit number:", key="keyword_input"
     )
 
+# Pre-compute keyword matches for all facilities for fast lookup
+facilities_with_keyword = set()
+if keyword:
+    name_match_mask = facilities["FACILITY_NAME"].str.contains(
+        keyword, case=False, na=False
+    )
+    permit_match_mask = facilities["PERMIT_NUMBER"].str.contains(
+        keyword, case=False, na=False
+    )
+    keyword_match_mask = name_match_mask | permit_match_mask
+    facilities_with_keyword = set(
+        facilities.loc[keyword_match_mask, "DUMMY_ID"]
+    )
+
 # Filter results
 results_list = []
 for sewershed_id in sewershed_map.keys():
@@ -390,18 +404,9 @@ for sewershed_id in sewershed_map.keys():
 
     keyword_match = True
     if keyword:
-        facility_mask = facilities["DUMMY_ID"].isin(
-            sewershed_map[sewershed_id]["nodes"]
-        )
-        facility_names = facilities.loc[facility_mask, "FACILITY_NAME"]
-        permit_numbers = facilities.loc[facility_mask, "PERMIT_NUMBER"]
-        name_match = facility_names.str.contains(
-            keyword, case=False, na=False
-        ).any()
-        permit_match = permit_numbers.str.contains(
-            keyword, case=False, na=False
-        ).any()
-        keyword_match = name_match or permit_match
+        # Set intersection
+        sewershed_facilities = set(sewershed_map[sewershed_id]["nodes"])
+        keyword_match = bool(sewershed_facilities & facilities_with_keyword)
 
     if state_match and county_match and keyword_match:
         results_list.append(sewershed_id)
