@@ -4,7 +4,11 @@ import pickle
 import streamlit.components.v1 as components
 import dash_cytoscape as cyto
 from dash import Dash
-from us_sewersheds.spatial_analysis import create_folium_map
+from us_sewersheds.plotting_configs import (
+    create_network_map,
+    create_facility_info,
+    create_cytoscape_legend,
+)
 
 cyto.load_extra_layouts()
 
@@ -106,28 +110,15 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     for node in nodes:
         facility_mask = facilities["DUMMY_ID"] == node
         if not facilities[facility_mask].empty:
-            name = facilities.loc[facility_mask, "FACILITY_NAME"].iloc[0]
-            population = facilities.loc[
-                facility_mask, "TOTAL_RES_POPULATION_2022"
-            ].iloc[0]
-            flow = (
-                facilities.loc[facility_mask, "CURRENT_DESIGN_FLOW"].iloc[0]
-                if pd.notna(
-                    facilities.loc[facility_mask, "CURRENT_DESIGN_FLOW"].iloc[0]
-                )
-                else None
-            )
-            permit_number = facilities.loc[facility_mask, "PERMIT_NUMBER"].iloc[
-                0
-            ]
-            dummy_id = facilities.loc[facility_mask, "DUMMY_ID"].iloc[0]
+            facility_row = facilities[facility_mask].iloc[0]
+            facility_info = create_facility_info(facility_row)
 
+            name = facility_info["name"]
             # Add newlines after spaces after every 16 chars
             if len(name) > 20:
                 name = add_newlines(name)
-            facility_type = facilities.loc[facility_mask, "FACILITY_TYPE"].iloc[
-                0
-            ]
+
+            facility_type = facility_info["type"]
             color = sewershed_map[sewershed_id]["node_data"][node]["color"]
             used_colors.add(color)
             shape = (
@@ -137,8 +128,12 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
             )  # different shape for collection
         else:
             name = str(node)
-            population = 0
-            flow = None
+            facility_info = {
+                "population": "N/A",
+                "design_flow": "N/A",
+                "permit_number": "N/A",
+                "dummy_id": node,
+            }
             color = sewershed_map[sewershed_id]["node_data"][node]["color"]
             used_colors.add(color)
             shape = "ellipse"
@@ -150,19 +145,10 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                     "label": name,
                     "color": color,
                     "shape": shape,
-                    "TOTAL_RES_POPULATION_2022": (
-                        str(int(population)) if pd.notna(population) else "N/A"
-                    ),
-                    "CURRENT_DESIGN_FLOW": (
-                        str(int(flow)) if flow is not None else "N/A"
-                    ),
-                    "PERMIT_NUMBER": (
-                        str(permit_number)
-                        if "permit_number" in locals()
-                        and pd.notna(permit_number)
-                        else "N/A"
-                    ),
-                    "DUMMY_ID": dummy_id if "dummy_id" in locals() else node,
+                    "TOTAL_RES_POPULATION_2022": facility_info["population"],
+                    "CURRENT_DESIGN_FLOW": facility_info["design_flow"],
+                    "PERMIT_NUMBER": facility_info["permit_number"],
+                    "DUMMY_ID": facility_info["dummy_id"],
                 }
             }
         )
@@ -179,70 +165,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
         )
 
     # Build legend items based on used colors
-    legend_items = []
-    if "#ADD8E6" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #C2E1EF;"></div>
-                Centralized Treatment
-            </div>
-        """
-        )
-    if "#C4A484" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #D4BCA0;"></div>
-                Collection
-            </div>
-        """
-        )
-    if "#808080" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #A0A0A0;"></div>
-                Storage Tanks & Facilities
-            </div>
-        """
-        )
-    if "#FFA500" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFBE4D;"></div>
-                OWTS, MS4s, Landfills
-            </div>
-        """
-        )
-    if "#9370DB" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #B095E6;"></div>
-                Water Reuse & Resource Recovery
-            </div>
-        """
-        )
-    if "#FFFFC5" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFFFD8;"></div>
-                Other
-            </div>
-        """
-        )
-    if "#90EE90" in used_colors:
-        legend_items.append(
-            """
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #B0F5B0;"></div>
-                Outfall
-            </div>
-        """
-        )
+    legend_items = create_cytoscape_legend(used_colors)
 
     cyto_html = f"""
 
@@ -402,7 +325,7 @@ st.markdown("### Generate U.S. sewershed maps")
 
 # Add view selection
 view_option = st.radio(
-    "Select view:", ["Network Graph", "US Map"], horizontal=True
+    "Select view:", ["Network Graph", "Network Map"], horizontal=True
 )
 
 # Get states and counties
@@ -498,33 +421,27 @@ if dropdown != "No matching sewersheds":
         except Exception as e:
             st.error(f"Error plotting sewershed: {e}")
 
-    elif view_option == "US Map":
+    elif view_option == "Network Map":
         try:
-            # Filter facilities for selected sewershed
-            sewershed_facilities = facilities[
-                facilities["DUMMY_ID"].isin(sewershed_map[dropdown]["nodes"])
-            ]
-
-            # Create folium map
-            folium_map = create_folium_map(sewershed_facilities)
-
-            # Convert to HTML and display
-            map_html = folium_map._repr_html_()
-            components.html(map_html, height=600, scrolling=False)
-
-            st.info(
-                f"**Spatial Analysis Info:** {sewershed_map['_spatial_metadata']['spatial_analysis_method']}"
+            # Create network map with connections at geographic coordinates
+            network_map = create_network_map(
+                facilities, sewershed_map, dropdown
             )
 
+            # Convert to HTML and display
+            map_html = network_map._repr_html_()
+            components.html(map_html, height=600, scrolling=False)
+
         except Exception as e:
-            st.error(f"Error creating Map: {e}")
+            st.error(f"Error creating Network Map: {e}")
+
 
 st.markdown(
     """
 This tool visualizes sewers, treatment facilities, outfalls, and connections as described in the 2022 Clean Watersheds Needs Survey dataset.
 Data was downloaded from the "[Nationwide 2022 CWNS Dataset](https://sdwis.epa.gov/ords/sfdw_pub/r/sfdw/cwns_pub/data-download)".
 
-**Spatial Analysis Credits:** H3 hexagonal indexing methodology adapted from the [USEPA Sewersheds repository](https://github.com/USEPA/Sewersheds/blob/main/functions/route_h3.R).
+**Similar methodology available in the [USEPA Sewersheds repository](https://github.com/USEPA/Sewersheds/blob/main/functions/route_h3.R).
 
 This tool should be used for approximation and guidance only, and may not reflect the most recent or accurate depictions of any particular sewershed.
 For the most up-to-date information, confirm with local or state authorities.
