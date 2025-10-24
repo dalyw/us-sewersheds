@@ -1,7 +1,5 @@
 # Data folders
 data/2012
-data/2022CWNS_NATIONAL_APR2024
-processed_data/
 
 # Python
 __pycache__/
