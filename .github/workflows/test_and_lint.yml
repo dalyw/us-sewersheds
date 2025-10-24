@@ -22,7 +22,7 @@ jobs:
         pip install .[dev]
     - name: Test with pytest
       run: |
-        pytest us_sewersheds/
+        PYTHONPATH=. pytest us_sewersheds/
   lint:
     runs-on: ubuntu-latest
 
