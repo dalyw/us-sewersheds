@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import json
 import streamlit.components.v1 as components
 import dash_cytoscape as cyto
 from dash import Dash
-from us_sewersheds.plotting_configs import (
-    create_network_map,
-    create_facility_info,
-    create_cytoscape_legend,
+from us_sewersheds.helpers import (
+    FACILITY_TYPE_GROUPS,
+    OUTPUT_COLUMNS,
 )
 
 cyto.load_extra_layouts()
@@ -44,21 +43,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Load data
-facilities = pd.read_csv("processed_data/facilities_2022_merged.csv")[
-    [
-        "CWNS_ID",
-        "DUMMY_ID",
-        "FACILITY_NAME",
-        "PERMIT_NUMBER",
-        "TOTAL_RES_POPULATION_2022",
-        "CURRENT_DESIGN_FLOW",
-        "FACILITY_TYPE",
-        "LATITUDE",
-        "LONGITUDE",
-        "CITY",
-    ]
-]
+facilities = pd.read_csv("processed_data/facilities_merged.csv")[OUTPUT_COLUMNS]
 
 
 def add_newlines(text, max_length=20):
@@ -77,10 +62,181 @@ def add_newlines(text, max_length=20):
     )
 
 
+def create_facility_info(facility, include_html=False):
+    """Create standardized facility information for display."""
+    facility_name = facility["FACILITY_NAME"]
+    facility_type = facility["FACILITY_TYPE"]
+    cwns_id = facility["CWNS_ID"]
+    permit_number = facility["PERMIT_NUMBER"]
+
+    # Format population and design flow
+    formatted_vals = {}
+    for format_key in ["TOTAL_RES_POPULATION_2022", "CURRENT_DESIGN_FLOW"]:
+        val = facility[format_key]
+        if pd.notna(val) and val != "N/A":
+            val = f"{int(val)}" if isinstance(val, (int, float)) else val
+        formatted_vals[format_key] = val
+
+    if include_html:
+        return f"""
+        <b>{facility_name}</b><br>
+        Type: {facility_type}<br>
+        CWNS ID: {cwns_id}<br>
+        Population Served: {formatted_vals["TOTAL_RES_POPULATION_2022"]}<br>
+        Design Flow: {formatted_vals[ "CURRENT_DESIGN_FLOW"]} MGD<br>
+        """
+    else:
+        return {
+            "name": facility_name,
+            "type": facility_type,
+            "cwns_id": cwns_id,
+            "population": formatted_vals["TOTAL_RES_POPULATION_2022"],
+            "design_flow": formatted_vals["CURRENT_DESIGN_FLOW"],
+            "permit_number": permit_number,
+        }
+
+
+def create_network_map(sewershed_map, sewershed_id):
+    """Create interactive Folium map showing network nodes and connections
+    at their actual geographic coordinates."""
+
+    try:
+        import folium  # Lazy import folium to avoid dependency issues
+    except ImportError:
+        raise ImportError(
+            "folium is required for map. Install with: pip install folium"
+        )
+
+    # Get nodes and connections for the sewershed
+    nodes = list(sewershed_map[sewershed_id]["nodes"].keys())
+    connections = sewershed_map[sewershed_id]["connections"]
+
+    # Calculate center based on sewershed facilities
+    coords = [
+        (
+            sewershed_map[sewershed_id]["nodes"][node_id]["LATITUDE"],
+            sewershed_map[sewershed_id]["nodes"][node_id]["LONGITUDE"],
+        )
+        for node_id in nodes
+    ]
+    center_lat = sum(coord[0] for coord in coords) / len(coords)
+    center_lon = sum(coord[1] for coord in coords) / len(coords)
+    m = folium.Map(
+        location=[center_lat, center_lon],
+        zoom_start=10,
+        tiles="OpenStreetMap",
+    )
+
+    # Add connections first (so they appear behind nodes)
+    for connection in connections:
+        source_id, target_id, flow_percentage = connection
+
+        # Extract base facility IDs (remove _type_X suffix)
+        source_facility = source_id.split("_type_")[0]
+        target_facility = target_id.split("_type_")[0]
+
+        # Skip self-loops within the same facility
+        if source_facility == target_facility:
+            continue
+
+        # Get coordinates directly from sewershed_map
+        source_data = sewershed_map[sewershed_id]["nodes"][source_facility]
+        target_data = sewershed_map[sewershed_id]["nodes"][target_facility]
+
+        if (
+            pd.notna(source_data.get("LATITUDE"))
+            and pd.notna(source_data.get("LONGITUDE"))
+            and pd.notna(target_data.get("LATITUDE"))
+            and pd.notna(target_data.get("LONGITUDE"))
+        ):
+
+            source_coords = [source_data["LATITUDE"], source_data["LONGITUDE"]]
+            target_coords = [target_data["LATITUDE"], target_data["LONGITUDE"]]
+
+            # Draw connection line
+            folium.PolyLine(
+                locations=[source_coords, target_coords],
+                color="#666666",
+                weight=2,
+                opacity=0.7,
+                popup=(
+                    f"{flow_percentage}%" if flow_percentage is not None else ""
+                ),
+            ).add_to(m)
+
+    # Add facility markers (nodes)
+    used_colors = set()
+    for node_id in nodes:
+        node_data = sewershed_map[sewershed_id]["nodes"][node_id]
+        if pd.notna(node_data.get("LATITUDE")) and pd.notna(
+            node_data.get("LONGITUDE")
+        ):
+            types = node_data["TYPES"]
+
+            # Determine color: single type uses type color, multiple types use grey
+            if len(types) == 1:
+                color = list(types.values())[0]["color"]
+                facility_types = [list(types.values())[0]["FACILITY_TYPE"]]
+            else:
+                color = "#808080"  # Grey for multiple types
+                facility_types = [ft["FACILITY_TYPE"] for ft in types.values()]
+
+            used_colors.add(color)
+
+            # Create popup text for this facility
+            facility_name = node_data["FACILITY_NAME"]
+
+            popup_text = f"""
+            <b>{facility_name}</b><br>
+            CWNS ID: {node_data['CWNS_ID']}<br>
+            Types: {', '.join(facility_types)}<br>
+            Population Served: {node_data["TOTAL_RES_POPULATION_2022"]}<br>
+            Design Flow: {node_data["CURRENT_DESIGN_FLOW"]} MGD
+            """
+
+            folium.CircleMarker(
+                location=[node_data["LATITUDE"], node_data["LONGITUDE"]],
+                popup=popup_text,
+                color="black",
+                fillColor=color,
+            ).add_to(m)
+
+    # Add legend
+    legend_html = create_legend(used_colors, html=True)
+    m.get_root().html.add_child(folium.Element(legend_html))
+
+    return m._repr_html_()
+
+
+def create_legend(used_colors, html=False):
+    """Create legend items for Cytoscape network graph."""
+
+    legend_items = []
+    added_groups = set()
+    for color in used_colors:
+        if color == "#808080":  # Grey for multiple types
+            legend_items.append(
+                f'<div><div class="legend-color" style="background-color: {color};"></div>Multiple Types</div>'
+            )
+        else:
+            for name, group_data in FACILITY_TYPE_GROUPS.items():
+                if group_data["color"] == color and name not in added_groups:
+                    added_groups.add(name)
+                    legend_items.append(
+                        f'<div><div class="legend-color" style="background-color: {color};"></div>{name}</div>'
+                    )
+
+    if html:
+        return f'<div style="position: fixed; top: 10px; right: 10px; background: white; padding: 10px; border: 1px solid #ccc;">{"".join(legend_items)}</div>'
+    else:
+        return legend_items
+
+
 def plot_sewershed(sewershed_id, sewershed_map, facilities):
     """
-    Each entry in sewershed_map is a dictionary with keys 'nodes' and 'connections'.
-    Plots a directed graph of a given sewershed using Cytoscape for interactive visualization
+    Each entry in sewershed_map is a dictionary with keys "nodes" and 'connections'.
+    Plots a directed graph of a given sewershed using Cytoscape for interactive visualization.
+    Now handles nested facility types structure.
 
     Inputs:
     - sewershed_id: string, the ID of the sewershed to plot
@@ -90,16 +246,17 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
     Outputs:
     - HTML component
     """
-    nodes = sewershed_map[sewershed_id]["nodes"]
+    nodes = list(sewershed_map[sewershed_id]["nodes"].keys())
     connections = sewershed_map[sewershed_id]["connections"]
-    elements = []
+    node_data = sewershed_map[sewershed_id]["nodes"]
 
+    elements = []
     used_colors = set()
 
     # Find max population in network
     max_pop = 0
     for node in nodes:
-        facility_mask = facilities["DUMMY_ID"] == node
+        facility_mask = facilities["CWNS_ID"] == node
         if not facilities[facility_mask].empty:
             population = facilities.loc[
                 facility_mask, "TOTAL_RES_POPULATION_2022"
@@ -108,64 +265,49 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 max_pop = population
 
     for node in nodes:
-        facility_mask = facilities["DUMMY_ID"] == node
-        if not facilities[facility_mask].empty:
-            facility_row = facilities[facility_mask].iloc[0]
-            facility_info = create_facility_info(facility_row)
+        # Get node data from sewershed map
+        node_data = sewershed_map[sewershed_id]["nodes"].get(node, {})
 
-            name = facility_info["name"]
-            # Add newlines after spaces after every 16 chars
-            if len(name) > 20:
+        # Always create nodes for each facility type
+        for i, facility_type in node_data["TYPES"].items():
+            node_id = f"{node}_type_{i}"
+            name = f"{node_data.get('FACILITY_NAME', node)} ({facility_type['FACILITY_TYPE']})"
+
+            if len(name) > 20:  # new lines after every 16 chars
                 name = add_newlines(name)
 
-            facility_type = facility_info["type"]
-            color = sewershed_map[sewershed_id]["node_data"][node]["color"]
-            used_colors.add(color)
-            shape = (
-                "diamond"
-                if facility_type and "collection" in facility_type.lower()
-                else "ellipse"
-            )  # different shape for collection
-        else:
-            name = str(node)
-            facility_info = {
-                "population": "N/A",
-                "design_flow": "N/A",
-                "permit_number": "N/A",
-                "dummy_id": node,
+            # Create data dict with all node_data keys plus specific ones
+            data_dict = {
+                "id": node_id,
+                "label": name,
+                "color": facility_type["color"],
+                "shape": facility_type["shape"],
+                "CWNS_ID": node,
+                "FACILITY_TYPE": facility_type["FACILITY_TYPE"],
             }
-            color = sewershed_map[sewershed_id]["node_data"][node]["color"]
-            used_colors.add(color)
-            shape = "ellipse"
+            used_colors.add(data_dict["color"])
 
+            # Add all keys from node_data
+            for key, value in node_data.items():
+                if key != "TYPES":  # Skip TYPES as it's handled separately
+                    data_dict[key] = value
+
+            elements.append({"data": data_dict})
+
+    for i, conn in enumerate(connections):
         elements.append(
             {
                 "data": {
-                    "id": str(node),
-                    "label": name,
-                    "color": color,
-                    "shape": shape,
-                    "TOTAL_RES_POPULATION_2022": facility_info["population"],
-                    "CURRENT_DESIGN_FLOW": facility_info["design_flow"],
-                    "PERMIT_NUMBER": facility_info["permit_number"],
-                    "DUMMY_ID": facility_info["dummy_id"],
-                }
-            }
-        )
-
-    for conn in connections:
-        elements.append(
-            {
-                "data": {
+                    "id": f"edge_{i}",
                     "source": str(conn[0]),
                     "target": str(conn[1]),
-                    "label": f"{conn[2]}%",  # Add flow percentage label
+                    "label": f"{conn[2]}%",
                 }
             }
         )
 
     # Build legend items based on used colors
-    legend_items = create_cytoscape_legend(used_colors)
+    legend_items = create_legend(used_colors)
 
     cyto_html = f"""
 
@@ -175,48 +317,10 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
             <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
             <style>
-                #cy {{
-                    width: 100%;
-                    height: 600px;
-                    display: block;
-                    background-color: white;
-                    position: absolute;
-                }}
-                body {{
-                    margin: 0;
-                    padding: 0;
-                    background-color: white;
-                    overflow: hidden;
-                }}
-                #legend {{
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: rgba(255, 255, 255, 0.9);
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                }}
-                .legend-item {{
-                    margin: 5px 0;
-                }}
-                .legend-color {{
-                    display: inline-block;
-                    width: 20px;
-                    height: 20px;
-                    margin-right: 5px;
-                    vertical-align: middle;
-                }}
-                #info-display {{
-                    position: absolute;
-                    bottom: 10px;
-                    left: 10px;
-                    background: rgba(255, 255, 255, 0.9);
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    display: none;
-                }}
+                #cy {{ width: 100%; height: 600px; }}
+                #legend {{ position: absolute; top: 10px; right: 10px; background: white; padding: 10px; border: 1px solid #ccc; }}
+                .legend-color {{ display: inline-block; width: 20px; height: 20px; margin-right: 5px; }}
+                #info-display {{ position: absolute; bottom: 10px; left: 10px; background: white; padding: 10px; border: 1px solid #ccc; display: none; }}
             </style>
         </head>
         <body>
@@ -229,7 +333,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
                 document.addEventListener('DOMContentLoaded', function() {{
                     var cy = cytoscape({{
                         container: document.getElementById('cy'),
-                        elements: {elements},
+                        elements: {json.dumps(elements)},
                         style: [
                             {{
                                 selector: 'node',
@@ -287,19 +391,7 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
 
                     cy.on('tap', 'node', function(evt){{
                         var node = evt.target;
-                        var info = 'Upstream population served: ' + node.data('TOTAL_RES_POPULATION_2022');
-                        if (node.data('PERMIT_NUMBER') && node.data('PERMIT_NUMBER') !== 'NA') {{
-                            // Remove brackets if present in permit number
-                            var permitNumber = node.data('PERMIT_NUMBER');
-                            if (permitNumber.startsWith('[') && permitNumber.endsWith(']')) {{
-                                permitNumber = permitNumber.substring(1, permitNumber.length - 1);
-                            }}
-                            info = 'Permit Number: ' + permitNumber + '<br>' + info;
-                        }}
-                        if (node.data('CURRENT_DESIGN_FLOW') && node.data('CURRENT_DESIGN_FLOW') !== 'NA') {{
-                            info = 'Current Design Flow: ' + node.data('CURRENT_DESIGN_FLOW') + ' MGD' + '<br>' + info;
-                        }}
-                        infoDisplay.innerHTML = info;
+                        infoDisplay.innerHTML = 'Population: ' + node.data('TOTAL_RES_POPULATION_2022') + '<br>Flow: ' + node.data('CURRENT_DESIGN_FLOW') + ' MGD';
                         infoDisplay.style.display = 'block';
                     }});
 
@@ -317,8 +409,8 @@ def plot_sewershed(sewershed_id, sewershed_map, facilities):
 
 
 # Load sewershed map
-with open("processed_data/sewershed_map.pkl", "rb") as f:
-    sewershed_map = pickle.load(f)
+with open("processed_data/sewershed_map.json", "r") as f:
+    sewershed_map = json.load(f)
 
 st.title("U.S. Sewershed Network Visualization")
 st.markdown("### Generate U.S. sewershed maps")
@@ -353,7 +445,7 @@ with col2:
             list(
                 set(
                     [
-                        name.split(" - ")[1].split(" County Sewershed")[0]
+                        name.split(" - ")[1].split(" Sewershed")[0]
                         for name in sewershed_map.keys()
                         if " - " in name
                         and name.split(" - ")[0] == selected_state
@@ -383,7 +475,7 @@ if keyword:
     )
     keyword_match_mask = name_match_mask | permit_match_mask
     facilities_with_keyword = set(
-        facilities.loc[keyword_match_mask, "DUMMY_ID"]
+        facilities.loc[keyword_match_mask, "CWNS_ID"].astype(str)
     )
 
 # Filter results
@@ -393,7 +485,7 @@ for sewershed_id in sewershed_map.keys():
         continue
 
     state = sewershed_id.split(" - ")[0]
-    county = sewershed_id.split(" - ")[1].split(" County Sewershed")[0]
+    county = sewershed_id.split(" - ")[1].split(" Sewershed")[0]
 
     state_match = selected_state == "All States" or state == selected_state
     county_match = (
@@ -405,7 +497,7 @@ for sewershed_id in sewershed_map.keys():
     keyword_match = True
     if keyword:
         # Set intersection
-        sewershed_facilities = set(sewershed_map[sewershed_id]["nodes"])
+        sewershed_facilities = set(sewershed_map[sewershed_id]["nodes"].keys())
         keyword_match = bool(sewershed_facilities & facilities_with_keyword)
 
     if state_match and county_match and keyword_match:
@@ -420,25 +512,18 @@ with col4:
 
 if dropdown != "No matching sewersheds":
     if view_option == "Network Graph":
-        try:
-            html_plot = plot_sewershed(dropdown, sewershed_map, facilities)
-            components.html(html_plot, height=600, scrolling=False)
-        except Exception as e:
-            st.error(f"Error plotting sewershed: {e}")
-
+        plot = plot_sewershed(dropdown, sewershed_map, facilities)
     elif view_option == "Network Map":
-        try:
-            # Create network map with connections at geographic coordinates
-            network_map = create_network_map(
-                facilities, sewershed_map, dropdown
-            )
+        plot = create_network_map(sewershed_map, dropdown)
 
-            # Convert to HTML and display
-            map_html = network_map._repr_html_()
-            components.html(map_html, height=600, scrolling=False)
-
-        except Exception as e:
-            st.error(f"Error creating Network Map: {e}")
+    try:
+        components.html(
+            plot,
+            height=750,
+            scrolling=False,
+        )
+    except Exception as e:
+        st.error(f"Error plotting sewershed: {e}")
 
 
 st.markdown(

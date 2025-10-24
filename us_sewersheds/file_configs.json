@@ -1,0 +1,45 @@
+{
+  "FACILITIES.csv": {
+    "columns": ["CWNS_ID", "FACILITY_NAME", "STATE_CODE"]
+  },
+  "FACILITY_PERMIT.csv": {
+    "columns": ["CWNS_ID", "PERMIT_NUMBER"],
+    "groupby": "CWNS_ID"
+  },
+  "AREAS_COUNTY.csv": {
+    "columns": ["CWNS_ID", "COUNTY_NAME", "COUNTY_PRIMARY_FLAG"],
+    "filter": {"COUNTY_PRIMARY_FLAG": "Y"}
+  },
+  "FACILITY_TYPES.csv": {
+    "columns": ["CWNS_ID", "FACILITY_TYPE"]
+  },
+  "FLOW.csv": {
+    "columns": ["CWNS_ID", "FLOW_TYPE", "CURRENT_DESIGN_FLOW"],
+    "filter": {"FLOW_TYPE": "Total Flow"}
+  },
+  "PHYSICAL_LOCATION.csv": {
+    "columns": ["CWNS_ID", "LATITUDE", "LONGITUDE", "CITY"]
+  },
+  "DISCHARGES.csv": {
+    "columns": [
+      "CWNS_ID",
+      "DISCHARGES_TO_CWNSID",
+      "DISCHARGE_TYPE",
+      "PRESENT_DISCHARGE_PERCENTAGE"
+    ]
+  },
+  "POPULATION_WASTEWATER.csv": {
+    "columns": [
+      "CWNS_ID",
+      "TOTAL_RES_POPULATION_2022",
+      "TOTAL_RES_POPULATION_2042"
+    ]
+  },
+  "POPULATION_WASTEWATER_CONFIRMED.csv": {
+    "columns": [
+      "CWNS_ID",
+      "TOTAL_RES_POPULATION_2022",
+      "TOTAL_RES_POPULATION_2042"
+    ]
+  }
+}

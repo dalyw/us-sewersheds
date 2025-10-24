@@ -39,7 +39,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "pytest-cov",
     "flake8",
     "black",
     "bumpversion",

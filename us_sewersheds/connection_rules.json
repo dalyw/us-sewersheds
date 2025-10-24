@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "external": {
+      "Interceptor Systems": {
+        "source_conditions": ["Interceptor Systems", "Centralized Treatment"],
+        "target_conditions": ["Centralized Treatment"]
+      },
+      "Centralized Treatment": {
+        "source_conditions": ["Centralized Treatment", "Water Reuse & Recovery"],
+        "target_conditions": ["Centralized Treatment"]
+      }
+    },
+    "target": {
+      "min_processing_order": 1
+    }
+  },
+  "internal": {
+    "sequential": {
+      "max_processing_order": 3
+    },
+    "diverging": {
+      "source_groups": ["Centralized Treatment", "Interceptor Systems"],
+      "target_groups": ["Water Reuse & Recovery", "Outfall"]
+    }
+  }
+}

@@ -1,24 +1,34 @@
 {
   "Collection Systems": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Collection: Separate Sewers",
-      "Collection: Pump Stations", 
       "Collection: Combined Sewers"
     ],
     "color": "#C4A484",
+    "shape": "diamond",
     "description": "Brown",
-    "processing_order": 0
+    "order": 0
+  },
+  "Pump Stations": {
+    "TYPE_LIST": [
+      "Collection: Pump Stations"
+    ],
+    "color": "#C4A484",
+    "shape": "diamond",
+    "description": "Brown",
+    "order": 0.5
   },
   "Interceptor Systems": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Collection: Interceptor Sewers"
     ],
     "color": "#C4A484",
+    "shape": "diamond",
     "description": "Brown",
-    "processing_order": 1
+    "order": 1
   },
   "OWTS, MS4s, Landfills": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Onsite Wastewater Treatment System",
       "Phase II MS4",
       "Phase I MS4",
@@ -27,53 +37,82 @@
       "Honey Bucket Lagoon"
     ],
     "color": "#FFD580",
+    "shape": "ellipse",
     "description": "Orange",
-    "processing_order": 2
+    "order": 2
   },
   "Centralized Treatment": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Treatment Plant",
       "Biosolids Handling Facility",
       "Clustered System"
     ],
     "color": "#ADD8E6",
+    "shape": "ellipse",
     "description": "Blue",
-    "processing_order": 3
+    "order": 3
   },
   "Storage Facilities": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Storage Tanks",
       "Storage Facility"
     ],
     "color": "#808080",
+    "shape": "ellipse",
     "description": "Grey",
-    "processing_order": 4
+    "order": 4
   },
   "Water Reuse & Recovery": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Water Reuse",
       "Resource Extraction",
       "Reuse",
-      "Desalination - WW"
+      "Desalination - WW",
+      "Agriculture - Cropland",
+      "Silviculture",
+      "Estuary Management"
     ],
     "color": "#9370DB",
+    "shape": "ellipse",
     "description": "Purple",
-    "processing_order": 5
+    "order": 5,
+    "discharge_type_keywords": [
+      "reuse",
+      "reclamation",
+      "land application",
+      "irrigation",
+      "groundwater",
+      "injection"
+    ]
   },
   "Outfall": {
-    "facility_types": [
+    "TYPE_LIST": [
       "Ocean Discharge"
     ],
     "color": "#90EE90",
+    "shape": "ellipse",
     "description": "Green",
-    "processing_order": 6
+    "order": 6,
+    "discharge_type_keywords": [
+      "ocean",
+      "marine",
+      "outfall"
+    ]
   },
   "Other": {
-    "facility_types": [
-      "Other"
+    "TYPE_LIST": [
+      "Other",
+      "Unregulated Community Stormwater",
+      "Marinas",
+      "Brownfields",
+      "Agriculture - Animals",
+      "Hydromodification",
+      "Ground Water - Unknown Source",
+      "Unknown"
     ],
     "color": "#FFFFC5",
+    "shape": "ellipse",
     "description": "Light yellow",
-    "processing_order": 7
+    "order": 7
   }
 }
