@@ -3,11 +3,12 @@ import json
 
 from us_sewersheds.helpers import (
     FILE_CONFIGS,
+    CONNECTION_RULES,
+    FACILITY_TYPE_GROUPS,
     OUTPUT_COLUMNS,
     FACILITY_TYPE_ORDER,
     DISCHARGE_TYPE_TO_FACILITY_TYPE,
     TYPE_SPECIFIC_COLUMNS,
-    CONNECTION_RULES,
     add_facility_type_node,
     get_facility_types,
     get_coords,
@@ -138,22 +139,16 @@ def load_and_merge_cwns_data(data_dir, state=None, data={}):
         county_data, on="CWNS_ID", how="left"
     )
 
-    # Clean and convert data types
-    data["FACILITIES"] = clean_permit_numbers(data["FACILITIES"])
-    data["FACILITIES"][["LATITUDE", "LONGITUDE"]] = data["FACILITIES"][
-        ["LATITUDE", "LONGITUDE"]
-    ].apply(pd.to_numeric, errors="coerce")
-
     # Calculate population percent increase
+    pop_2022 = data["FACILITIES"]["TOTAL_RES_POPULATION_2022"]
+    pop_2042 = data["FACILITIES"]["TOTAL_RES_POPULATION_2042"]
     data["FACILITIES"]["POP_PERCENT_INCREASE"] = (
-        (
-            data["FACILITIES"]["TOTAL_RES_POPULATION_2042"]
-            - data["FACILITIES"]["TOTAL_RES_POPULATION_2022"]
-        )
-        / data["FACILITIES"]["TOTAL_RES_POPULATION_2022"].replace(0, 1)
-        * 100
-    ).round(2)
+        ((pop_2042 - pop_2022) / pop_2022 * 100)
+        .where(pop_2022 != 0, pd.NA)
+        .round(2)
+    )
 
+    data["FACILITIES"] = clean_permit_numbers(data["FACILITIES"])
     return {
         "FACILITIES": clean_cwns_ids(data["FACILITIES"]),
         "DISCHARGES": clean_cwns_ids(data["DISCHARGES"]),
@@ -251,60 +246,65 @@ def process_multi_type_facilities(data):
     """Process facilities with multiple types using nested structure"""
     print("Processing multi-type facilities")
 
+    # Pre-filter discharges for external ones (vectorized)
+    external_discharges = data["DISCHARGES"][
+        data["DISCHARGES"]["DISCHARGE_TYPE"].notna()
+        & data["DISCHARGES"]["DISCHARGES_TO_CWNSID"].isna()
+    ].copy()
+
+    # Group external discharges by CWNS_ID for faster lookup
+    external_discharges_by_facility = external_discharges.groupby("CWNS_ID")[
+        "DISCHARGE_TYPE"
+    ].apply(set)
+
     processed_facilities = {}
 
     # Group facilities by CWNS_ID to find multi-type facilities
     facility_groups = data["FACILITIES"].groupby("CWNS_ID")
     id_count = 0
+
     for cwns_id, group in facility_groups:
         id_count += 1
         if id_count % 2500 == 0:
             print(f"{id_count} facilities processed")
+
         # Get all facility types for this CWNS_ID
         group_types = group["FACILITY_TYPE"].unique()
         sorted_types = sorted(group_types, key=lambda x: FACILITY_TYPE_ORDER[x])
         base_coords = get_coords(group.iloc[0])
         TYPES = {}
+
+        # Add facility types
         for t, fac_type in enumerate(sorted_types):
             TYPES[t] = add_facility_type_node(fac_type, base_coords, t)
 
-        # Add discharge types
-        facility_discharges = data["DISCHARGES"][
-            (data["DISCHARGES"]["CWNS_ID"] == cwns_id)
-            & (data["DISCHARGES"]["DISCHARGE_TYPE"].notna())
-            & (data["DISCHARGES"]["DISCHARGES_TO_CWNSID"].isna())
-        ]
-
-        # Get unique discharge types and map to facility types
-        unique_discharge_types = set()
-        for discharge_type in facility_discharges["DISCHARGE_TYPE"].unique():
-            discharge_facility_type = next(
-                (
-                    facility_type
-                    for keyword, facility_type in DISCHARGE_TYPE_TO_FACILITY_TYPE.items()
-                    if keyword in discharge_type.lower()
-                ),
-                "Other",
-            )
-
-            if discharge_facility_type not in unique_discharge_types:
-                unique_discharge_types.add(discharge_facility_type)
-                next_index = len(TYPES)
-                TYPES[next_index] = add_facility_type_node(
-                    discharge_facility_type,
-                    base_coords,
-                    next_index,
+        # Add discharge types using direct dictionary lookup
+        if cwns_id in external_discharges_by_facility:
+            unique_discharge_types = set()
+            for discharge_type in external_discharges_by_facility[cwns_id]:
+                discharge_facility_type = DISCHARGE_TYPE_TO_FACILITY_TYPE.get(
+                    discharge_type, "Other"
                 )
 
-        # Update discharges to treat external discharges as internal (vectorized)
-        external_mask = (data["DISCHARGES"]["CWNS_ID"] == cwns_id) & (
-            data["DISCHARGES"]["DISCHARGES_TO_CWNSID"].isna()
-        )
-        data["DISCHARGES"].loc[external_mask, "DISCHARGES_TO_CWNSID"] = cwns_id
+                if discharge_facility_type not in unique_discharge_types:
+                    unique_discharge_types.add(discharge_facility_type)
+                    next_index = len(TYPES)
+                    TYPES[next_index] = add_facility_type_node(
+                        discharge_facility_type,
+                        base_coords,
+                        next_index,
+                    )
+
         processed_facilities[str(cwns_id)] = {
             **group.iloc[0][OUTPUT_COLUMNS].to_dict(),
             "TYPES": TYPES,
         }
+
+    # Batch update all external discharges at once (vectorized)
+    external_mask = data["DISCHARGES"]["DISCHARGES_TO_CWNSID"].isna()
+    data["DISCHARGES"].loc[external_mask, "DISCHARGES_TO_CWNSID"] = data[
+        "DISCHARGES"
+    ].loc[external_mask, "CWNS_ID"]
 
     print(f"Processed {len(processed_facilities)} facilities with nested types")
     return processed_facilities
@@ -435,6 +435,12 @@ def main(
                 ]
             flattened_facilities.append(flattened_facility)
     facilities_df = pd.DataFrame(flattened_facilities)
+
+    # Filter out facilities with any type from the "Other" category
+    other_types = FACILITY_TYPE_GROUPS["Other"]["TYPE_LIST"]
+    facilities_df = facilities_df[
+        ~facilities_df["FACILITY_TYPE"].isin(other_types)
+    ]
     prefix = f"{state}_" if state else ""
     facilities_df[OUTPUT_COLUMNS].to_csv(
         f"processed_data/{prefix}facilities_merged.csv", index=False

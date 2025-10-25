@@ -72,32 +72,47 @@
       "Silviculture",
       "Estuary Management"
     ],
+    "DISCHARGE_TYPE_LIST": [
+      "Reuse: Agricultural-related and livestock watering",
+      "Reuse: Environmental restoration and groundwater discharge",
+      "Reuse: Impoundments",
+      "Reuse: Industrial",
+      "Reuse: Irrigation",
+      "Reuse: Landscape-related irrigation",
+      "Reuse: Other Centralized Non-Potable",
+      "Reuse: Potable",
+      "Deep well disposal (UIC Class I)"
+    ],
     "color": "#9370DB",
     "shape": "ellipse",
     "description": "Purple",
-    "order": 5,
-    "discharge_type_keywords": [
-      "reuse",
-      "reclamation",
-      "land application",
-      "irrigation",
-      "groundwater",
-      "injection"
-    ]
+    "order": 5
   },
   "Outfall": {
     "TYPE_LIST": [
       "Ocean Discharge"
     ],
+    "DISCHARGE_TYPE_LIST": [
+      "Ocean Discharge",
+      "Outfall To Surface Waters",
+      "Overland Flow With Discharge",
+      "CSO Discharge",
+      "Evaporation"
+    ],
     "color": "#90EE90",
     "shape": "ellipse",
     "description": "Green",
-    "order": 6,
-    "discharge_type_keywords": [
-      "ocean",
-      "marine",
-      "outfall"
-    ]
+    "order": 6
+  },
+  "Unknown": {
+    "TYPE_LIST": [
+      "Unknown"
+    ],
+    "DISCHARGE_TYPE_LIST": [],
+    "color": "#FFFFC5",
+    "shape": "ellipse",
+    "description": "Light yellow",
+    "order": 7
   },
   "Other": {
     "TYPE_LIST": [
@@ -107,12 +122,17 @@
       "Brownfields",
       "Agriculture - Animals",
       "Hydromodification",
-      "Ground Water - Unknown Source",
-      "Unknown"
+      "Ground Water - Unknown Source"
+    ],
+    "DISCHARGE_TYPE_LIST": [
+      "Other",
+      "No Discharge, unknown",
+      "Overland Flow, No Discharge",
+      "Discharge To Another Facility"
     ],
     "color": "#FFFFC5",
     "shape": "ellipse",
     "description": "Light yellow",
-    "order": 7
+    "order": 8
   }
 }

@@ -34,7 +34,6 @@ for config in FILE_CONFIGS.values():
 OUTPUT_COLUMNS = sorted(all_columns)
 TYPE_SPECIFIC_COLUMNS = ["FACILITY_TYPE", "LATITUDE", "LONGITUDE"]
 
-
 FACILITY_TYPE_ORDER = {}
 FACILITY_TYPE_TO_GROUP = {}
 DISCHARGE_TYPE_TO_FACILITY_TYPE = {}
@@ -43,10 +42,14 @@ for group_name, group_data in FACILITY_TYPE_GROUPS.items():
     for facility_type in group_data["TYPE_LIST"]:
         FACILITY_TYPE_ORDER[facility_type] = processing_order
         FACILITY_TYPE_TO_GROUP[facility_type] = group_name
-    if "discharge_type_keywords" in group_data:
-        type = group_data["TYPE_LIST"][0]  # first facility type from group
-        for keyword in group_data["discharge_type_keywords"]:
-            DISCHARGE_TYPE_TO_FACILITY_TYPE[keyword.lower()] = type
+
+    # Map discharge types to the first facility type in each group
+    if "DISCHARGE_TYPE_LIST" in group_data:
+        primary_facility_type = group_data["TYPE_LIST"][0]
+        for discharge_type in group_data["DISCHARGE_TYPE_LIST"]:
+            DISCHARGE_TYPE_TO_FACILITY_TYPE[discharge_type] = (
+                primary_facility_type
+            )
 
 
 def get_coords(facility):
